@@ -277,27 +277,33 @@ To test $F_{sss}$ function we use a recently developed approach which computes
 that function for sets defined by inequation $f(x) \le T$, $x \in \mathbb{R}^3$
 with help of automatic differentiation \cite{postnicov20232}. We choose $f$
 \begin{equation}
-  f(x, y, z) = \sqrt{x^2 + y^2 + z^2}
+  f(x, y, z) = [(2x)^{\frac{3}{2}} + y^{\frac{3}{2}} + z^{\frac{3}{2}}]^{\frac{2}{3}}
 \end{equation}
-so inequation $f(x, y, z) \le T$ gives us a ball.
+so inequation $f(x, y, z) \le T$ gives us an ellipse-like object
+(\cref{fig:sss-ellipse}).
 
-The test was performed by evaluating the inequation with the parameter $T = 0.2$
-in a cube $[0, 1]^3$ and comparing $F_{sss}$ calculated with our algorithm with
-precise values. The result of comparison is on
-\cref{fig:sss-verification}. Maximal relative error for this case is about  15\%
-when $F_{sss}(r_1, r_2)$ is calculated for $r_1$ and $r_2$ being not too close
-to zero.
+The test was performed by evaluating the inequation with the parameter $T = 0.4$
+in a cube $[-1, 1]^3$ and comparing $F_{sss}$ calculated by our algorithm with
+precise values. Pointwise relative error of $F_{sss}$ is on
+\cref{fig:sss-ellipse-error}. Maximal relative error in the area bound by
+inequations $x > 0.1$, $y > 0.1$ and $f(x, y) < 0.78$ is about 10\%.
 \begin{figure*}[tp]
   \centering
-  \subfigure[Computation with our algorithm]{
-    \includegraphics[width=0.45\linewidth]{images/ball-sss.png}
-    \label{fig:balls-sss-comp}}
+  \subfigure[The ellipse-like object used in testing of $F_{sss}$ computation]{
+    \includegraphics[width=0.45\linewidth]{images/ellipse.png}
+    \label{fig:sss-ellipse}}
   \hfill
   \subfigure[Relative error of computation]{
-    \includegraphics[width=0.45\linewidth]{images/ball-sss-error.png}
-    \label{fig:ball-sss-error}}
-  \caption[]{Comparison of $F_{sss}$ function for a ball with the radius $0.2$
-    with precise values.}
+    \includegraphics[width=0.45\linewidth]{images/ellipse-sss-diff.png}
+    \label{fig:sss-ellipse-error}}
+  \vskip\baselineskip
+  \subfigure[$F_{sss}$: precise]{
+    \includegraphics[width=0.45\linewidth]{images/ellipse-sss.png}}
+  \hfill
+  \subfigure[$F_{sss}$: calculated with our approach]{
+    \includegraphics[width=0.45\linewidth]{images/ellipse-sss-julia.png}}
+  \caption[]{A comparison of $F_{sss}$ function calculated using our approach
+    with its precise values.}
   \label{fig:sss-verification}
 \end{figure*}
 
