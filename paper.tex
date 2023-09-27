@@ -12,6 +12,7 @@
 \usepackage{subfigure}
 \usepackage{hyperref}
 \usepackage{cleveref}
+\usepackage[export]{adjustbox}
 
 \bibliographystyle{elsarticle-num}
 \journal{Physica A: Statistical Mechanics and its Applications}
@@ -271,8 +272,6 @@ $\lambda=5000$ and a cube $[0, 1]^3$. Because $R \ll 1$, we can use
   \label{fig:s3-verification}
 \end{figure*}
 
-\textcolor{red}{What about $C_3$?}
-
 To test $F_{sss}$ function we use a recently developed approach which computes
 that function for sets defined by inequation $f(x) \le T$, $x \in \mathbb{R}^3$
 with help of automatic differentiation \cite{postnicov20232}. We choose $f$
@@ -345,28 +344,87 @@ The comparison of our algorithm against theory is on
   \label{fig:surface-verification}
 \end{figure*}
 
-
 \section{Results}
-In this section we compute correlation functions for some real samples. Table
-\ref{tab:summary} contains information about these samples.
+In this section we compute correlation functions along the plane $XY$ for some
+real samples, namely one three-dimensional XCT and one two-dimensional SEM
+sample. Table \ref{tab:summary} contains information about these samples. Images
+of the samples are on \cref{fig:samples}. On the plots of correlation functions
+we provide a family of curves with the first argument of the correlation
+function being fixed.
+
+Correlation functions for the XCT sample are on
+\cref{fig:sample-limestone-cf}. The plot of $S_3$ function allows us to estimate
+porosity of the sample to be $\sim 0.04$ (note, that the curve with $r_1 = 0$ is
+actually $S_2$ function). The two-point correlation function reaches plateau at
+$r_2 \approx 200\div 225\ \mu m$ which means that two events of finding two
+points in the void phase are independent if the points are farther than
+$225\ \mu m$ from each other. We see that the sample is a little bit anisotropic
+($S_3(0, 225) \approx S_3(150, 0)$). From analysis of $C_3$ function it can be
+stated that the sample has clusters of void phase which are $\sim 200\ \mu m$ in
+diameter.
+
+Correlation functions for the SEM sample are on
+\cref{fig:sample-sandstone-cf}. Porosity of the sample is $\sim 0.3$ as follows
+from the plot of $S_3$ function at $r_1 = 0$. The funcion $S_3(0, r_2)$ reaches
+plateau at $r_2 \approx 20\ \mu m$. The sample is highly anisotropic (elongated
+along the ordinate). The samples has clusters which are $\sim 45\ \mu m$ in
+diameter.
 \begin{table}[!htp]
   \centering
   \begin{tabular}{|c|c|c|c|c|}
     \hline
     Sample name & Image type & Dimensions (pixels) & Image resolution ($\mu m$) & $C_{0.5}$\\
     \hline
-    Ceramic 1   & XCT & $500 \times 500 \times 500$ & 2.25 & 0.9823 \\
-    Ceramic 2   & XCT & $500 \times 500 \times 500$ & 2.25 & 0.9890 \\
-    Ceramic 3   & XCT & $500 \times 500 \times 500$ & 2.25 & 0.9712 \\
-    Sandstone 1 & SEM &  $1280 \times 869$ & 0.10 & 0.9703 \\
-    Sandstone 2 & SEM &  $1280 \times 869$ & 0.05 & 0.9897 \\
-    Carbonate 1 & SEM &  $1024 \times 691$ & 0.06 & 0.9721 \\
+    Limestone & XCT &  $600 \times 600 \times 600$ & 3.02 & 0.9712 \\
+    Sandstone & SEM &  $1280 \times 869$ & 0.10 & 0.9703 \\
     \hline
   \end{tabular}
   \caption{Summary of samples used for calculation of correlation functions.}
   \label{tab:summary}
 \end{table}
 
+\begin{figure*}[tp]
+  \centering
+  \subfigure[Limestone]{
+    \includegraphics[width=0.45\linewidth]{images/carb.png}
+    \label{fig:sample-limestone}}
+  \hfill
+  \subfigure[Sandstone (different clusters of void phase are shown in color)]{
+    \includegraphics[width=0.45\linewidth, frame]{images/sandstone1.png}
+    \label{fig:sample-sandstone}}
+  \caption[]{Images of samples used for calculation of higher-order correlation
+    functions.}
+  \label{fig:samples}
+\end{figure*}
+
+\begin{figure}[tp]
+  \centering
+  \includegraphics[width=0.3\linewidth]{images/carb.npy-surf3.png}
+  \hfill
+  \includegraphics[width=0.3\linewidth]{images/carb.npy-surf2void.png}
+  \hfill
+  \includegraphics[width=0.3\linewidth]{images/carb.npy-surfvoid2.png}
+  \vskip\baselineskip
+  \includegraphics[width=0.3\linewidth]{images/carb.npy-s3.png}
+  \includegraphics[width=0.3\linewidth]{images/carb.npy-c3.png}
+  \caption[]{Correlation functions for carbonate sample
+    (\cref{fig:sample-limestone}).}
+  \label{fig:sample-limestone-cf}
+\end{figure}
+
+\begin{figure}[tp]
+  \centering
+  \includegraphics[width=0.45\linewidth]{images/sandstone1.png-surf2void.png}
+  \hfill
+  \includegraphics[width=0.45\linewidth]{images/sandstone1.png-surfvoid2.png}
+  \vskip\baselineskip
+  \includegraphics[width=0.45\linewidth]{images/sandstone1.png-s3.png}
+  \hfill
+  \includegraphics[width=0.45\linewidth]{images/sandstone1.png-c3.png}
+  \caption[]{Correlation functions for sandstone sample
+    (\cref{fig:sample-sandstone}).}
+  \label{fig:sample-sandstone-cf}
+\end{figure}
 
 \section{Discussion}
 In this paper we have provided two approaches to compute three-point correlation
