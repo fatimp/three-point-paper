@@ -14,6 +14,9 @@
 \usepackage{cleveref}
 \usepackage[export]{adjustbox}
 
+\definecolor{light-gray}{gray}{0.95}
+\newcommand{\code}[1]{\colorbox{light-gray}{\texttt{#1}}}
+
 \bibliographystyle{elsarticle-num}
 \journal{Physica A: Statistical Mechanics and its Applications}
 
@@ -52,21 +55,23 @@ $I_n(x) : A \rightarrow \{0,1\}$ defined as:
 \begin{equation}
   I_n(x) = \left\{
   \begin{array}{ll}
-    1 & \quad x \in A \\
+    1 & \quad x \in A_n \\
     0 & \quad \text{otherwise}
   \end{array}
   \right.
 \end{equation}
 
-Now we can define the three-point correlation function $S_3: A^2 \rightarrow [0, 1]$:
+Now we can define the three-point correlation function
+$S_3: \mathbb{R}^2 \rightarrow [0, 1]$:
 \begin{equation}
   S_3^n(x_1, x_2) = \langle I_n(x) I_n(x + x_1) I_n(x + x_2) \rangle
 \end{equation}
-It can be understood as the probability that all three vertices of a triangle
-$(0, x_1, x_2)$ will appear in the subset $A_n$ when it is randomly thrown in
-$A$. When $A$ represent isotropic medium, $x_1$ and $x_2$ can be replaced with
-three numbers $r_1 = |x_1|$, $r_2 = |x_2|$ and $r_3 = |x_2 - x_1|$ to get a
-function $S_3: [0, \infty)^3 \rightarrow [0, 1]$.
+where $\langle \dots \rangle$ means average over all points in $A$. It can be
+understood as the probability that all three vertices of a triangle
+$(0, x_1, x_2)$ will appear in the subset $A_n$ when the triangle is randomly
+thrown in $A$. When $A$ represent isotropic medium, $x_1$ and $x_2$ can be
+replaced with three numbers $r_1 = |x_1|$, $r_2 = |x_2|$ and $r_3 = |x_2 - x_1|$
+to get a function of three scalar arguments.
 
 Another function closely related to the three-point correlation function is the
 cluster function which can be defined as
@@ -246,10 +251,9 @@ defined as follows:
 To verify correctness of computation of $S_3$ and $C_3$ functions we use the
 following simple relations:
 \begin{align}
-  & S_3^n (x, 0) = S_3^n (0, x) = S_2^n(x) \\
-  & C_3^n (x, 0) = C_3^n (0, x) = C_2^n(x) \\
-  & \lim_{\substack{x_1 \to \infty \\ x_2 \to \infty}} S_3^n (x_1, x_2) =
-  \lim_{\substack{x_1 \to \infty \\ x_2 \to \infty}} C_3^n (x_1, x_2) = \phi_n^3
+  S_3^n (x, 0) = S_3^n (0, x) &= S_2^n(x) \\
+  C_3^n (x, 0) = C_3^n (0, x) &= C_2^n(x) \\
+  \lim_{\substack{x_1 \to \infty \\ x_2 \to \infty}} S_3^n (x_1, x_2) &= \phi_n^3
 \end{align}
 Here $\phi_n$ is a fraction of phase $n$ in $A$.
 
@@ -366,9 +370,9 @@ In this section we compute correlation functions along the plane $XY$ for some
 real samples, namely one three-dimensional XCT and one two-dimensional SEM
 sample. Table \ref{tab:summary} contains information about these samples. Note
 that the criterion $C_{0.5} > 0.97$ holds for both of the samples. Images of the
-samples are on \cref{fig:samples}. On the plots of correlation functions we
-provide a family of curves with the first argument of the correlation function
-being fixed.
+samples are on \cref{fig:samples}. On plots of correlation functions we provide
+a family of curves with the first argument of the correlation function being
+fixed.
 
 Correlation functions for the XCT sample are on
 \cref{fig:sample-limestone-cf}. The plot of $S_3$ function allows us to estimate
