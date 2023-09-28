@@ -7,14 +7,13 @@
    viewBox="0 0 179.99999 120"
    version="1.1"
    id="svg5"
-   inkscape:version="1.2.2 (b0a8486541, 2022-12-01)"
+   inkscape:version="1.3 (0e150ed6c4, 2023-07-21)"
    sodipodi:docname="zeros.svg"
    inkscape:export-filename="zeros.png"
    inkscape:export-xdpi="300"
    inkscape:export-ydpi="300"
    xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
    xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
-   xmlns:xlink="http://www.w3.org/1999/xlink"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
   <sodipodi:namedview
@@ -29,8 +28,8 @@
      inkscape:document-units="mm"
      showgrid="false"
      inkscape:zoom="1.0381216"
-     inkscape:cx="371.34378"
-     inkscape:cy="299.57955"
+     inkscape:cx="371.82542"
+     inkscape:cy="300.06119"
      inkscape:window-width="1916"
      inkscape:window-height="1030"
      inkscape:window-x="0"
@@ -70,7 +69,7 @@
      inkscape:groupmode="layer"
      id="layer1">
     <rect
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.7;stroke-dasharray:none;stroke-opacity:1"
        id="rect9906"
        width="14.13281"
        height="14.13281"
@@ -100,7 +99,7 @@
          x="37.570358"
          y="17.885794">a₁</tspan></text>
     <rect
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.7;stroke-dasharray:none;stroke-opacity:1"
        id="rect16864"
        width="14.13281"
        height="14.13281"
@@ -130,7 +129,7 @@
          x="51.903168"
          y="17.885794">a₂</tspan></text>
     <rect
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.7;stroke-dasharray:none;stroke-opacity:1"
        id="rect16872"
        width="14.13281"
        height="14.13281"
@@ -160,7 +159,7 @@
          x="66.235977"
          y="17.885794">a₃</tspan></text>
     <rect
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.7;stroke-dasharray:none;stroke-opacity:1"
        id="rect16880"
        width="14.13281"
        height="14.13281"
@@ -190,7 +189,7 @@
          x="80.568787"
          y="17.885794">a₄</tspan></text>
     <rect
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.7;stroke-dasharray:none;stroke-opacity:1"
        id="rect16888"
        width="14.13281"
        height="14.13281"
@@ -220,7 +219,7 @@
          x="94.901596"
          y="17.885794">a₅</tspan></text>
     <rect
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.7;stroke-dasharray:none;stroke-opacity:1"
        id="rect16896"
        width="14.13281"
        height="14.13281"
@@ -250,7 +249,7 @@
          x="109.23441"
          y="17.885794">a₆</tspan></text>
     <rect
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.7;stroke-dasharray:none;stroke-opacity:1"
        id="rect16904"
        width="14.13281"
        height="14.13281"
@@ -280,7 +279,7 @@
          x="123.56721"
          y="17.885794">a₇</tspan></text>
     <rect
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.7;stroke-dasharray:none;stroke-opacity:1"
        id="rect16912"
        width="14.13281"
        height="14.13281"
@@ -310,7 +309,7 @@
          x="137.90002"
          y="17.885794">a₈</tspan></text>
     <rect
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.7;stroke-dasharray:none;stroke-opacity:1"
        id="rect18596"
        width="14.13281"
        height="14.13281"
@@ -340,7 +339,7 @@
          x="23.237549"
          y="46.551414">a₁</tspan></text>
     <rect
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.7;stroke-dasharray:none;stroke-opacity:1"
        id="rect18602"
        width="14.13281"
        height="14.13281"
@@ -370,7 +369,7 @@
          x="37.570358"
          y="46.551414">a₂</tspan></text>
     <rect
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.7;stroke-dasharray:none;stroke-opacity:1"
        id="rect18608"
        width="14.13281"
        height="14.13281"
@@ -400,7 +399,7 @@
          x="51.903168"
          y="46.551414">a₃</tspan></text>
     <rect
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.7;stroke-dasharray:none;stroke-opacity:1"
        id="rect18614"
        width="14.13281"
        height="14.13281"
@@ -430,7 +429,7 @@
          x="66.235977"
          y="46.551414">a₄</tspan></text>
     <rect
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.7;stroke-dasharray:none;stroke-opacity:1"
        id="rect18620"
        width="14.13281"
        height="14.13281"
@@ -460,7 +459,7 @@
          x="80.568787"
          y="46.551414">a₅</tspan></text>
     <rect
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.7;stroke-dasharray:none;stroke-opacity:1"
        id="rect18626"
        width="14.13281"
        height="14.13281"
@@ -490,7 +489,7 @@
          x="94.901596"
          y="46.551414">a₆</tspan></text>
     <rect
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.7;stroke-dasharray:none;stroke-opacity:1"
        id="rect18632"
        width="14.13281"
        height="14.13281"
@@ -520,7 +519,7 @@
          x="109.23441"
          y="46.551414">a₇</tspan></text>
     <rect
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.7;stroke-dasharray:none;stroke-opacity:1"
        id="rect18638"
        width="14.13281"
        height="14.13281"
@@ -550,7 +549,7 @@
          x="123.56721"
          y="46.551414">a₈</tspan></text>
     <rect
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-dasharray:6.00000015,2;stroke-dashoffset:0;stroke-opacity:1"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.7;stroke-dasharray:8.4,2.8;stroke-dashoffset:0;stroke-opacity:1"
        id="rect18644"
        width="14.13281"
        height="14.13281"
@@ -580,7 +579,7 @@
          x="140.69958"
          y="47.986038">0</tspan></text>
     <rect
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.7;stroke-dasharray:none;stroke-opacity:1"
        id="rect18658"
        width="14.13281"
        height="14.13281"
@@ -610,7 +609,7 @@
          x="8.9047394"
          y="75.217033">a₁</tspan></text>
     <rect
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.7;stroke-dasharray:none;stroke-opacity:1"
        id="rect18664"
        width="14.13281"
        height="14.13281"
@@ -640,7 +639,7 @@
          x="23.237549"
          y="75.217033">a₂</tspan></text>
     <rect
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.7;stroke-dasharray:none;stroke-opacity:1"
        id="rect18670"
        width="14.13281"
        height="14.13281"
@@ -670,7 +669,7 @@
          x="37.570358"
          y="75.217033">a₃</tspan></text>
     <rect
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.7;stroke-dasharray:none;stroke-opacity:1"
        id="rect18676"
        width="14.13281"
        height="14.13281"
@@ -700,7 +699,7 @@
          x="51.903168"
          y="75.217033">a₄</tspan></text>
     <rect
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.7;stroke-dasharray:none;stroke-opacity:1"
        id="rect18682"
        width="14.13281"
        height="14.13281"
@@ -730,7 +729,7 @@
          x="66.235977"
          y="75.217033">a₅</tspan></text>
     <rect
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.7;stroke-dasharray:none;stroke-opacity:1"
        id="rect18688"
        width="14.13281"
        height="14.13281"
@@ -760,7 +759,7 @@
          x="80.568787"
          y="75.217033">a₆</tspan></text>
     <rect
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.7;stroke-dasharray:none;stroke-opacity:1"
        id="rect18694"
        width="14.13281"
        height="14.13281"
@@ -790,7 +789,7 @@
          x="94.901596"
          y="75.217033">a₇</tspan></text>
     <rect
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.7;stroke-dasharray:none;stroke-opacity:1"
        id="rect18700"
        width="14.13281"
        height="14.13281"
@@ -820,7 +819,7 @@
          x="109.23441"
          y="75.217033">a₈</tspan></text>
     <rect
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-dasharray:6.00000015,2;stroke-dashoffset:0;stroke-opacity:1"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.7;stroke-dasharray:8.4,2.8;stroke-dashoffset:0;stroke-opacity:1"
        id="rect18706"
        width="14.13281"
        height="14.13281"
@@ -850,7 +849,7 @@
          x="126.57285"
          y="76.335068">0</tspan></text>
     <rect
-       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-dasharray:6.00000015,2;stroke-dashoffset:0;stroke-opacity:1"
+       style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.7;stroke-dasharray:8.4,2.8;stroke-dashoffset:0;stroke-opacity:1"
        id="rect18712"
        width="14.13281"
        height="14.13281"
@@ -880,126 +879,101 @@
          x="141.2561"
          y="76.373894">0</tspan></text>
     <path
-       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.3;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#TriangleStart)"
-       d="M 43.864699,24.344214 V 35.881942"
-       id="path19848"
-       inkscape:tile-cx="53.98509"
-       inkscape:tile-cy="54.401737"
-       inkscape:tile-w="1.8466156"
-       inkscape:tile-h="12.60305"
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#TriangleStart)"
+       d="M 43.086158,23.358595 V 34.896323"
+       id="use21052"
        inkscape:tile-x0="53.061782"
        inkscape:tile-y0="48.632873" />
-    <use
-       x="0"
-       y="0"
-       inkscape:tiled-clone-of="#path19848"
-       xlink:href="#path19848"
-       id="use21052" />
-    <use
-       x="0"
-       y="0"
-       inkscape:tiled-clone-of="#path19848"
-       xlink:href="#path19848"
-       transform="translate(14.403602)"
-       id="use21056" />
-    <use
-       x="0"
-       y="0"
-       inkscape:tiled-clone-of="#path19848"
-       xlink:href="#path19848"
-       transform="translate(28.807203)"
-       id="use21060" />
-    <use
-       x="0"
-       y="0"
-       inkscape:tiled-clone-of="#path19848"
-       xlink:href="#path19848"
-       transform="translate(1.1079699,28.356862)"
-       id="use21062" />
-    <use
-       x="0"
-       y="0"
-       inkscape:tiled-clone-of="#path19848"
-       xlink:href="#path19848"
-       transform="translate(43.210805)"
-       id="use21064" />
-    <use
-       x="0"
-       y="0"
-       inkscape:tiled-clone-of="#path19848"
-       xlink:href="#path19848"
-       transform="translate(15.511571,28.356862)"
-       id="use21066" />
-    <use
-       x="0"
-       y="0"
-       inkscape:tiled-clone-of="#path19848"
-       xlink:href="#path19848"
-       transform="translate(57.614407)"
-       id="use21068" />
-    <use
-       x="0"
-       y="0"
-       inkscape:tiled-clone-of="#path19848"
-       xlink:href="#path19848"
-       transform="translate(29.915173,28.356862)"
-       id="use21070" />
-    <use
-       x="0"
-       y="0"
-       inkscape:tiled-clone-of="#path19848"
-       xlink:href="#path19848"
-       transform="translate(72.018008)"
-       id="use21072" />
-    <use
-       x="0"
-       y="0"
-       inkscape:tiled-clone-of="#path19848"
-       xlink:href="#path19848"
-       transform="translate(44.318774,28.356862)"
-       id="use21074" />
-    <use
-       x="0"
-       y="0"
-       inkscape:tiled-clone-of="#path19848"
-       xlink:href="#path19848"
-       transform="translate(86.42161)"
-       id="use21076" />
-    <use
-       x="0"
-       y="0"
-       inkscape:tiled-clone-of="#path19848"
-       xlink:href="#path19848"
-       transform="translate(58.722376,28.356862)"
-       id="use21078" />
-    <use
-       x="0"
-       y="0"
-       inkscape:tiled-clone-of="#path19848"
-       xlink:href="#path19848"
-       transform="translate(100.82521)"
-       id="use21080" />
-    <use
-       x="0"
-       y="0"
-       inkscape:tiled-clone-of="#path19848"
-       xlink:href="#path19848"
-       transform="translate(73.125978,28.356862)"
-       id="use21082" />
-    <use
-       x="0"
-       y="0"
-       inkscape:tiled-clone-of="#path19848"
-       xlink:href="#path19848"
-       transform="translate(87.529579,28.356862)"
-       id="use21086" />
-    <use
-       x="0"
-       y="0"
-       inkscape:tiled-clone-of="#path19848"
-       xlink:href="#path19848"
-       transform="translate(101.93318,28.356862)"
-       id="use21090" />
+    <path
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#TriangleStart)"
+       d="M 57.48976,23.358595 V 34.896323"
+       id="use21056"
+       inkscape:tile-x0="53.061782"
+       inkscape:tile-y0="48.632873" />
+    <path
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#TriangleStart)"
+       d="M 71.893361,23.358595 V 34.896323"
+       id="use21060"
+       inkscape:tile-x0="53.061782"
+       inkscape:tile-y0="48.632873" />
+    <path
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#TriangleStart)"
+       d="M 44.194128,51.715457 V 63.253185"
+       id="use21062"
+       inkscape:tile-x0="53.061782"
+       inkscape:tile-y0="48.632873" />
+    <path
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#TriangleStart)"
+       d="M 86.296963,23.358595 V 34.896323"
+       id="use21064"
+       inkscape:tile-x0="53.061782"
+       inkscape:tile-y0="48.632873" />
+    <path
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#TriangleStart)"
+       d="M 58.597729,51.715457 V 63.253185"
+       id="use21066"
+       inkscape:tile-x0="53.061782"
+       inkscape:tile-y0="48.632873" />
+    <path
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#TriangleStart)"
+       d="M 100.70057,23.358595 V 34.896323"
+       id="use21068"
+       inkscape:tile-x0="53.061782"
+       inkscape:tile-y0="48.632873" />
+    <path
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#TriangleStart)"
+       d="M 73.001331,51.715457 V 63.253185"
+       id="use21070"
+       inkscape:tile-x0="53.061782"
+       inkscape:tile-y0="48.632873" />
+    <path
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#TriangleStart)"
+       d="M 115.10417,23.358595 V 34.896323"
+       id="use21072"
+       inkscape:tile-x0="53.061782"
+       inkscape:tile-y0="48.632873" />
+    <path
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#TriangleStart)"
+       d="M 87.404932,51.715457 V 63.253185"
+       id="use21074"
+       inkscape:tile-x0="53.061782"
+       inkscape:tile-y0="48.632873" />
+    <path
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#TriangleStart)"
+       d="M 129.50777,23.358595 V 34.896323"
+       id="use21076"
+       inkscape:tile-x0="53.061782"
+       inkscape:tile-y0="48.632873" />
+    <path
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#TriangleStart)"
+       d="M 101.80854,51.715457 V 63.253185"
+       id="use21078"
+       inkscape:tile-x0="53.061782"
+       inkscape:tile-y0="48.632873" />
+    <path
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#TriangleStart)"
+       d="M 143.91137,23.358595 V 34.896323"
+       id="use21080"
+       inkscape:tile-x0="53.061782"
+       inkscape:tile-y0="48.632873" />
+    <path
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#TriangleStart)"
+       d="M 116.21214,51.715457 V 63.253185"
+       id="use21082"
+       inkscape:tile-x0="53.061782"
+       inkscape:tile-y0="48.632873" />
+    <path
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#TriangleStart)"
+       d="M 130.61574,51.715457 V 63.253185"
+       id="use21086"
+       inkscape:tile-x0="53.061782"
+       inkscape:tile-y0="48.632873" />
+    <path
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.5;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1;marker-end:url(#TriangleStart)"
+       d="M 145.01934,51.715457 V 63.253185"
+       id="use21090"
+       inkscape:tile-x0="53.061782"
+       inkscape:tile-y0="48.632873" />
     <text
        xml:space="preserve"
        style="font-size:14.6216px;fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:1.38157;stroke-dasharray:none;stroke-dashoffset:0;stroke-opacity:1"
