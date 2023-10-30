@@ -471,6 +471,43 @@ in $O(n)$. It is still an open question if there are linear transforms which
 allow computation of convolution with complexity between $O(n)$ and $O(n^2)$
 \cite{stone2008uniqueness,stone1998convolution}.
 
+\textcolor{red}{Where to put this?}
+We have made a comparison of our algorithm with two algorithms, one of which
+proposed by Malmir~et~al \cite{malmir2018} and another proposed by Smith and
+Torquato \cite{SMITH1988176}. The first algorithms generates a triangle with
+fixed sides $r_1$ and $r_2$ and an angle $\theta$ between them and places it in
+the medium firstly making a random translation and a rotation around a random
+vector by a random angle. By making a large number of trials the algorithm gets
+a value of a three-point correlation function at the point
+$(r_1, r_2, \theta)$. The second algorithm takes a precalculated triangle
+$(r_1, r_2, \theta)$ from a web pattern and places it in the medium without
+rotation, only applying a random translation. This way the algorithm preserves
+orientation of triangles stored in the pattern.
+
+Our algorithm fixes $\theta = \frac{pi}{2}$ and does not perform random
+rotations or trial triangles. It is sensitive to anisotropicity of the medium
+when it is stretched along one of the axes as shown in \cref{fig:ellipses}. The
+main advantage of our algorithm is its parallelizability and ease of
+implementation.
+\begin{figure}[tp]
+  \centering
+  \includegraphics[width=0.3\linewidth]{images/ellipse-0.png}
+  \hfill
+  \includegraphics[width=0.3\linewidth]{images/ellipse-45.png}
+  \hfill
+  \includegraphics[width=0.3\linewidth]{images/ellipse-90.png}
+  \vskip\baselineskip
+  \includegraphics[width=0.3\linewidth]{images/ellipse-0-s3.png}
+  \hfill
+  \includegraphics[width=0.3\linewidth]{images/ellipse-45-s3.png}
+  \hfill
+  \includegraphics[width=0.3\linewidth]{images/ellipse-90-s3.png}
+  \caption[]{$S_3$ function for anisotropic media (ellipses). Anisotropicity of
+    the medium can be seen on heatmaps of $S_3$ function when the medium is
+    stretched along one of the axes.}
+  \label{fig:ellipses}
+\end{figure}
+
 \appendix
 \section{Computation of number of trials for non-periodic mode}
 \label{sec:number-of-trials}
