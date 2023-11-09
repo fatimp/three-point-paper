@@ -481,32 +481,30 @@ the medium firstly making a random translation and a rotation around a random
 vector by a random angle. By making a large number of trials the algorithm gets
 a value of a three-point correlation function at the point
 $(r_1, r_2, \theta)$. The second algorithm takes a precalculated triangle
-$(r_1, r_2, \theta)$ from a web pattern and places it in the medium without
+$(r_1, r_2, \theta)$ from a web-like pattern and places it in the medium without
 rotation, only applying a random translation. This way the algorithm preserves
 orientation of triangles stored in the pattern.
 
 Our algorithm fixes $\theta = \frac{pi}{2}$ and does not perform random
 rotations or trial triangles. It is sensitive to anisotropicity of the medium
-when it is stretched along one of the axes as shown in \cref{fig:ellipses}. The
+when it is stretched along one of the axes as shown in \cref{fig:aniso}. The
 main advantage of our algorithm is its parallelizability and ease of
-implementation.
+implementation. An equivalent operation for rotation of test triangles is a
+rotation of the whole input image which we have implemented in our
+CorrelationFunctions.jl package. By applying a rotation to the input first we
+made a rest of the algorithm cache-friendly by avoiding random memory access.
 \begin{figure}[tp]
   \centering
-  \includegraphics[width=0.3\linewidth]{images/ellipse-0.png}
+  \includegraphics[width=0.3\linewidth]{images/aniso.png}
   \hfill
-  \includegraphics[width=0.3\linewidth]{images/ellipse-45.png}
+  \includegraphics[width=0.3\linewidth]{images/aniso-s3.png}
   \hfill
-  \includegraphics[width=0.3\linewidth]{images/ellipse-90.png}
-  \vskip\baselineskip
-  \includegraphics[width=0.3\linewidth]{images/ellipse-0-s3.png}
-  \hfill
-  \includegraphics[width=0.3\linewidth]{images/ellipse-45-s3.png}
-  \hfill
-  \includegraphics[width=0.3\linewidth]{images/ellipse-90-s3.png}
-  \caption[]{$S_3$ function for anisotropic media (ellipses). Anisotropicity of
-    the medium can be seen on heatmaps of $S_3$ function when the medium is
-    stretched along one of the axes.}
-  \label{fig:ellipses}
+  \includegraphics[width=0.3\linewidth]{images/aniso-s3-avg.png}
+  \caption[]{$S_3$ function for anisotropic media (on the left) elongated along
+    the axis $Y$. Anisotropicity of the medium can be seen on a heatmap of $S_3$
+    function (in the middle). An average of 10 $S_3$ evaluations of the medium
+    rotated by a random angle is on the right.}
+  \label{fig:aniso}
 \end{figure}
 
 \appendix
