@@ -62,7 +62,7 @@ $I_n(x) : A \rightarrow \{0,1\}$ defined as:
 \end{equation}
 
 Now we can define the three-point correlation function
-$S_3: \mathbb{R}^2 \rightarrow [0, 1]$:
+$S_3: \mathbb{R}^{2n} \rightarrow [0, 1]$:
 \begin{equation}
   S_3^n(x_1, x_2) = \langle I_n(x) I_n(x + x_1) I_n(x + x_2) \rangle
 \end{equation}
@@ -152,14 +152,15 @@ We can use a well-known formula to compute Fourier image of $g$:
   \hat{g}(z_1, z_2) = \hat{f}(z_1) \hat{f}(z_2) \overline{\hat{f}(z_1 + z_2)}
 \end{equation}
 This algorithm has a better computational complexity compared with the previous
-algorithms if the whole correlation map is needed ($O(n \log n)$ vs
-$O(n^2)$). The whole correlation map, however, requires a lot of memory and is
-rarely needed. Imagine, that the input array $A$ is of dimensions
-$500 \times 500$. Then, considering that single precision floating point numbers
-are used, $4 \cdot 2 \cdot 500^4 / 1000^3 = 500$ GB are needed to store Fourier
-image of the map. Moreover, Fourier image of the whole map is needed even if
-only one element of the map in spatial domain is required. The aforementioned
-limitations render this approach very impractical.
+algorithms if the whole correlation map is needed ($O(n^2 \log n)$ vs
+$O(n^3)$ where $n$ is a number of elements in the input array). The whole
+correlation map, however, requires a lot of memory and is rarely
+needed. Imagine, that the input array $A$ is of dimensions $500 \times 500$.
+Then, considering that single precision floating point numbers are used,
+$4 \cdot 2 \cdot 500^4 / 1000^3 = 500$ GB are needed to store Fourier image of
+the map. Moreover, Fourier image of the whole map is needed even if only one
+element of the map in spatial domain is required. The aforementioned limitations
+render this approach very impractical.
 
 Our implementation fixes $x_1$ and $x_2$ to be parallel to one of the axes $X$,
 $Y$ or $Z$ with restriction $x_1 \perp x_2$ (\cref{fig:pattern}). Thus, the
@@ -298,7 +299,7 @@ To test $F_{sss}$ function we use a recently developed approach which computes
 that function for sets defined by inequation $f(x) \le T$, $x \in \mathbb{R}^3$
 with help of automatic differentiation \cite{postnicov20232}. We choose $f$
 \begin{equation}
-  f(x, y, z) = [(2x)^{\frac{3}{2}} + y^{\frac{3}{2}} + z^{\frac{3}{2}}]^{\frac{2}{3}}
+  f(x, y, z) = (|2x|^{\frac{3}{2}} + |y|^{\frac{3}{2}} + |z|^{\frac{3}{2}})^{\frac{2}{3}}
 \end{equation}
 so inequation $f(x, y, z) \le T$ gives us an ellipsoid-like object
 (\cref{fig:sss-ellipsoid}).
@@ -488,13 +489,13 @@ In this paper we have provided two approaches to compute three-point correlation
 function:
 \begin{enumerate}
 \item Computation in frequency domain using Fourier transform. This approach has
-  computational complexity $O(n \log n)$ and computes the whole correlation
+  computational complexity $O(n^2 \log n)$ and computes the whole correlation
   map. Unfortunately, it requires $O(n^2)$ additional memory and therefore can
   be used only with small inputs. Moreover, the whole Fourier image of the input
   is needed even if we need only a small part of the correlation map.
 \item Computation in spatial domain. This approach is implemented by us in
   CorrelationFunctions.jl package. This approach calculates the full map with
-  complexity $O(n^2)$ but uses only $O(n)$ additional memory for shifted
+  complexity $O(n^3)$ but uses only $O(n)$ additional memory for shifted
   versions of the input. For our purposes the whole map is not needed and
   therefore the amount of calculations can be significantly reduced.
 \end{enumerate}
@@ -502,8 +503,8 @@ It's tempting to create an algorithm which unites advantages of both approaches
 (fast speed of the first and low memory consumption of the second) which
 computes some desired slices of correlation map. It is known that Fourier
 transform is the only linear transform which allows computation of convolution
-in $O(n)$. It is still an open question if there are linear transforms which
-allow computation of convolution with complexity between $O(n)$ and $O(n^2)$
+in linear time. It is still an open question if there are linear transforms which
+allow computation of convolution faster than a naïve approach
 \cite{stone2008uniqueness,stone1998convolution}.
 
 \textcolor{red}{Where to put this?}
