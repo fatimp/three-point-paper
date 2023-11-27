@@ -367,13 +367,16 @@ The comparison of our algorithm against theory is on
 \end{figure*}
 
 \section{Results}
-In this section we compute correlation functions along the plane $XY$ for some
-real samples, namely one three-dimensional XCT and one two-dimensional SEM
-sample. Table \ref{tab:summary} contains information about these samples. Note
-that the criterion $C_{0.5} > 0.97$ holds for both of the samples. Images of the
-samples are on \cref{fig:samples}. On plots of correlation functions we provide
-a family of curves with the first argument of the correlation function being
-fixed.
+In this section we compute correlation functions along the plane $XY$ for 2- and
+3-dimensional real samples. Table \ref{tab:summary} contains information about
+these samples. Note that we compute surface correlation functions only for those
+samples for which the criterion $C_{0.5} > 0.97$ holds. Images of the samples
+are on \cref{fig:samples}. On plots of correlation functions we provide a family
+of curves with the first argument of the correlation function being fixed. For
+two highly anisotropic samples (the soil and the shale) we provide heatmaps of
+$S_3$ correlation function where anisotropicity can be easily seen. These two
+samples was preliminary rotated by $\frac{\pi}{4}$ around the axis $Z$ before
+calculation of correlation functions.
 
 Correlation functions for the XCT sample are on
 \cref{fig:sample-limestone-cf}. The plot of $S_3$ function allows us to estimate
@@ -392,6 +395,10 @@ from the plot of $S_3$ function at $r_1 = 0$. The funcion $S_3(0, r_2)$ reaches
 plateau at $r_2 \approx 20\ \mu m$. The sample is highly anisotropic (elongated
 along the ordinate). The samples has clusters which are $\sim 45\ \mu m$ in
 diameter.
+
+Heatmaps of $S_3$ for the two highly anisotropic samples can be seen on
+\cref{fig:heatmaps}.
+
 \begin{table}[!htp]
   \centering
   \begin{tabular}{|c|c|c|c|c|}
@@ -399,6 +406,8 @@ diameter.
     Sample name & Image type & Dimensions (pixels) & Image resolution ($\mu m$) & $C_{0.5}$\\
     \hline
     Limestone & XCT &  $600 \times 600 \times 600$ & 3.02 & 0.9712 \\
+    Soil & XCT & $160 \times 160 \times 160$ & \textcolor{red}{2.25} & 0.9210 \\
+    Shale & XCT & $160 \times 160 \times 160$ & \textcolor{red}{2.25} & 0.8912 \\
     Sandstone & SEM &  $1280 \times 869$ & 0.10 & 0.9703 \\
     \hline
   \end{tabular}
@@ -415,6 +424,14 @@ diameter.
   \subfigure[Sandstone (different clusters of void phase are shown in color)]{
     \includegraphics[width=0.45\linewidth, frame]{images/sandstone1.png}
     \label{fig:sample-sandstone}}
+  \vskip\baselineskip
+  \subfigure[Soil]{
+    \includegraphics[width=0.45\linewidth]{images/soil.png}
+    \label{fig:sample-soil}}
+  \hfill
+  \subfigure[Shale]{
+    \includegraphics[width=0.45\linewidth]{images/shale.png}
+    \label{fig:sample-shale}}
   \caption[]{Images of samples used for calculation of higher-order correlation
     functions.}
   \label{fig:samples}
@@ -449,6 +466,22 @@ diameter.
     (\cref{fig:sample-sandstone}).}
   \label{fig:sample-sandstone-cf}
 \end{figure}
+
+\begin{figure*}[tp]
+  \centering
+  \subfigure[Shale]{
+    \includegraphics[width=0.45\linewidth]{images/shale-c3.png}
+    \label{fig:shale-s3}}
+  \hfill
+  \subfigure[Soil]{
+    \includegraphics[width=0.45\linewidth]{images/soil-s3.png}
+    \label{fig:soil-s3}}
+  \hfill
+  \caption[]{Heatmaps of $S_3$ function for highly anisotropic samples of shale
+    and soil. $S_3$ function was clamped to the range $[0, 0.1]$ to make
+    anisotropicity more visible.}
+  \label{fig:heatmaps}
+\end{figure*}
 
 \section{Discussion}
 In this paper we have provided two approaches to compute three-point correlation
