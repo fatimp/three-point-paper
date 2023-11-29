@@ -27,9 +27,9 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      showgrid="false"
-     inkscape:zoom="0.55055723"
-     inkscape:cx="-116.24586"
-     inkscape:cy="342.38039"
+     inkscape:zoom="0.7786055"
+     inkscape:cx="529.15115"
+     inkscape:cy="448.87944"
      inkscape:window-width="1916"
      inkscape:window-height="1030"
      inkscape:window-x="0"
@@ -154,7 +154,7 @@
          x="3.2368851"
          y="18.552853">Y</tspan></text>
     <circle
-       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.4;stroke-opacity:1"
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#214fd7;stroke-width:0.4;stroke-opacity:1"
        id="use5729"
        cx="46.216751"
        cy="47.668201"
@@ -162,7 +162,7 @@
        inkscape:tile-x0="52.783127"
        inkscape:tile-y0="56.687039" />
     <circle
-       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.4;stroke-opacity:1"
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#214fd7;stroke-width:0.4;stroke-opacity:1"
        id="use5731"
        cx="46.216751"
        cy="66.747063"
@@ -178,7 +178,7 @@
        inkscape:tile-x0="52.783127"
        inkscape:tile-y0="56.687039" />
     <circle
-       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#d72121;stroke-width:0.6;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.6;stroke-dasharray:none;stroke-opacity:1"
        id="use5735"
        cx="46.216751"
        cy="104.90479"
@@ -202,7 +202,7 @@
        inkscape:tile-x0="52.783127"
        inkscape:tile-y0="56.687039" />
     <circle
-       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#d72121;stroke-width:0.6;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.6;stroke-dasharray:none;stroke-opacity:1"
        id="use5741"
        cx="46.216751"
        cy="162.14139"
@@ -218,7 +218,7 @@
        inkscape:tile-x0="52.783127"
        inkscape:tile-y0="56.687039" />
     <circle
-       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#2150d7;stroke-width:0.4;stroke-opacity:1"
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#214fd7;stroke-width:0.4;stroke-opacity:1"
        id="use5745"
        cx="65.295601"
        cy="66.747063"
@@ -226,7 +226,7 @@
        inkscape:tile-x0="52.783127"
        inkscape:tile-y0="56.687039" />
     <circle
-       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#2150d7;stroke-width:0.4;stroke-opacity:1"
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.4;stroke-opacity:1"
        id="use5747"
        cx="65.295601"
        cy="85.825928"
@@ -266,7 +266,7 @@
        inkscape:tile-x0="52.783127"
        inkscape:tile-y0="56.687039" />
     <circle
-       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.4;stroke-opacity:1"
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#d75121;stroke-width:0.4;stroke-opacity:1"
        id="use5757"
        cx="84.374474"
        cy="47.668201"
@@ -282,7 +282,7 @@
        inkscape:tile-x0="52.783127"
        inkscape:tile-y0="56.687039" />
     <circle
-       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#214fd7;stroke-width:0.4;stroke-opacity:1"
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.4;stroke-opacity:1"
        id="use5761"
        cx="84.374474"
        cy="85.825928"
@@ -314,7 +314,7 @@
        inkscape:tile-x0="52.783127"
        inkscape:tile-y0="56.687039" />
     <circle
-       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#d72121;stroke-width:0.6;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#d75121;stroke-width:0.6;stroke-dasharray:none;stroke-opacity:1"
        id="use5769"
        cx="84.374474"
        cy="162.14139"
@@ -330,7 +330,7 @@
        inkscape:tile-x0="52.783127"
        inkscape:tile-y0="56.687039" />
     <circle
-       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#d72121;stroke-width:0.6;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.6;stroke-dasharray:none;stroke-opacity:1"
        id="use5773"
        cx="103.45332"
        cy="66.747063"
@@ -354,7 +354,7 @@
        inkscape:tile-x0="52.783127"
        inkscape:tile-y0="56.687039" />
     <circle
-       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#d72121;stroke-width:0.6;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.6;stroke-dasharray:none;stroke-opacity:1"
        id="use5779"
        cx="103.45332"
        cy="123.98367"
@@ -418,7 +418,7 @@
        inkscape:tile-x0="52.783127"
        inkscape:tile-y0="56.687039" />
     <circle
-       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#214fd7;stroke-width:0.4;stroke-opacity:1"
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.4;stroke-opacity:1"
        id="use5795"
        cx="122.5322"
        cy="143.06253"
@@ -426,7 +426,7 @@
        inkscape:tile-x0="52.783127"
        inkscape:tile-y0="56.687039" />
     <circle
-       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#214fd7;stroke-width:0.4;stroke-opacity:1"
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#d75121;stroke-width:0.4;stroke-opacity:1"
        id="use5797"
        cx="122.5322"
        cy="162.14139"
@@ -466,7 +466,7 @@
        inkscape:tile-x0="52.783127"
        inkscape:tile-y0="56.687039" />
     <circle
-       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#d72121;stroke-width:0.6;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.6;stroke-dasharray:none;stroke-opacity:1"
        id="use5807"
        cx="141.61107"
        cy="123.98367"
@@ -474,7 +474,7 @@
        inkscape:tile-x0="52.783127"
        inkscape:tile-y0="56.687039" />
     <circle
-       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.4;stroke-opacity:1"
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#214fd7;stroke-width:0.4;stroke-opacity:1"
        id="use5809"
        cx="141.61107"
        cy="143.06253"
@@ -538,21 +538,13 @@
        inkscape:tile-x0="52.783127"
        inkscape:tile-y0="56.687039" />
     <circle
-       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:none;stroke-width:0.4;stroke-opacity:1"
+       style="fill:#000000;fill-opacity:1;fill-rule:evenodd;stroke:#214fd7;stroke-width:0.4;stroke-opacity:1"
        id="use5825"
        cx="160.68994"
        cy="162.14139"
        r="3.1798105"
        inkscape:tile-x0="52.783127"
        inkscape:tile-y0="56.687039" />
-    <path
-       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#d72121;stroke-width:0.5;stroke-dasharray:none;stroke-opacity:1"
-       d="m 45.870639,162.16768 v -57.56579 l 38.556611,57.5107 z"
-       id="path11783" />
-    <path
-       style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#d72121;stroke-width:0.499999;stroke-dasharray:none;stroke-opacity:1"
-       d="M 103.50754,123.93995 V 66.37416 l 38.55661,57.5107 z"
-       id="path11783-4" />
     <rect
        style="fill:none;fill-opacity:1;fill-rule:evenodd;stroke:#000000;stroke-width:0.4;stroke-dasharray:none;stroke-opacity:1"
        id="rect12075"
@@ -588,11 +580,15 @@
          y="60.543873">r₁</tspan></text>
     <path
        style="fill:none;fill-rule:evenodd;stroke:#214fd7;stroke-width:0.499999;stroke-opacity:1"
-       d="M 65.067,66.79364 V 86.048501 H 83.101655 Z"
+       d="M 45.904488,47.711092 V 67.00566 h 19.066253 z"
        id="path1" />
     <path
        style="fill:none;fill-rule:evenodd;stroke:#214fd7;stroke-width:0.499999;stroke-opacity:1"
-       d="m 122.6017,143.30826 v 19.25487 h 18.03466 z"
+       d="m 141.83666,142.84725 v 19.29457 h 19.06625 z"
        id="path1-1" />
+    <path
+       style="fill:none;fill-rule:evenodd;stroke:#d75121;stroke-width:0.499999;stroke-opacity:1"
+       d="M 84.437206,47.576361 V 161.6752 h 38.241354 z"
+       id="path2" />
   </g>
 </svg>
