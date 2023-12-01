@@ -304,10 +304,11 @@ with help of automatic differentiation \cite{postnicov20232}. We choose $f$ as
 and parameters $a = 10$, $b = 0.45$, $T = 10^{-2}$, so inequation
 $f(x, y, z) \le T$ gives us a dumbbell-like object (\cref{fig:sss-dumbbell}).
 
-The test was performed by firstly evaluating the inequation in a cube
+The test is performed by firstly evaluating the inequation in a cube
 $[-1, 1]^3$ and obtaining precise values of $F_{sss}$ and secondly computing
 $F_{sss}$ with our algorithm, giving a discretized $400 \times 400 \times 400$
-pixels wide image as the input. Pointwise relative error of $F_{sss}$ is on
+pixels wide image as the input. $F_{sss}$ function is evaluated in $XY$
+plane. Pointwise relative error of $F_{sss}$ is on
 \cref{fig:sss-dumbbell-error}. Maximal relative error in the area distanced
 farther than 0.1 (20 pixels) from curves of discontinuity (look at
 \cref{fig:sss-dumbbell-precise}) is no more than 20\%.
