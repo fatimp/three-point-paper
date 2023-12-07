@@ -76,7 +76,8 @@ to get a function of three scalar arguments.
 Another function closely related to the three-point correlation function is the
 cluster function which can be defined as
 \begin{equation}
-  C_3^n(x_1, x_2) = \sum_{k=1}^K \langle \tilde{I}_k(x) \tilde{I}_k(x + x_1) \tilde{I}_k(x + x_2) \rangle
+  C_3^n(x_1, x_2) = \sum_{k=1}^K \langle \tilde{I}_k(x) \tilde{I}_k(x + x_1)
+  \tilde{I}_k(x + x_2) \rangle
 \end{equation}
 where $\tilde{I}_k$ is an indicator function for $k$-th cluster and $K$ is a
 total number of clusters. A cluster is a subset of $A_n$ so that any two points
@@ -101,13 +102,16 @@ its spatial configuration with respect to $A_v$.
 
 \section{Computational algorithms}
 Three-point correlation function $S_3$ can be computed either in spatial domain
-or in frequency domain via the convolution theorem. The simplest algorithm below
+or in frequency domain via the convolution theorem. Suppose that a finite
+countable set $A$ is defined as a multidimensional array. A point $x$ belongs to
+a subset $A_n$ if and only if $A[x] = n$. The simplest algorithm below
 calculates $S_3$ pointwise in spatial domain:
 \begin{algorithmic}[1]
   \Procedure{$S_3$}{$A, n, x_1, x_2$}
   \State $A_n \gets I_n (A)$
-  \State $A'_n \gets \mathfrak{S}(A_n, x_1)$
-  \State $A''_n \gets \mathfrak{S}(A_n, x_2)$
+  \Comment Apply $I_n$ to the input array elementwise.
+  \State $A'_n \gets \mathfrak{S}_{x_1}(A_n)$
+  \State $A''_n \gets \mathfrak{S}_{x_2}(A_n)$
   \State $T \gets A_n \cdot A'_n \cdot A''_n$
   \State \textbf{return} $Sum(T) / Norm(A, x_1, x_2)$
   \EndProcedure
@@ -115,17 +119,29 @@ calculates $S_3$ pointwise in spatial domain:
 In this algorithm the indicator function $I_n$ for the phase of interest $n$ is
 applied to the input array $A$. Then the shift operator $\mathfrak{S}$ is used
 to shift $A_n$ by vectors $x_1$ and $x_2$. Finally, the three arrays are
-multiplied pointwise and normalized sum of all elements of the product is
+multiplied pointwise and a normalized sum of all elements of the product is
 returned.
 
-There are two common boundary conditions when applying $\mathfrak{S}$. The first
-condition is to extend $A_n$ periodically (\cref{fig:s3-periodic}) when
-accessing out-of-bounds array elements. This is the same as circular-shifting
-$A_n$. In this case $Norm(A, x_1, x_2)$ does not depend on $x_1$ and $x_2$ and
+There are two common boundary conditions when applying $\mathfrak{S}$. The
+first condition is to extend $A_n$ periodically (\cref{fig:s3-periodic}) when
+accessing out-of-bounds array elements. In this case $\mathfrak{S}_z$ is a
+circular shift operator:
+\begin{equation}
+  A[x] \leftarrow A[x+z \mod d]
+\end{equation}
+In this case $Norm(A, x_1, x_2)$ does not depend on $x_1$ and $x_2$ and
 is equal to the total number of elements in $A$. The second condition is to
 replace out-of-bound elements with zeros (so-called zero padding)
 (\cref{fig:s3-zeros}). A formula for $Norm(A, x_1, x_2)$ in this case is in
-\ref{sec:number-of-trials}.
+\ref{sec:number-of-trials} and $\mathfrak{S}_z$ is defined as follows:
+\begin{equation}
+  A[x] \leftarrow \left\{
+  \begin{array}{ll}
+    A[x+z] & \quad \text{if $x+z$ is a correct index in $A$} \\
+    0 & \quad \text{otherwise}
+  \end{array}
+  \right.
+\end{equation}
 \begin{figure*}[tp]
   \centering
   \subfigure[Periodic boundary conditions]{
@@ -183,8 +199,8 @@ replace an indicator function $I_n$ with an edge detection operator $E_n$
 \begin{algorithmic}[1]
   \Procedure{$F_{sss}$}{$A, n, x_1, x_2$}
   \State $A_n \gets E_n (A)$
-  \State $A'_n \gets \mathfrak{S}(A_n, x_1)$
-  \State $A''_n \gets \mathfrak{S}(A_n, x_2)$
+  \State $A'_n \gets \mathfrak{S}_{x_1}(A_n)$
+  \State $A''_n \gets \mathfrak{S}_{x_2}(A_n)$
   \State $T \gets A_n \cdot A'_n \cdot A''_n$
   \State \textbf{return} $Sum(T) / Norm(A, x_1, x_2)$
   \EndProcedure
@@ -192,8 +208,8 @@ replace an indicator function $I_n$ with an edge detection operator $E_n$
   \Procedure{$F_{ssv}$}{$A, n, x_1, x_2$}
   \State $A_n \gets E_n (A)$
   \State $A_{(void)} \gets I_{(void)} (A)$
-  \State $A'_n \gets \mathfrak{S}(A_n, x_1)$
-  \State $A'_{(void)} \gets \mathfrak{S}(A_{(void)}, x_2)$
+  \State $A'_n \gets \mathfrak{S}_{x_1}(A_n)$
+  \State $A'_{(void)} \gets \mathfrak{S}_{x_2}(A_{(void)})$
   \State $T \gets A_n \cdot A'_n \cdot A'_{(void)}$
   \State \textbf{return} $Sum(T) / Norm(A, x_1, x_2)$
   \EndProcedure
@@ -201,8 +217,8 @@ replace an indicator function $I_n$ with an edge detection operator $E_n$
   \Procedure{$F_{svv}$}{$A, n, x_1, x_2$}
   \State $A_n \gets E_n (A)$
   \State $A_{(void)} \gets I_{(void)} (A)$
-  \State $A'_{(void)} \gets \mathfrak{S}(A_{(void)}, x_1)$
-  \State $A''_{(void)} \gets \mathfrak{S}(A_{(void)}, x_2)$
+  \State $A'_{(void)} \gets \mathfrak{S}_{x_1}(A_{(void)})$
+  \State $A''_{(void)} \gets \mathfrak{S}_{x_2}(A_{(void)})$
   \State $T \gets A_n \cdot A'_{(void)} \cdot A''_{(void)}$
   \State \textbf{return} $Sum(T) / Norm(A, x_1, x_2)$
   \EndProcedure
@@ -232,8 +248,8 @@ slightly modified algorithm for $S_3$ is used.
   \Procedure{$C_3$}{$A, n, x_1, x_2$}
   \State $A_n \gets I_n (A)$
   \State $C_n \gets \mathfrak{C}(A_n)$
-  \State $C'_n \gets \mathfrak{S}(C_n, x_1)$
-  \State $C''_n \gets \mathfrak{S}(C_n, x_2)$
+  \State $C'_n \gets \mathfrak{S}_{x_1}(C_n)$
+  \State $C''_n \gets \mathfrak{S}_{x_2}(C_n)$
   \State $T \gets C_n \odot C'_n \odot C''_n$
   \State \textbf{return} $Sum(T) / Norm(A, x_1, x_2)$
   \EndProcedure
