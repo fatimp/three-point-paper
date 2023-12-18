@@ -16,6 +16,7 @@
 
 \definecolor{light-gray}{gray}{0.95}
 \newcommand{\code}[1]{\colorbox{light-gray}{\texttt{#1}}}
+\newcommand{\highlight}[1]{{\color{red}{#1}}} % convinient for revised version
 
 \bibliographystyle{elsarticle-num}
 \journal{Physica A: Statistical Mechanics and its Applications}
@@ -33,10 +34,8 @@
   Sciences, Moscow, 107031, Russia}
 \address[MIT]{Moscow Institute of Physics and Technology,
   Dolgoprudny, 141701, Russia}
-%\affiliation{\textsuperscript{3}Oil and Gas Research Institute Russian Academy
-%  of Sciences (OGRI RAS) 3, Gubkina st., Moscow, 119333, Russian Federation}
 
-\title{Another paper with lots of text and fancy pictures}
+\title{Evaluation of 3-point correlation functions from structural images on CPU and GPU architectures: accounting for anisotropy effects}
 
 \begin{abstract}
   Wow, we can multiply arrays and tell you how cool it is.
@@ -48,9 +47,43 @@
 
 \maketitle
 
-\section{Theoretical background}
+\section{Introduction}
+Structures, or spatial arrangements of matter and energy, including some fields (e.g., velocity or pressure) are ubiquitous in research applications and frequently require description for subsequent analysis. Examples of such objects for studies include galaxy formations \cite{springel2006}, immiscible multiphase fluid flow patterns \cite{hopkins2015new,balashov2021}, rock and soil samples \cite{rozenbaum2014,karsanina2015,ledesma2018,chen2020super,prokhorov2021digital,vogel2010}, food specimens \cite{derossi2019,nagdalian2021}, biological tissue \cite{park2020}, vortexes during flow \cite{gorbunova2016precessing} and interstellar turbulence \cite{portillo2018developing}. The scale of interest may span orders of magnitude from angstroms and nm for materials \cite{garum2020,gerke2021,khlyupin2023molecular} to millions of light-years for star clusters \cite{takada2003three,hopkins2013stars}. The studied structure can be non-static -- it will  change with time, and this dynamics is usually also of great interest \cite{jiao2013,fomin2023soil}. Thus, description of the structure is of utmost importance for numerous applications:
+\begin{enumerate}
+  \item Elucidation of structure--property relationships in the form of theoretical expression \cite{Torquato_book,Sahimi_book}, e.g., rigorous bounds and such;
+  \item Prediction of material physical properties using machine (deep) learning \cite{obayashi2018persistence,kamrava2020linking,roding2020predicting};
+  \item Description of complex structures and fields for taxonomy, comparison and analysis \cite{takada2003three,hopkins2013stars,shivashankar2015felix,saadatfar2017pore,portillo2018developing,KarsaninaEJSS,PNM_Morse,khlyupin2023molecular}, which may include temporal dynamics or surface evolution \cite{jiao2013,PhysRevE.92.023301,prokhorov2022,chen2022,fomin2023soil};
+  \item Morphological representativity \cite{capek2009,rozenbaum2014,gerke2019tensor} and spatial stationarity analysis \cite{REVpaper,LavrukhinPRE};
+  \item Stochastic reconstructions from limited amount of input data \cite{Adler_recon,Y-T,tahmasebiPRL,Euras2012,EPL2,karsaninaPRL,rozanski2023} in the form of limited dimension structures or correlation functions;
+  \item Compress structural information for storage, analysis, training (feature extraction), and retrieval (by means of stochastic reconstructions) \cite{jiao2007,SciRep1,Havelka,KarsaninaEJSS};
+  \item Multiscale image fusion that is usually necessary due to trade-off between field-of-view and imaging resolution \cite{SciRep1,Geoderma2018,chen2020super,karimpouli2022}.
+\end{enumerate}
+
+The number of possible descriptors to quantify spatial structure developed within different disciplines is stunning, for example: phase ratio or porosity \cite{anovitz2015characterization}, surface area, radial distribution functions \cite{zimm1948scattering,becker2010radial}, Minkowski functionals \cite{vogel2010} and tensors \cite{schroder2011minkowski}, correlation functions \cite{Torquato_book}, persistence diagrams \cite{shivashankar2015felix,saadatfar2017pore,obayashi2018persistence}. The evolution of such metrics was mainly induced by the ease of measurement and interpretation -- this is startling to observe holy wars on the question which metric is superior to flare up occasionally, e.g.,\cite{vogel2022holistic,yudina2023dual}. In fact, we need a single universal descriptor defined by only one characteristic -- information content. The latter is an ability of the metric to describe the structure at hand with 100$\%$ meaning the ability to fully recover the structure back from this metric. Thus, universal descriptor has to possess following key properties: (1) high information content, (2) easy to assess, (3) high compression (i.e., descriptor is much "smaller" than the structure itself).
+
+The large portion of the research papers mentioned above \cite{rozenbaum2014,karsanina2015,ledesma2018,derossi2019,portillo2018developing,takada2003three,hopkins2013stars,jiao2013,Torquato_book,roding2020predicting,KarsaninaEJSS,capek2009,gerke2019tensor,REVpaper,LavrukhinPRE,Adler_recon,Y-T,tahmasebiPRL,Euras2012,EPL2,karsaninaPRL,jiao2007,SciRep1,Havelka,Geoderma2018} is based on so-called correlation functions (CFs). These functions define a probability that some events are occurring withing the structure (with some special cases of surface functions), for example, 2-point probability $S_2$ measures the probability that both ends of the line segment are within the same phase, 2-point cluster function $C_2$ - that both ends of the line segment are within the same interconnected cluster of same phase, and lineal path $L_2$ measures the probability that the whole segment lies within the phase (see \highlight{Fig.1}). Compared to other descriptors, CFs possess a number of features making them, in our opinion, a perfect candidate for universal descriptor:
+\begin{enumerate}
+  \item They contain the majority of other metrics inside. For example, porosity is $S_2(0)$ (and at zero correlation length of the majority of correlation functions except for surface ones), surface area is represented by in the derivative at $S_2(0)$ \cite{debye1957scattering} or the value of $F_{ss}(0)$ (or $F_{sss}(0)$). Connectivity is described by cluster functions $C_2$ or $C_3$. Pore-size distribution is related to pore-size function and partially by $L_2$ and $S_3$. Surface-void functions are interconnected with mean curvature and Euler characteristic \cite{ma2020generation}. All together, the classic set of correlation functions describes both the geometry and topology of the structure at hand;
+  \item While the extent to which such classical set describes any arbitrary structure is not yet known, compared to other complex descriptors  where are known pathways to assess the information content of correlation functions -- there is a methodology for $S_2$ \cite{Gommes2} and approaches for other functions \cite{Degeneraty.045306,cherkasov2023towards};
+  \item In addition to a possibility to compute correlation functions using images or other structural data, i.e., similar to all other descriptors, some CFs can be also determined experimentally \cite{debye1957scattering,barrall1992nmr,dietrich1995scattering,li2018accurate};
+  \item Correlation functions can be scaled \cite{karsaninaPRL} or manipulated, for example, to add functions into a single one \cite{moctezuma2002};
+  \item As opposed to scalar metrics such as porosity, surface area or Minkowski functionals, CFs can be computed in directions and describe anisotropic structures;
+  \item Numerous rigorous bounds to obtain thermal, elastic, electromagnetic and transport properties are known, among which the most known (and least useful due to the impractically huge gap between the bounds) are Hashin-Strikman bounds \cite{hashin1963variational}. Other expressions based on integration of higher order $S_n$ are known and were found to be close to direct simulations \cite{brown1955solid,beran1965use,milton1981bounds,hlushkou2015effective};
+  \item One can control both the size of the CFs-based descriptor and the information content via correlation length, number of functions in the set (including directions \cite{EPL2}), and by the order of functions (e.g., 2- and 3-point versions, or even more points).
+\end{enumerate}
+This list highlights that correlations functions are indeed possess necessary properties so satisfy key criteria stated above.
+
+However, while 2-point CFs are computed and used in multitude of studies, higher order functions, for example, 3-point correlation functions are not that widely used. The reason for this is straightforward -- 3-point correlation functions are more involved and, thus, require much more computational resources to assess. It has been shown that the amount of additional information content with each increase in number of points $n$ decreases \cite{yao1993high,Gommes2}. The trade-off between additional information and computational burden is still not clear. Nonetheless, the computation of 3-point statistics is known to be advantageous at least in the number of applications as related to cosmology, astrophysics and turbulence patterns analysis as they can probe non-Gaussian signatures in the distribution of matter and energy, which are not captured in 2-point counterparts \cite{TakadaJain,hopkins2013stars,gorbunova2016precessing,yoo2022non}.
+
+
+In this contribution we continue our initiative to develop a simple, efficient and open-source solution to compute all classical correlation functions on CPU and GPU architectures -- \code{CorrelationFunctions.jl} \cite{CFsjlpaper}. Here we build upon previous results in computations of higher order functions with n > 2, most notably by Malmir et al. \cite{malmir2018}, and our aim is to develop robust and computationally efficient methods. In addition, we also considered the case of anisotropic structures and how to describe them with 3-point correlation functions similar to directional 2-point CFs \cite {10.1063/1.4867611,EPL1}.
+
+\highlight{The paper is organized as follows:}
+
+\section{Methods}
+\subsection{3-point correlation functions}
 Let $A_1, A_2, \dots, A_n$ be pairwise disjoint subsets of a set
-$A \subset \mathbb{R}^n$. We introduce a family of indicator functions
+$A \subset \mathbb{R}^n$, where the index can be interpreted as a phase on the image $A$. We introduce a family of indicator functions
 $I_n(x) : A \rightarrow \{0,1\}$ defined as:
 \begin{equation}
   I_n(x) = \left\{
@@ -74,7 +107,7 @@ replaced with three numbers $r_1 = |x_1|$, $r_2 = |x_2|$ and $r_3 = |x_2 - x_1|$
 to get a function of three scalar arguments.
 
 Another function closely related to the three-point correlation function is the
-cluster function which can be defined as
+cluster function which can be defined as:
 \begin{equation}
   C_3^n(x_1, x_2) = \sum_{k=1}^K \langle \tilde{I}_k(x) \tilde{I}_k(x + x_1) \tilde{I}_k(x + x_2) \rangle
 \end{equation}
@@ -86,7 +119,7 @@ Introduce a function $M_n(x) = |\nabla I_n(x)|$ which is a so-called interface
 indicator function. With this function we can define three additional
 correlation functions, which are the surface-surface-surface function
 ($F_{sss}$), surface-surface-void function ($F_{ssv}$) and surface-void-void
-function ($F_{svv}$). They are defined as
+function ($F_{svv}$). They are defined as:
 \begin{align}
   F_{sss}^n(x_1, x_2) &= \langle M_n(x) M_n(x + x_1) M_n(x + x_2) \rangle \\
   F_{ssv}^n(x_1, x_2) &= \langle M_n(x) M_v(x + x_1) I_v(x + x_2) \rangle \\
@@ -99,7 +132,7 @@ volume, surface and length, respectively (e.g. $\mu m^{-3}$, $\mu m^{-2}$ and
 $\mu m^{-1}$). These functions describe the interface of the subset $A_n$ and
 its spatial configuration with respect to $A_v$.
 
-\section{Computational algorithms}
+\subsection{Computational algorithms}
 Three-point correlation function $S_3$ can be computed either in spatial domain
 or in frequency domain via the convolution theorem. The simplest algorithm below
 calculates $S_3$ pointwise in spatial domain:
@@ -142,10 +175,9 @@ replace out-of-bound elements with zeros (so-called zero padding)
 
 The second approach is to compute the whole correlation map in Fourier
 domain. Suppose we have a function
-$f: \mathbb{R} \rightarrow \mathbb{R}$. Triple correlation for this function is
-a function
+$f: \mathbb{R} \rightarrow \mathbb{R}$. Triple correlation for this function is:
 \begin{equation}
-  g(t_1, t_2) = \int f(\tau) f(\tau + t_1) f(\tau + t_2) d \tau
+  g(t_1, t_2) = \int f(\tau) f(\tau + t_1) f(\tau + t_2) d \tau.
 \end{equation}
 We can use a well-known formula to compute Fourier image of $g$:
 \begin{equation}
@@ -160,7 +192,7 @@ Then, considering that single precision floating point numbers are used,
 $4 \cdot 2 \cdot 500^4 / 1000^3 = 500$ GB are needed to store Fourier image of
 the map. Moreover, Fourier image of the whole map is needed even if only one
 element of the map in spatial domain is required. The aforementioned limitations
-render this approach very impractical.
+render this approach impractical.
 
 Our implementation fixes $x_1$ and $x_2$ to be parallel to one of the axes $X$,
 $Y$ or $Z$ with restriction $x_1 \perp x_2$ (\cref{fig:pattern}). Thus, the
@@ -223,11 +255,12 @@ $\mathbb{R}^3$). We define $C_\alpha$ as follows:
 where $\hat{f_0}$ is a Fourier transform of $f_0$ and $\omega$ is a folding
 frequency which depends only on resolution of the image. If a criterion
 $C_{0.5} > 0.97$ holds then the image is suitable for application of
-aforementioned algorithms for calculation of surface functions.
+aforementioned algorithms for calculation of surface functions, otherwise image's resolution
+can be improved with the help of interpolation prior to computations \cite{samarin2023robust}.
 
 To compute $C_3$ function we need to use a connected-component labeling
 algorithm \cite{4728561,PhysRevB.14.3438} to label clusters. Then, again, a
-slightly modified algorithm for $S_3$ is used.
+slightly modified algorithm for $S_3$ is used to assess cluster function:
 \begin{algorithmic}[1]
   \Procedure{$C_3$}{$A, n, x_1, x_2$}
   \State $A_n \gets I_n (A)$
@@ -244,12 +277,13 @@ defined as follows:
   x \odot y = \left\{
   \begin{array}{ll}
     1 & \quad x = y \\
-    0 & \quad \text{otherwise}
+    0 & \quad \text{otherwise}.
   \end{array}
   \right.
 \end{equation}
 
-\section{Verification}
+\section{Results}
+\subsection{Verification}
 To verify correctness of computation of $S_3$ and $C_3$ functions we use the
 following simple relations:
 \begin{align}
@@ -269,7 +303,7 @@ the expression for $S_2$ is following:
     f(r, R) &= \left\{
     \begin{array}{ll}
       1 + \frac{3}{4} \frac{r}{R} - \frac{1}{16} (\frac{r}{R})^3 & \quad r < 2R \\
-      2 & \quad \text{otherwise}
+      2 & \quad \text{otherwise}.
     \end{array}
     \right.
   \end{aligned}
@@ -278,7 +312,7 @@ the expression for $S_2$ is following:
 
 On \cref{fig:balls} there is an intersection of such a set with $R = 0.02$ and
 $\lambda=5000$ and a cube $[0, 1]^3$. Because $R \ll 1$, we can use
-\cref{eq:s2-balls} to verify our computations what we do on
+\cref{eq:s2-balls} to verify our computations -- this is exactly what we present on
 \cref{fig:balls-s3-comparison}.
 \begin{figure*}[tp]
   \centering
@@ -296,8 +330,8 @@ $\lambda=5000$ and a cube $[0, 1]^3$. Because $R \ll 1$, we can use
 \end{figure*}
 
 To test $F_{sss}$ function we use a recently developed approach which computes
-that function for sets defined by inequation $f(x) \le T$, $x \in \mathbb{R}^3$
-with help of automatic differentiation \cite{postnicov20232}. We choose $f$ as
+that function for sets defined by inequality $f(x) \le T$, $x \in \mathbb{R}^3$
+with help of automatic differentiation \cite{postnicov20232}. We choose $f$ as:
 \begin{equation}
   f(x, y, z) = y^2 + z^2 - a x^2 (b^2 - x^2)
 \end{equation}
@@ -310,7 +344,7 @@ $F_{sss}$ with our algorithm, giving a discretized $400 \times 400 \times 400$
 pixels wide image as the input. $F_{sss}$ function is evaluated in $XY$
 plane. Pointwise relative error of $F_{sss}$ is on
 \cref{fig:sss-dumbbell-error}. Maximal relative error in the area distanced
-farther than 0.1 (20 pixels) from curves of discontinuity (look at
+farther than 0.1 (20 pixels) from curves of discontinuity (see
 \cref{fig:sss-dumbbell-precise}) is no more than 20\%.
 \begin{figure*}[tp]
   \centering
@@ -335,7 +369,7 @@ farther than 0.1 (20 pixels) from curves of discontinuity (look at
 \end{figure*}
 
 To test $F_{ssv}$ and $F_{svv}$ we use the following relations for such a set
-$A$ where all non-void phase is covered by a ball $\mathfrak{O}(R)$:
+$A$ where all non-void phase is covered by a ball with radius $R$:
 \begin{align}
   F^n_{ssv}(x_1, x_2) &= F^n_{ss}(x_1) \qquad x_2 > R \\
   F^n_{svv}(x_1, x_2) &= F^n_{sv}(x_1) \qquad x_2 > R
@@ -356,8 +390,8 @@ phase) placed in the center of cube of volume $V$ (void phase):
     \end{array}
     \right.
 \end{align}
-The comparison of our algorithm against theory is on
-\cref{fig:surface-verification}. Radius of the ball is chosen $R=0.2$.
+The comparison of our algorithm against theory is shown on
+\cref{fig:surface-verification}. Radius of the ball is chosen to be $R=0.2$.
 \begin{figure*}[tp]
   \centering
   \subfigure[$F_{ssv}$]{
@@ -372,7 +406,7 @@ The comparison of our algorithm against theory is on
   \label{fig:surface-verification}
 \end{figure*}
 
-\section{Results}
+\subsection{Applications to material images}
 In this section we compute correlation functions along the plane $XY$ for 2- and
 3-dimensional real samples. Table \ref{tab:summary} contains information about
 these samples. Note that we compute surface correlation functions only for those
@@ -381,7 +415,7 @@ limestone). Images of the samples are on \cref{fig:samples}. On plots of
 correlation functions we provide a family of curves with the first argument of
 the correlation function being fixed. For two highly anisotropic samples (the
 soil and the shale) we provide heatmaps of $S_3$ correlation function where
-anisotropicity can be easily seen. These two samples was preliminary rotated by
+anisotropy can be easily observed. These two samples were preliminary rotated by
 $\frac{\pi}{4}$ around the axis $Z$ before calculation of correlation functions.
 
 Correlation functions for the XCT sample of the limestone are on
@@ -390,7 +424,7 @@ porosity of the sample to be $\sim 0.04$ (note, that the curve with $r_1 = 0$ is
 actually $S_2$ function). The two-point correlation function reaches plateau at
 $r_2 \approx 200\div 225\ \mu m$ which means that two events of finding two
 points in the void phase are independent if the points are farther than
-$225\ \mu m$ from each other. We see that the sample is a little bit anisotropic
+$225\ \mu m$ from each other. We see that the sample is slightly anisotropic
 ($S_3(0, 225) \approx S_3(150, 0)$). From analysis of $C_3$ function it can be
 stated that the sample has clusters of void phase which are $\sim 200\ \mu m$ in
 diameter.
@@ -406,7 +440,7 @@ Heatmaps of $S_3$ for the two highly anisotropic samples can be seen on
 \cref{fig:heatmaps}. Anisotropicity of the both samples can be seen as a slower
 decay of $S_3$ in one of the directions. Additionally, it can be observed that
 elongated clusters of the void phase in the sample of soil are parallel to each
-other and have a regular spacing about $50 \mu m$.
+other and have a regular spacing of about $50 \mu m$.
 
 \begin{table}[!htp]
   \centering
@@ -529,6 +563,10 @@ $(r_1, r_2, \theta)$ from a web-like pattern and places it in the medium without
 rotation, only applying a random translation. This way the algorithm preserves
 orientation of triangles stored in the pattern.
 
+We mentioned that classic set of correlation functions describes
+both the geometry and topology of the structure at hand - but this is to yet unknown extent.
+With the advent of analytical methods \cite{cherkasov2023towards} to assess information content of arbitrary descriptor for structure of any size, it will be possible to choose the most useful set of correlation functions and compare their information content against classical and other metrics.
+
 Our algorithm fixes $\theta = \frac{pi}{2}$ and does not perform random
 rotations or trial triangles. It is sensitive to anisotropicity of the medium
 when it is stretched along one of the axes as shown in \cref{fig:aniso}. The
@@ -578,7 +616,7 @@ such value, so all elements of the kernel sum to zero:
   \end{array}
   \right.
 \end{equation}
-For 3D case $S=172.96$ and for 2D case $S=30.46$.
+For 3D case $S=172.96$ and for 2D case $S=30.46$ \cite{postnicov20232}.
 
 \bibliography{paper}
 \end{document}
