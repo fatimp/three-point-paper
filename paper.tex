@@ -1,10 +1,8 @@
-\documentclass[1p]{elsarticle}
+\documentclass[reprint,amsmath,amssymb,aps,pre,showkeys,showpacs]{revtex4-1}
 
 \usepackage[english]{babel}
 \usepackage[utf8]{inputenc}
 \usepackage[T1]{fontenc}
-\usepackage{amsmath}
-\usepackage{amssymb}
 \usepackage{bm}
 \usepackage{xcolor}
 \usepackage{algpseudocode}
@@ -18,21 +16,18 @@
 \newcommand{\code}[1]{\colorbox{light-gray}{\texttt{#1}}}
 \newcommand{\highlight}[1]{{\color{red}{#1}}} % convinient for revised version
 
-\bibliographystyle{elsarticle-num}
-\journal{Physica A: Statistical Mechanics and its Applications}
-
 \begin{document}
+\preprint{APS/123-QED}
 
-\author[Smith]{Vasily~Postnicov}
-\author[Smith]{Marina~V.~Karsanina}
-\author[Smith,MIT]{Aleksey~Khlyupin}
-\author[Smith]{Kirill~M.~Gerke\corref{maincorr}}
-\cortext[maincorr]{Corresponding author}
-\ead{kg@ifz.ru}
+\author{Vasily~Postnicov\textsuperscript{1}}
+\author{Marina~V.~Karsanina\textsuperscript{1}}
+\author{Aleksey~Khlyupin\textsuperscript{1,2}}
+\author{Kirill~M.~Gerke\textsuperscript{1}}
+\email{kg@ifz.ru}
 
-\address[Smith]{Schmidt Institute of Physics of the Earth of Russian Academy of
-  Sciences, Moscow, 107031, Russia}
-\address[MIT]{Moscow Institute of Physics and Technology,
+\affiliation{\textsuperscript{1}Schmidt Institute of Physics of the Earth of
+  Russian Academy of Sciences, Moscow, 107031, Russia}
+\affiliation{\textsuperscript{2}Moscow Institute of Physics and Technology,
   Dolgoprudny, 141701, Russia}
 
 \title{Evaluation of 3-point correlation functions from structural images on CPU
@@ -42,9 +37,7 @@
   Wow, we can multiply arrays and tell you how cool it is.
 \end{abstract}
 
-\begin{keyword}
-  Arrays, multiplication, addition
-\end{keyword}
+\keywords{Arrays, multiplication, addition}
 
 \maketitle
 
@@ -289,11 +282,11 @@ replace out-of-bound elements with zeros (so-called zero padding)
 \begin{figure*}[tp]
   \centering
   \subfigure[Periodic boundary conditions]{
-    \includegraphics[width=0.45\linewidth]{images/periodic.png}
+    \includegraphics[width=0.4\linewidth]{images/periodic.png}
     \label{fig:s3-periodic}}
   \hfill
   \subfigure[Zero padding]{
-    \includegraphics[width=0.45\linewidth]{images/zeros.png}
+    \includegraphics[width=0.4\linewidth]{images/zeros.png}
     \label{fig:s3-zeros}}
   \caption[]{Computation of unnormalized $S_3$ function at point $(1, 2)$ for
     one-dimensional sequence of length 8.}
@@ -445,12 +438,12 @@ $\lambda=5000$ and a cube $[0, 1]^3$. Because $R \ll 1$, we can use
 \begin{figure*}[tp]
   \centering
   \subfigure[Realization of overlapping balls]{
-    \includegraphics[width=0.45\linewidth]{images/balls.png}
+    \includegraphics[width=0.4\linewidth]{images/balls.png}
     \label{fig:balls}}
   \hfill
   \subfigure[A plot of $S_3(0, r)$ computed with our algorithm and theoretical
     formula.]{
-    \includegraphics[width=0.45\linewidth]{images/balls-s3.png}
+    \includegraphics[width=0.4\linewidth]{images/balls-s3.png}
     \label{fig:balls-s3-comparison}}
   \caption[]{A comparison of calculated and theoretical values of $S_3$ function
     for overlapping balls.}
@@ -477,20 +470,20 @@ farther than 0.1 (20 pixels) from curves of discontinuity (see
 \begin{figure*}[tp]
   \centering
   \subfigure[The dumbbell-like object used in testing of $F_{sss}$ computation]{
-    \includegraphics[width=0.45\linewidth]{images/dumbbell.png}
+    \includegraphics[width=0.4\linewidth]{images/dumbbell.png}
     \label{fig:sss-dumbbell}}
   \hfill
   \subfigure[Relative error of computation]{
-    \includegraphics[width=0.45\linewidth]{images/dumbbell-sss-err.png}
+    \includegraphics[width=0.4\linewidth]{images/dumbbell-sss-err.png}
     \label{fig:sss-dumbbell-error}}
   \vskip\baselineskip
   \subfigure[$F_{sss}$: precise. The correlation function is undefined (has type
     II discontinuity) at curves A, B and C.]{
-    \includegraphics[width=0.45\linewidth]{images/dumbbell-sss-precise.png}
+    \includegraphics[width=0.4\linewidth]{images/dumbbell-sss-precise.png}
     \label{fig:sss-dumbbell-precise}}
   \hfill
   \subfigure[$F_{sss}$: calculated with our approach]{
-    \includegraphics[width=0.45\linewidth]{images/dumbbell-sss-julia.png}}
+    \includegraphics[width=0.4\linewidth]{images/dumbbell-sss-julia.png}}
   \caption[]{A comparison of $F_{sss}$ function calculated using our approach
     with its precise values.}
   \label{fig:sss-verification}
@@ -523,11 +516,11 @@ The comparison of our algorithm against theory is shown on
 \begin{figure*}[tp]
   \centering
   \subfigure[$F_{ssv}$]{
-    \includegraphics[width=0.45\linewidth]{images/ball-ssv.png}
+    \includegraphics[width=0.4\linewidth]{images/ball-ssv.png}
     \label{fig:balls-ssv}}
   \hfill
   \subfigure[$F_{svv}$]{
-    \includegraphics[width=0.45\linewidth]{images/ball-svv.png}
+    \includegraphics[width=0.4\linewidth]{images/ball-svv.png}
     \label{fig:ball-svv}}
   \caption[]{Comparison of $F_{ssv}$ and $F_{svv}$ functions for a ball with the
     radius $0.2$ with theoretical values.}
@@ -570,7 +563,7 @@ decay of $S_3$ in one of the directions. Additionally, it can be observed that
 elongated clusters of the void phase in the sample of soil are parallel to each
 other and have a regular spacing of about $50 \mu m$.
 
-\begin{table}[!htp]
+\begin{table*}[!htp]
   \centering
   \begin{tabular}{|c|c|c|c|c|}
     \hline
@@ -584,68 +577,68 @@ other and have a regular spacing of about $50 \mu m$.
   \end{tabular}
   \caption{Summary of samples used for calculation of correlation functions.}
   \label{tab:summary}
-\end{table}
+\end{table*}
 
 \begin{figure*}[tp]
   \centering
   \subfigure[Limestone]{
-    \includegraphics[width=0.45\linewidth]{images/carb.png}
+    \includegraphics[width=0.4\linewidth]{images/carb.png}
     \label{fig:sample-limestone}}
   \hfill
   \subfigure[Sandstone (different clusters of void phase are shown in color)]{
-    \includegraphics[width=0.45\linewidth, frame]{images/sandstone1.png}
+    \includegraphics[width=0.4\linewidth, frame]{images/sandstone1.png}
     \label{fig:sample-sandstone}}
   \vskip\baselineskip
   \subfigure[Soil]{
-    \includegraphics[width=0.45\linewidth]{images/soil.png}
+    \includegraphics[width=0.4\linewidth]{images/soil.png}
     \label{fig:sample-soil}}
   \hfill
   \subfigure[Shale]{
-    \includegraphics[width=0.45\linewidth]{images/shale.png}
+    \includegraphics[width=0.4\linewidth]{images/shale.png}
     \label{fig:sample-shale}}
   \caption[]{Images of samples used for calculation of higher-order correlation
     functions.}
   \label{fig:samples}
 \end{figure*}
 
-\begin{figure}[tp]
+\begin{figure*}[tp]
   \centering
-  \includegraphics[width=0.45\linewidth]{images/carb.npy-surf3.png}
+  \includegraphics[width=0.4\linewidth]{images/carb.npy-surf3.png}
   \hfill
-  \includegraphics[width=0.45\linewidth]{images/carb.npy-surf2void.png}
+  \includegraphics[width=0.4\linewidth]{images/carb.npy-surf2void.png}
   \vskip\baselineskip
-  \includegraphics[width=0.45\linewidth]{images/carb.npy-surfvoid2.png}
+  \includegraphics[width=0.4\linewidth]{images/carb.npy-surfvoid2.png}
   \hfill
-  \includegraphics[width=0.45\linewidth]{images/carb.npy-s3.png}
+  \includegraphics[width=0.4\linewidth]{images/carb.npy-s3.png}
   \vskip\baselineskip
-  \includegraphics[width=0.45\linewidth]{images/carb.npy-c3.png}
+  \includegraphics[width=0.4\linewidth]{images/carb.npy-c3.png}
   \caption[]{Correlation functions for carbonate sample
     (\cref{fig:sample-limestone}).}
   \label{fig:sample-limestone-cf}
-\end{figure}
+\end{figure*}
 
-\begin{figure}[tp]
+\begin{figure*}[tp]
   \centering
-  \includegraphics[width=0.45\linewidth]{images/sandstone1.png-surf2void.png}
+  \includegraphics[width=0.4\linewidth]{images/sandstone1.png-surf2void.png}
   \hfill
-  \includegraphics[width=0.45\linewidth]{images/sandstone1.png-surfvoid2.png}
+  \includegraphics[width=0.4\linewidth]{images/sandstone1.png-surfvoid2.png}
   \vskip\baselineskip
-  \includegraphics[width=0.45\linewidth]{images/sandstone1.png-s3.png}
+  \includegraphics[width=0.4\linewidth]{images/sandstone1.png-s3.png}
   \hfill
-  \includegraphics[width=0.45\linewidth]{images/sandstone1.png-c3.png}
+  \includegraphics[width=0.4\linewidth]{images/sandstone1.png-c3.png}
   \caption[]{Correlation functions for sandstone sample
     (\cref{fig:sample-sandstone}).}
   \label{fig:sample-sandstone-cf}
-\end{figure}
+\end{figure*}
 
 \begin{figure*}[tp]
   \centering
   \subfigure[Shale]{
-    \includegraphics[width=0.45\linewidth]{images/shale-s3.png}
+    \includegraphics[width=0.4\linewidth]{images/shale-s3.png}
     \label{fig:shale-s3}}
   \hfill
   \subfigure[Soil]{
-    \includegraphics[width=0.45\linewidth]{images/soil-s3.png}
+    \includegraphics[width=0.4\linewidth]{images/soil-s3.png}
     \label{fig:soil-s3}}
   \hfill
   \caption[]{Heatmaps of $S_3$ function for highly anisotropic samples of shale
@@ -719,15 +712,14 @@ implementation. An equivalent operation for rotation of test triangles is a
 rotation of the whole input image which we have implemented in our
 CorrelationFunctions.jl package. By applying a rotation to the input first we
 made a rest of the algorithm cache-friendly by avoiding random memory access.
-\begin{figure}[tp]
+\begin{figure*}[tp]
   \centering
-
   \subfigure[An original image of an anisotropic pore.]{
-    \includegraphics[width=0.45\linewidth, frame]{images/aniso.png}
+    \includegraphics[width=0.4\linewidth, frame]{images/aniso.png}
     \label{fig:aniso-unrot}}
   \hfill
   \subfigure[A rotated image of pore, so it is elongated along the axis $X$.]{
-    \includegraphics[width=0.45\linewidth, frame]{images/aniso-rot.png}
+    \includegraphics[width=0.4\linewidth, frame]{images/aniso-rot.png}
     \label{fig:aniso-rot}}
   \vskip\baselineskip
   \subfigure[$S_3$ function for the original image]{
@@ -746,7 +738,7 @@ made a rest of the algorithm cache-friendly by avoiding random memory access.
     directed along one of the axes. A result on \cref{fig:aniso-avg} is similar
     to the algorithm proposed by Malmir~et~al.}
   \label{fig:aniso}
-\end{figure}
+\end{figure*}
 
 \appendix
 \section{Computation of number of trials for non-periodic mode}
