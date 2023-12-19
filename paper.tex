@@ -170,20 +170,26 @@ signatures in the distribution of matter and energy, which are not captured in
 2-point counterparts
 \cite{TakadaJain,hopkins2013stars,gorbunova2016precessing,yoo2022non}.
 
-
 In this contribution we continue our initiative to develop a simple, efficient
 and open-source solution to compute all classical correlation functions on CPU
 and GPU architectures -- \code{CorrelationFunctions.jl} \cite{CFsjlpaper}. Here
-we build upon previous results in computations of higher order functions with n
-> 2, most notably by Malmir et al. \cite{malmir2018}, and our aim is to develop
-robust and computationally efficient methods. In addition, we also considered
-the case of anisotropic structures and how to describe them with 3-point
-correlation functions similar to directional 2-point CFs \cite
-{10.1063/1.4867611,EPL1}.
+we build upon previous results in computations of higher order functions with
+$n > 2$, most notably by Malmir et al. \cite{malmir2018}, and our aim is to
+develop robust and computationally efficient methods. In addition, we also
+considered the case of anisotropic structures and how to describe them with
+3-point correlation functions similar to directional 2-point CFs
+\cite{10.1063/1.4867611,EPL1}.
 
-\highlight{The paper is organized as follows:}
+The paper is organized as follows: in \cref{sec:methods} we provide
+mathematical background and describe methods for computation of 3-point
+correlation functions. Verification of these methods along with some results for
+real-world samples (limestone, soil etc.) is described in
+\cref{sec:results}. Section \ref{sec:discussion} provides the discussion, a
+comparison with other existing methods and summarizes possible directions for
+improvement.
 
 \section{Methods}
+\label{sec:methods}
 \subsection{3-point correlation functions}
 Let $A_1, A_2, \dots, A_n$ be pairwise disjoint subsets of a set
 $A \subset \mathbb{R}^n$, where the index can be interpreted as a phase on the
@@ -404,6 +410,7 @@ defined as follows:
 \end{equation}
 
 \section{Results}
+\label{sec:results}
 \subsection{Verification}
 To verify correctness of computation of $S_3$ and $C_3$ functions we use the
 following simple relations:
@@ -649,6 +656,7 @@ other and have a regular spacing of about $50 \mu m$.
 \end{figure*}
 
 \section{Discussion}
+\label{sec:discussion}
 In this paper we have provided two approaches to compute three-point correlation
 function:
 \begin{enumerate}
