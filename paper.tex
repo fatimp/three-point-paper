@@ -109,7 +109,8 @@ to get a function of three scalar arguments.
 Another function closely related to the three-point correlation function is the
 cluster function which can be defined as:
 \begin{equation}
-  C_3^n(x_1, x_2) = \sum_{k=1}^K \langle \tilde{I}_k(x) \tilde{I}_k(x + x_1) \tilde{I}_k(x + x_2) \rangle
+  C_3^n(x_1, x_2) = \sum_{k=1}^K \langle \tilde{I}_k(x) \tilde{I}_k(x + x_1)
+  \tilde{I}_k(x + x_2) \rangle
 \end{equation}
 where $\tilde{I}_k$ is an indicator function for $k$-th cluster and $K$ is a
 total number of clusters. A cluster is a subset of $A_n$ so that any two points
@@ -134,13 +135,16 @@ its spatial configuration with respect to $A_v$.
 
 \subsection{Computational algorithms}
 Three-point correlation function $S_3$ can be computed either in spatial domain
-or in frequency domain via the convolution theorem. The simplest algorithm below
+or in frequency domain via the convolution theorem. Suppose that a finite
+countable set $A$ is defined as a multidimensional array. A point $x$ belongs to
+a subset $A_n$ if and only if $A[x] = n$. The simplest algorithm below
 calculates $S_3$ pointwise in spatial domain:
 \begin{algorithmic}[1]
   \Procedure{$S_3$}{$A, n, x_1, x_2$}
   \State $A_n \gets I_n (A)$
-  \State $A'_n \gets \mathfrak{S}(A_n, x_1)$
-  \State $A''_n \gets \mathfrak{S}(A_n, x_2)$
+  \Comment Apply $I_n$ to the input array elementwise.
+  \State $A'_n \gets \mathfrak{S}_{x_1}(A_n)$
+  \State $A''_n \gets \mathfrak{S}_{x_2}(A_n)$
   \State $T \gets A_n \cdot A'_n \cdot A''_n$
   \State \textbf{return} $Sum(T) / Norm(A, x_1, x_2)$
   \EndProcedure
@@ -148,17 +152,29 @@ calculates $S_3$ pointwise in spatial domain:
 In this algorithm the indicator function $I_n$ for the phase of interest $n$ is
 applied to the input array $A$. Then the shift operator $\mathfrak{S}$ is used
 to shift $A_n$ by vectors $x_1$ and $x_2$. Finally, the three arrays are
-multiplied pointwise and normalized sum of all elements of the product is
+multiplied pointwise and a normalized sum of all elements of the product is
 returned.
 
-There are two common boundary conditions when applying $\mathfrak{S}$. The first
-condition is to extend $A_n$ periodically (\cref{fig:s3-periodic}) when
-accessing out-of-bounds array elements. This is the same as circular-shifting
-$A_n$. In this case $Norm(A, x_1, x_2)$ does not depend on $x_1$ and $x_2$ and
+There are two common boundary conditions when applying $\mathfrak{S}$. The
+first condition is to extend $A_n$ periodically (\cref{fig:s3-periodic}) when
+accessing out-of-bounds array elements. In this case $\mathfrak{S}_z$ is a
+circular shift operator:
+\begin{equation}
+  A[x] \leftarrow A[x+z \mod d]
+\end{equation}
+In this case $Norm(A, x_1, x_2)$ does not depend on $x_1$ and $x_2$ and
 is equal to the total number of elements in $A$. The second condition is to
 replace out-of-bound elements with zeros (so-called zero padding)
 (\cref{fig:s3-zeros}). A formula for $Norm(A, x_1, x_2)$ in this case is in
-\ref{sec:number-of-trials}.
+\ref{sec:number-of-trials} and $\mathfrak{S}_z$ is defined as follows:
+\begin{equation}
+  A[x] \leftarrow \left\{
+  \begin{array}{ll}
+    A[x+z] & \quad \text{if $x+z$ is a correct index in $A$} \\
+    0 & \quad \text{otherwise}
+  \end{array}
+  \right.
+\end{equation}
 \begin{figure*}[tp]
   \centering
   \subfigure[Periodic boundary conditions]{
@@ -215,8 +231,8 @@ replace an indicator function $I_n$ with an edge detection operator $E_n$
 \begin{algorithmic}[1]
   \Procedure{$F_{sss}$}{$A, n, x_1, x_2$}
   \State $A_n \gets E_n (A)$
-  \State $A'_n \gets \mathfrak{S}(A_n, x_1)$
-  \State $A''_n \gets \mathfrak{S}(A_n, x_2)$
+  \State $A'_n \gets \mathfrak{S}_{x_1}(A_n)$
+  \State $A''_n \gets \mathfrak{S}_{x_2}(A_n)$
   \State $T \gets A_n \cdot A'_n \cdot A''_n$
   \State \textbf{return} $Sum(T) / Norm(A, x_1, x_2)$
   \EndProcedure
@@ -224,8 +240,8 @@ replace an indicator function $I_n$ with an edge detection operator $E_n$
   \Procedure{$F_{ssv}$}{$A, n, x_1, x_2$}
   \State $A_n \gets E_n (A)$
   \State $A_{(void)} \gets I_{(void)} (A)$
-  \State $A'_n \gets \mathfrak{S}(A_n, x_1)$
-  \State $A'_{(void)} \gets \mathfrak{S}(A_{(void)}, x_2)$
+  \State $A'_n \gets \mathfrak{S}_{x_1}(A_n)$
+  \State $A'_{(void)} \gets \mathfrak{S}_{x_2}(A_{(void)})$
   \State $T \gets A_n \cdot A'_n \cdot A'_{(void)}$
   \State \textbf{return} $Sum(T) / Norm(A, x_1, x_2)$
   \EndProcedure
@@ -233,8 +249,8 @@ replace an indicator function $I_n$ with an edge detection operator $E_n$
   \Procedure{$F_{svv}$}{$A, n, x_1, x_2$}
   \State $A_n \gets E_n (A)$
   \State $A_{(void)} \gets I_{(void)} (A)$
-  \State $A'_{(void)} \gets \mathfrak{S}(A_{(void)}, x_1)$
-  \State $A''_{(void)} \gets \mathfrak{S}(A_{(void)}, x_2)$
+  \State $A'_{(void)} \gets \mathfrak{S}_{x_1}(A_{(void)})$
+  \State $A''_{(void)} \gets \mathfrak{S}_{x_2}(A_{(void)})$
   \State $T \gets A_n \cdot A'_{(void)} \cdot A''_{(void)}$
   \State \textbf{return} $Sum(T) / Norm(A, x_1, x_2)$
   \EndProcedure
@@ -265,8 +281,8 @@ slightly modified algorithm for $S_3$ is used to assess cluster function:
   \Procedure{$C_3$}{$A, n, x_1, x_2$}
   \State $A_n \gets I_n (A)$
   \State $C_n \gets \mathfrak{C}(A_n)$
-  \State $C'_n \gets \mathfrak{S}(C_n, x_1)$
-  \State $C''_n \gets \mathfrak{S}(C_n, x_2)$
+  \State $C'_n \gets \mathfrak{S}_{x_1}(C_n)$
+  \State $C''_n \gets \mathfrak{S}_{x_2}(C_n)$
   \State $T \gets C_n \odot C'_n \odot C''_n$
   \State \textbf{return} $Sum(T) / Norm(A, x_1, x_2)$
   \EndProcedure
@@ -437,7 +453,7 @@ along the ordinate). The samples has clusters which are $\sim 45\ \mu m$ in
 diameter.
 
 Heatmaps of $S_3$ for the two highly anisotropic samples can be seen on
-\cref{fig:heatmaps}. Anisotropicity of the both samples can be seen as a slower
+\cref{fig:heatmaps}. Anisotropy of the both samples can be seen as a slower
 decay of $S_3$ in one of the directions. Additionally, it can be observed that
 elongated clusters of the void phase in the sample of soil are parallel to each
 other and have a regular spacing of about $50 \mu m$.
@@ -522,7 +538,7 @@ other and have a regular spacing of about $50 \mu m$.
   \hfill
   \caption[]{Heatmaps of $S_3$ function for highly anisotropic samples of shale
     and soil. $S_3$ function was clamped to the range $[0, 0.1]$ to make
-    anisotropicity more visible. It can be observed that the samples have
+    anisotropy more visible. It can be observed that the samples have
     cavities elongated along the vector $(1, 1, 0)$.}
   \label{fig:heatmaps}
 \end{figure*}
@@ -568,24 +584,51 @@ both the geometry and topology of the structure at hand - but this is to yet unk
 With the advent of analytical methods \cite{cherkasov2023towards} to assess information content of arbitrary descriptor for structure of any size, it will be possible to choose the most useful set of correlation functions and compare their information content against classical and other metrics.
 
 Our algorithm fixes $\theta = \frac{pi}{2}$ and does not perform random
-rotations or trial triangles. It is sensitive to anisotropicity of the medium
-when it is stretched along one of the axes as shown in \cref{fig:aniso}. The
-main advantage of our algorithm is its parallelizability and ease of
+rotations or trial triangles. It is sensitive to anisotropy of the medium
+when it is stretched along one of the axes as shown in \cref{fig:aniso}. A
+direction of elongation for a $N$-dimensional image can be easily detected by
+firstly evaluating a $N \times N$ covariance matrix for points belonging to the
+phase of interest:
+\begin{equation}
+  C_{ij} = \sum_{x \in \left\{ \text{Coordinates of points in the
+      phase of interest} \right\}} (x_i - \overline{x_i})(x_j - \overline{x_j})
+\end{equation}
+and then decomposing $C$ as $T \Lambda T^{-1}$ where $T$ is a unitary matrix and
+$\Lambda$ is diagonal. $T$ can always be made so that it defines a rotation and
+can be used to align the elongation with the axes (compare \cref{fig:aniso-unrot}
+and \cref{fig:aniso-rot}).
+
+The main advantage of our algorithm is its parallelizability and ease of
 implementation. An equivalent operation for rotation of test triangles is a
 rotation of the whole input image which we have implemented in our
 CorrelationFunctions.jl package. By applying a rotation to the input first we
 made a rest of the algorithm cache-friendly by avoiding random memory access.
 \begin{figure}[tp]
   \centering
-  \includegraphics[width=0.4\linewidth, frame]{images/aniso.png}
-  \vskip\baselineskip
-  \includegraphics[width=0.45\linewidth]{images/aniso-s3.png}
+
+  \subfigure[An original image of an anisotropic pore.]{
+    \includegraphics[width=0.45\linewidth, frame]{images/aniso.png}
+    \label{fig:aniso-unrot}}
   \hfill
-  \includegraphics[width=0.45\linewidth]{images/aniso-s3-avg.png}
-  \caption[]{$S_3$ function for anisotropic media (on the left) elongated along
-    the vector $(1, 1)$. Anisotropicity of the medium can be seen on a heatmap
-    of $S_3$ function (in the middle). An average of 120 $S_3$ evaluations of
-    the medium rotated by a random angle is on the right.}
+  \subfigure[A rotated image of pore, so it is elongated along the axis $X$.]{
+    \includegraphics[width=0.45\linewidth, frame]{images/aniso-rot.png}
+    \label{fig:aniso-rot}}
+  \vskip\baselineskip
+  \subfigure[$S_3$ function for the original image]{
+    \includegraphics[width=0.3\linewidth]{images/aniso-s3.png}}
+  \hfill
+  \subfigure[$S_3$ function for the rotated image. A vector $(0.92, -0.4)$ is a
+    direction of elongation of the pore.]{
+  \includegraphics[width=0.3\linewidth]{images/aniso-rot-s3.png}}
+  \hfill
+  \subfigure[$S_3$ function averaged across 100 random rotations.]{
+    \includegraphics[width=0.3\linewidth]{images/aniso-avg-s3.png}
+    \label{fig:aniso-avg}}
+  \caption[]{Behaviour of our algorithm for calculation of the $S_3$ function
+    when dealing with highly anisotropic media. The pattern \cref{fig:pattern}
+    which we use in our algorithm is most sensitive to anisotropy which is
+    directed along one of the axes. A result on \cref{fig:aniso-avg} is similar
+    to the algorithm proposed by Malmir~et~al.}
   \label{fig:aniso}
 \end{figure}
 
