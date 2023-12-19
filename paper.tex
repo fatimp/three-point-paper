@@ -35,7 +35,8 @@
 \address[MIT]{Moscow Institute of Physics and Technology,
   Dolgoprudny, 141701, Russia}
 
-\title{Evaluation of 3-point correlation functions from structural images on CPU and GPU architectures: accounting for anisotropy effects}
+\title{Evaluation of 3-point correlation functions from structural images on CPU
+  and GPU architectures: accounting for anisotropy effects}
 
 \begin{abstract}
   Wow, we can multiply arrays and tell you how cool it is.
@@ -48,42 +49,152 @@
 \maketitle
 
 \section{Introduction}
-Structures, or spatial arrangements of matter and energy, including some fields (e.g., velocity or pressure) are ubiquitous in research applications and frequently require description for subsequent analysis. Examples of such objects for studies include galaxy formations \cite{springel2006}, immiscible multiphase fluid flow patterns \cite{hopkins2015new,balashov2021}, rock and soil samples \cite{rozenbaum2014,karsanina2015,ledesma2018,chen2020super,prokhorov2021digital,vogel2010}, food specimens \cite{derossi2019,nagdalian2021}, biological tissue \cite{park2020}, vortexes during flow \cite{gorbunova2016precessing} and interstellar turbulence \cite{portillo2018developing}. The scale of interest may span orders of magnitude from angstroms and nm for materials \cite{garum2020,gerke2021,khlyupin2023molecular} to millions of light-years for star clusters \cite{takada2003three,hopkins2013stars}. The studied structure can be non-static -- it will  change with time, and this dynamics is usually also of great interest \cite{jiao2013,fomin2023soil}. Thus, description of the structure is of utmost importance for numerous applications:
+Structures, or spatial arrangements of matter and energy, including some fields
+(e.g., velocity or pressure) are ubiquitous in research applications and
+frequently require description for subsequent analysis. Examples of such objects
+for studies include galaxy formations \cite{springel2006}, immiscible multiphase
+fluid flow patterns \cite{hopkins2015new,balashov2021}, rock and soil samples
+\cite{rozenbaum2014,karsanina2015,ledesma2018,chen2020super,prokhorov2021digital,vogel2010},
+food specimens \cite{derossi2019,nagdalian2021}, biological tissue
+\cite{park2020}, vortexes during flow \cite{gorbunova2016precessing} and
+interstellar turbulence \cite{portillo2018developing}. The scale of interest may
+span orders of magnitude from angstroms and nm for materials
+\cite{garum2020,gerke2021,khlyupin2023molecular} to millions of light-years for
+star clusters \cite{takada2003three,hopkins2013stars}. The studied structure can
+be non-static -- it will change with time, and this dynamics is usually also of
+great interest \cite{jiao2013,fomin2023soil}. Thus, description of the structure
+is of utmost importance for numerous applications:
 \begin{enumerate}
-  \item Elucidation of structure--property relationships in the form of theoretical expression \cite{Torquato_book,Sahimi_book}, e.g., rigorous bounds and such;
-  \item Prediction of material physical properties using machine (deep) learning \cite{obayashi2018persistence,kamrava2020linking,roding2020predicting};
-  \item Description of complex structures and fields for taxonomy, comparison and analysis \cite{takada2003three,hopkins2013stars,shivashankar2015felix,saadatfar2017pore,portillo2018developing,KarsaninaEJSS,PNM_Morse,khlyupin2023molecular}, which may include temporal dynamics or surface evolution \cite{jiao2013,PhysRevE.92.023301,prokhorov2022,chen2022,fomin2023soil};
-  \item Morphological representativity \cite{capek2009,rozenbaum2014,gerke2019tensor} and spatial stationarity analysis \cite{REVpaper,LavrukhinPRE};
-  \item Stochastic reconstructions from limited amount of input data \cite{Adler_recon,Y-T,tahmasebiPRL,Euras2012,EPL2,karsaninaPRL,rozanski2023} in the form of limited dimension structures or correlation functions;
-  \item Compress structural information for storage, analysis, training (feature extraction), and retrieval (by means of stochastic reconstructions) \cite{jiao2007,SciRep1,Havelka,KarsaninaEJSS};
-  \item Multiscale image fusion that is usually necessary due to trade-off between field-of-view and imaging resolution \cite{SciRep1,Geoderma2018,chen2020super,karimpouli2022}.
+  \item Elucidation of structure--property relationships in the form of
+    theoretical expression \cite{Torquato_book,Sahimi_book}, e.g., rigorous
+    bounds and such;
+  \item Prediction of material physical properties using machine (deep) learning
+    \cite{obayashi2018persistence,kamrava2020linking,roding2020predicting};
+  \item Description of complex structures and fields for taxonomy, comparison
+    and analysis
+    \cite{takada2003three,hopkins2013stars,shivashankar2015felix,saadatfar2017pore,
+      portillo2018developing,KarsaninaEJSS,PNM_Morse,khlyupin2023molecular},
+    which may include temporal dynamics or surface evolution
+    \cite{jiao2013,PhysRevE.92.023301,prokhorov2022,chen2022,fomin2023soil};
+  \item Morphological representativity
+    \cite{capek2009,rozenbaum2014,gerke2019tensor} and spatial stationarity
+    analysis \cite{REVpaper,LavrukhinPRE};
+  \item Stochastic reconstructions from limited amount of input data
+    \cite{Adler_recon,Y-T,tahmasebiPRL,Euras2012,EPL2,karsaninaPRL,rozanski2023}
+    in the form of limited dimension structures or correlation functions;
+  \item Compress structural information for storage, analysis, training (feature
+    extraction), and retrieval (by means of stochastic reconstructions)
+    \cite{jiao2007,SciRep1,Havelka,KarsaninaEJSS};
+  \item Multiscale image fusion that is usually necessary due to trade-off
+    between field-of-view and imaging resolution
+    \cite{SciRep1,Geoderma2018,chen2020super,karimpouli2022}.
 \end{enumerate}
 
-The number of possible descriptors to quantify spatial structure developed within different disciplines is stunning, for example: phase ratio or porosity \cite{anovitz2015characterization}, surface area, radial distribution functions \cite{zimm1948scattering,becker2010radial}, Minkowski functionals \cite{vogel2010} and tensors \cite{schroder2011minkowski}, correlation functions \cite{Torquato_book}, persistence diagrams \cite{shivashankar2015felix,saadatfar2017pore,obayashi2018persistence}. The evolution of such metrics was mainly induced by the ease of measurement and interpretation -- this is startling to observe holy wars on the question which metric is superior to flare up occasionally, e.g.,\cite{vogel2022holistic,yudina2023dual}. In fact, we need a single universal descriptor defined by only one characteristic -- information content. The latter is an ability of the metric to describe the structure at hand with 100$\%$ meaning the ability to fully recover the structure back from this metric. Thus, universal descriptor has to possess following key properties: (1) high information content, (2) easy to assess, (3) high compression (i.e., descriptor is much "smaller" than the structure itself).
+The number of possible descriptors to quantify spatial structure developed
+within different disciplines is stunning, for example: phase ratio or porosity
+\cite{anovitz2015characterization}, surface area, radial distribution functions
+\cite{zimm1948scattering,becker2010radial}, Minkowski functionals
+\cite{vogel2010} and tensors \cite{schroder2011minkowski}, correlation functions
+\cite{Torquato_book}, persistence diagrams
+\cite{shivashankar2015felix,saadatfar2017pore,obayashi2018persistence}. The
+evolution of such metrics was mainly induced by the ease of measurement and
+interpretation -- this is startling to observe holy wars on the question which
+metric is superior to flare up occasionally,
+e.g.,\cite{vogel2022holistic,yudina2023dual}. In fact, we need a single
+universal descriptor defined by only one characteristic -- information
+content. The latter is an ability of the metric to describe the structure at
+hand with 100$\%$ meaning the ability to fully recover the structure back from
+this metric. Thus, universal descriptor has to possess following key properties:
+(1) high information content, (2) easy to assess, (3) high compression (i.e.,
+descriptor is much "smaller" than the structure itself).
 
-The large portion of the research papers mentioned above \cite{rozenbaum2014,karsanina2015,ledesma2018,derossi2019,portillo2018developing,takada2003three,hopkins2013stars,jiao2013,Torquato_book,roding2020predicting,KarsaninaEJSS,capek2009,gerke2019tensor,REVpaper,LavrukhinPRE,Adler_recon,Y-T,tahmasebiPRL,Euras2012,EPL2,karsaninaPRL,jiao2007,SciRep1,Havelka,Geoderma2018} is based on so-called correlation functions (CFs). These functions define a probability that some events are occurring withing the structure (with some special cases of surface functions), for example, 2-point probability $S_2$ measures the probability that both ends of the line segment are within the same phase, 2-point cluster function $C_2$ - that both ends of the line segment are within the same interconnected cluster of same phase, and lineal path $L_2$ measures the probability that the whole segment lies within the phase (see \highlight{Fig.1}). Compared to other descriptors, CFs possess a number of features making them, in our opinion, a perfect candidate for universal descriptor:
+The large portion of the research papers mentioned above
+\cite{rozenbaum2014,karsanina2015,ledesma2018,derossi2019,portillo2018developing,
+  takada2003three,hopkins2013stars,jiao2013,Torquato_book,roding2020predicting,
+  KarsaninaEJSS,capek2009,gerke2019tensor,REVpaper,LavrukhinPRE,Adler_recon,Y-T,
+  tahmasebiPRL,Euras2012,EPL2,karsaninaPRL,jiao2007,SciRep1,Havelka,Geoderma2018}
+is based on so-called correlation functions (CFs). These functions define a
+probability that some events are occurring withing the structure (with some
+special cases of surface functions), for example, 2-point probability $S_2$
+measures the probability that both ends of the line segment are within the same
+phase, 2-point cluster function $C_2$ -- that both ends of the line segment are
+within the same interconnected cluster of same phase, and lineal path $L_2$
+measures the probability that the whole segment lies within the phase (see
+\highlight{Fig.1}). Compared to other descriptors, CFs possess a number of
+features making them, in our opinion, a perfect candidate for universal
+descriptor:
 \begin{enumerate}
-  \item They contain the majority of other metrics inside. For example, porosity is $S_2(0)$ (and at zero correlation length of the majority of correlation functions except for surface ones), surface area is represented by in the derivative at $S_2(0)$ \cite{debye1957scattering} or the value of $F_{ss}(0)$ (or $F_{sss}(0)$). Connectivity is described by cluster functions $C_2$ or $C_3$. Pore-size distribution is related to pore-size function and partially by $L_2$ and $S_3$. Surface-void functions are interconnected with mean curvature and Euler characteristic \cite{ma2020generation}. All together, the classic set of correlation functions describes both the geometry and topology of the structure at hand;
-  \item While the extent to which such classical set describes any arbitrary structure is not yet known, compared to other complex descriptors  where are known pathways to assess the information content of correlation functions -- there is a methodology for $S_2$ \cite{Gommes2} and approaches for other functions \cite{Degeneraty.045306,cherkasov2023towards};
-  \item In addition to a possibility to compute correlation functions using images or other structural data, i.e., similar to all other descriptors, some CFs can be also determined experimentally \cite{debye1957scattering,barrall1992nmr,dietrich1995scattering,li2018accurate};
-  \item Correlation functions can be scaled \cite{karsaninaPRL} or manipulated, for example, to add functions into a single one \cite{moctezuma2002};
-  \item As opposed to scalar metrics such as porosity, surface area or Minkowski functionals, CFs can be computed in directions and describe anisotropic structures;
-  \item Numerous rigorous bounds to obtain thermal, elastic, electromagnetic and transport properties are known, among which the most known (and least useful due to the impractically huge gap between the bounds) are Hashin-Strikman bounds \cite{hashin1963variational}. Other expressions based on integration of higher order $S_n$ are known and were found to be close to direct simulations \cite{brown1955solid,beran1965use,milton1981bounds,hlushkou2015effective};
-  \item One can control both the size of the CFs-based descriptor and the information content via correlation length, number of functions in the set (including directions \cite{EPL2}), and by the order of functions (e.g., 2- and 3-point versions, or even more points).
+  \item They contain the majority of other metrics inside. For example, porosity
+    is $S_2(0)$ (and at zero correlation length of the majority of correlation
+    functions except for surface ones), surface area is represented by in the
+    derivative at $S_2(0)$ \cite{debye1957scattering} or the value of
+    $F_{ss}(0)$ (or $F_{sss}(0)$). Connectivity is described by cluster
+    functions $C_2$ or $C_3$. Pore-size distribution is related to pore-size
+    function and partially by $L_2$ and $S_3$. Surface-void functions are
+    interconnected with mean curvature and Euler characteristic
+    \cite{ma2020generation}. All together, the classic set of correlation
+    functions describes both the geometry and topology of the structure at hand;
+  \item While the extent to which such classical set describes any arbitrary
+    structure is not yet known, compared to other complex descriptors where are
+    known pathways to assess the information content of correlation functions --
+    there is a methodology for $S_2$ \cite{Gommes2} and approaches for other
+    functions \cite{Degeneraty.045306,cherkasov2023towards};
+  \item In addition to a possibility to compute correlation functions using
+    images or other structural data, i.e., similar to all other descriptors,
+    some CFs can be also determined experimentally
+    \cite{debye1957scattering,barrall1992nmr,dietrich1995scattering,li2018accurate};
+  \item Correlation functions can be scaled \cite{karsaninaPRL} or manipulated,
+    for example, to add functions into a single one \cite{moctezuma2002};
+  \item As opposed to scalar metrics such as porosity, surface area or Minkowski
+    functionals, CFs can be computed in directions and describe anisotropic
+    structures;
+  \item Numerous rigorous bounds to obtain thermal, elastic, electromagnetic and
+    transport properties are known, among which the most known (and least useful
+    due to the impractically huge gap between the bounds) are Hashin-Strikman
+    bounds \cite{hashin1963variational}. Other expressions based on integration
+    of higher order $S_n$ are known and were found to be close to direct
+    simulations
+    \cite{brown1955solid,beran1965use,milton1981bounds,hlushkou2015effective};
+  \item One can control both the size of the CFs-based descriptor and the
+    information content via correlation length, number of functions in the set
+    (including directions \cite{EPL2}), and by the order of functions (e.g., 2-
+    and 3-point versions, or even more points).
 \end{enumerate}
-This list highlights that correlations functions are indeed possess necessary properties so satisfy key criteria stated above.
+This list highlights that correlations functions are indeed possess necessary
+properties so satisfy key criteria stated above.
 
-However, while 2-point CFs are computed and used in multitude of studies, higher order functions, for example, 3-point correlation functions are not that widely used. The reason for this is straightforward -- 3-point correlation functions are more involved and, thus, require much more computational resources to assess. It has been shown that the amount of additional information content with each increase in number of points $n$ decreases \cite{yao1993high,Gommes2}. The trade-off between additional information and computational burden is still not clear. Nonetheless, the computation of 3-point statistics is known to be advantageous at least in the number of applications as related to cosmology, astrophysics and turbulence patterns analysis as they can probe non-Gaussian signatures in the distribution of matter and energy, which are not captured in 2-point counterparts \cite{TakadaJain,hopkins2013stars,gorbunova2016precessing,yoo2022non}.
+However, while 2-point CFs are computed and used in multitude of studies, higher
+order functions, for example, 3-point correlation functions are not that widely
+used. The reason for this is straightforward -- 3-point correlation functions
+are more involved and, thus, require much more computational resources to
+assess. It has been shown that the amount of additional information content with
+each increase in number of points $n$ decreases \cite{yao1993high,Gommes2}. The
+trade-off between additional information and computational burden is still not
+clear. Nonetheless, the computation of 3-point statistics is known to be
+advantageous at least in the number of applications as related to cosmology,
+astrophysics and turbulence patterns analysis as they can probe non-Gaussian
+signatures in the distribution of matter and energy, which are not captured in
+2-point counterparts
+\cite{TakadaJain,hopkins2013stars,gorbunova2016precessing,yoo2022non}.
 
 
-In this contribution we continue our initiative to develop a simple, efficient and open-source solution to compute all classical correlation functions on CPU and GPU architectures -- \code{CorrelationFunctions.jl} \cite{CFsjlpaper}. Here we build upon previous results in computations of higher order functions with n > 2, most notably by Malmir et al. \cite{malmir2018}, and our aim is to develop robust and computationally efficient methods. In addition, we also considered the case of anisotropic structures and how to describe them with 3-point correlation functions similar to directional 2-point CFs \cite {10.1063/1.4867611,EPL1}.
+In this contribution we continue our initiative to develop a simple, efficient
+and open-source solution to compute all classical correlation functions on CPU
+and GPU architectures -- \code{CorrelationFunctions.jl} \cite{CFsjlpaper}. Here
+we build upon previous results in computations of higher order functions with n
+> 2, most notably by Malmir et al. \cite{malmir2018}, and our aim is to develop
+robust and computationally efficient methods. In addition, we also considered
+the case of anisotropic structures and how to describe them with 3-point
+correlation functions similar to directional 2-point CFs \cite
+{10.1063/1.4867611,EPL1}.
 
 \highlight{The paper is organized as follows:}
 
 \section{Methods}
 \subsection{3-point correlation functions}
 Let $A_1, A_2, \dots, A_n$ be pairwise disjoint subsets of a set
-$A \subset \mathbb{R}^n$, where the index can be interpreted as a phase on the image $A$. We introduce a family of indicator functions
+$A \subset \mathbb{R}^n$, where the index can be interpreted as a phase on the
+image $A$. We introduce a family of indicator functions
 $I_n(x) : A \rightarrow \{0,1\}$ defined as:
 \begin{equation}
   I_n(x) = \left\{
@@ -271,8 +382,9 @@ $\mathbb{R}^3$). We define $C_\alpha$ as follows:
 where $\hat{f_0}$ is a Fourier transform of $f_0$ and $\omega$ is a folding
 frequency which depends only on resolution of the image. If a criterion
 $C_{0.5} > 0.97$ holds then the image is suitable for application of
-aforementioned algorithms for calculation of surface functions, otherwise image's resolution
-can be improved with the help of interpolation prior to computations \cite{samarin2023robust}.
+aforementioned algorithms for calculation of surface functions, otherwise
+image's resolution can be improved with the help of interpolation prior to
+computations \cite{samarin2023robust}.
 
 To compute $C_3$ function we need to use a connected-component labeling
 algorithm \cite{4728561,PhysRevB.14.3438} to label clusters. Then, again, a
@@ -580,8 +692,12 @@ rotation, only applying a random translation. This way the algorithm preserves
 orientation of triangles stored in the pattern.
 
 We mentioned that classic set of correlation functions describes
-both the geometry and topology of the structure at hand - but this is to yet unknown extent.
-With the advent of analytical methods \cite{cherkasov2023towards} to assess information content of arbitrary descriptor for structure of any size, it will be possible to choose the most useful set of correlation functions and compare their information content against classical and other metrics.
+both the geometry and topology of the structure at hand -- but this is to yet
+unknown extent. With the advent of analytical methods
+\cite{cherkasov2023towards} to assess information content of arbitrary
+descriptor for structure of any size, it will be possible to choose the most
+useful set of correlation functions and compare their information content
+against classical and other metrics.
 
 Our algorithm fixes $\theta = \frac{pi}{2}$ and does not perform random
 rotations or trial triangles. It is sensitive to anisotropy of the medium
