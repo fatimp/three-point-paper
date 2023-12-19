@@ -764,9 +764,10 @@ following:
 
 \section{Edge detection filter}
 \label{sec:filter}
-For edge detection we use a kernel with the width 7 with coefficients inversely
-proportional to distance to kernel's central element. The central element has
-such value, so all elements of the kernel sum to zero:
+For edge detection we use a kernel with the width 7 pixels with coefficients
+inversely proportional to distance to acentral element of the kernel. The
+central element is determined by a property that all elements of the kernel sum
+to zero:
 \begin{equation}
   E_k = S \left\{
   \begin{array}{ll}
