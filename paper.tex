@@ -409,6 +409,76 @@ defined as follows:
   \right.
 \end{equation}
 
+\subsection{Analysis of anisotropic media}
+When an analized sample is anisotropic, i.e. it is stretched or oriented along
+some specific direction, it may be desired to align one of the catheti of the
+scanning pattern \cref{fig:pattern} with that direction. In this case the
+anisotropicity present in the sample will be featured in a produced correlation
+function \textcolor{red}{most well. voobshe eto po-angliyski?}
+
+To detect the direction of anisotropy we use an $N \times N$ (where $N$ is
+dimensionality of the sample) covariance matrix for coordinates of points in the
+phase of interest:
+\begin{equation}
+  C_{ij} = \sum_{x \in \left\{
+    \begin{array}{l}
+      \text{Coordinates of points} \\
+      \text{in the phase of interset}
+    \end{array}
+    \right\}} (x_i - \overline{x_i})(x_j - \overline{x_j})
+\end{equation}
+and decompose $C$ as $T \Lambda T^{-1}$ where $T$ is a unitary matrix and
+$\Lambda$ is diagonal. $T$ can always be made so that it defines a rotation (by
+multiplication of one of the columns by $-1$ if needed, so that
+$\det T = 1$. Application of this rotation to the sample makes the direction of
+anisotropicity parallel to one of the axes, so anisotropicity can be better
+featured in the correlation function \cref{fig:aniso}.
+\begin{figure*}[tp]
+  \centering
+  \subfigure[An original image of an anisotropic pore.]{
+    \includegraphics[width=0.4\linewidth, frame]{images/aniso.png}
+    \label{fig:aniso-unrot}}
+  \hfill
+  \subfigure[A rotated image of the pore, so it is elongated along the axis
+    $X$.]{
+    \includegraphics[width=0.4\linewidth, frame]{images/aniso-rot.png}
+    \label{fig:aniso-rot}}
+  \vskip\baselineskip
+  \subfigure[$S_3$ function for the original image]{
+    \includegraphics[width=0.3\linewidth]{images/aniso-s3.png}}
+  \hfill
+  \subfigure[$S_3$ function for the rotated image. A vector $(0.92, -0.4)$ is a
+    direction of elongation of the pore.]{
+  \includegraphics[width=0.3\linewidth]{images/aniso-rot-s3.png}}
+  \hfill
+  \subfigure[$S_3$ function averaged across 100 random rotations.]{
+    \includegraphics[width=0.3\linewidth]{images/aniso-avg-s3.png}
+    \label{fig:aniso-avg}}
+  \caption[]{Behaviour of our algorithm for calculation of the $S_3$ function
+    when dealing with highly anisotropic media. The pattern \cref{fig:pattern}
+    which we use in our algorithm is most sensitive to anisotropy which is
+    directed along one of the axes. A result on \cref{fig:aniso-avg} averaged
+    across rotations is similar to the algorithm proposed by Malmir~et~al.}
+  \label{fig:aniso}
+\end{figure*}
+The above said holds for every algorithm introduced in the paper.
+
+When a sample is known to be isotropic, the correlation function may be
+calculated multiple times, each time applying a random rotation of the sample,
+and then averaged across rotations to gather more statistics. This process is
+illustrated on \cref{fig:workflow}.
+\begin{figure*}[tp]
+  \centering
+  \includegraphics[width=0.6\linewidth]{images/workflow.png}
+  \caption[]{A possible workflow for computation of correlation functions
+    (clockwise from top left to bottom right ): 1.~rotating a sample in random
+    directions (which is equivalent to rotating the sampling pattern),
+    2.~calculating the correlation function for each direction, 3.~avegaring
+    results across rotations, 4.~representing the result as a family of 2D
+    plots.}
+  \label{fig:workflow}
+\end{figure*}
+
 \section{Results}
 \label{sec:results}
 \subsection{Verification}
@@ -724,34 +794,6 @@ implementation. An equivalent operation for rotation of test triangles is a
 rotation of the whole input image which we have implemented in our
 CorrelationFunctions.jl package. By applying a rotation to the input first we
 made a rest of the algorithm cache-friendly by avoiding random memory access.
-\begin{figure*}[tp]
-  \centering
-  \subfigure[An original image of an anisotropic pore.]{
-    \includegraphics[width=0.4\linewidth, frame]{images/aniso.png}
-    \label{fig:aniso-unrot}}
-  \hfill
-  \subfigure[A rotated image of the pore, so it is elongated along the axis
-    $X$.]{
-    \includegraphics[width=0.4\linewidth, frame]{images/aniso-rot.png}
-    \label{fig:aniso-rot}}
-  \vskip\baselineskip
-  \subfigure[$S_3$ function for the original image]{
-    \includegraphics[width=0.3\linewidth]{images/aniso-s3.png}}
-  \hfill
-  \subfigure[$S_3$ function for the rotated image. A vector $(0.92, -0.4)$ is a
-    direction of elongation of the pore.]{
-  \includegraphics[width=0.3\linewidth]{images/aniso-rot-s3.png}}
-  \hfill
-  \subfigure[$S_3$ function averaged across 100 random rotations.]{
-    \includegraphics[width=0.3\linewidth]{images/aniso-avg-s3.png}
-    \label{fig:aniso-avg}}
-  \caption[]{Behaviour of our algorithm for calculation of the $S_3$ function
-    when dealing with highly anisotropic media. The pattern \cref{fig:pattern}
-    which we use in our algorithm is most sensitive to anisotropy which is
-    directed along one of the axes. A result on \cref{fig:aniso-avg} is similar
-    to the algorithm proposed by Malmir~et~al.}
-  \label{fig:aniso}
-\end{figure*}
 
 \appendix
 \section{Computation of number of trials for non-periodic mode}
