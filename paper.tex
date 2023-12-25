@@ -606,39 +606,6 @@ The comparison of our algorithm against theory is shown on
 \end{figure*}
 
 \subsection{Applications to material images}
-In this section we compute correlation functions for 2- and 3-dimensional real
-samples. Table \ref{tab:summary} contains information about these samples. Note
-that we compute surface correlation functions only for those samples for which
-the criterion $C_{0.5} > 0.97$ holds (the two sandstones and the \textcolor{red}{shale}). Images
-of the samples are on \cref{fig:samples}. On plots of correlation functions for
-isotropic samples we provide a family of curves with the first argument of the
-correlation function being fixed. For anisotropic samples we provide heatmaps of
-correlation functions where anisotropy can be easily observed.
-
-Correlation functions for the XCT sample of a sandstone are on
-\cref{fig:sample-sandstone-xct-cf}. The plot of $S_3$ function allows us to
-estimate porosity of the sample to be $\sim 0.19$ (note that the curve with
-$r_1 = 0$ is actually $S_2$ function). The two-point correlation function
-reaches plateau at $r_2 \approx 60 \mu m$ which means that two events
-of finding two points in the void phase are independent if the points are
-farther than $60 \mu m$ from each other. We see that the sample is isotropic
-($S_3(0, 56.25) \approx S_3(56.25, 0)$). From similarity of the $C_3$ and $S_3$
-functions it can be stated that the pore phase in this sample forms one big
-interconnected pore system.
-
-Correlation functions for the SEM sample (the sandstone) are on
-\cref{fig:sample-sandstone-cf}. Porosity of the sample is $\sim 0.3$ as follows
-from the plot of $S_3$ function at $r_1 = 0$. The function $S_3(0, r_2)$ reaches
-plateau at $r_2 \approx 20\ \mu m$. The sample is highly anisotropic (elongated
-along the ordinate). The samples has clusters which are $\sim 45\ \mu m$ in
-diameter.
-
-Heatmaps of $S_3$ for the two highly anisotropic samples can be seen on
-\cref{fig:heatmaps}. Anisotropy of the both samples can be seen as a slower
-decay of $S_3$ in one of the directions. Additionally, it can be observed that
-elongated clusters of the void phase in the sample of soil are parallel to each
-other and have a regular spacing of about $50 \mu m$.
-
 \begin{table*}[!htp]
   \centering
   \begin{tabular}{|c|c|c|c|c|}
@@ -654,7 +621,14 @@ other and have a regular spacing of about $50 \mu m$.
   \caption{Summary of samples used for calculation of correlation functions.}
   \label{tab:summary}
 \end{table*}
-
+In this section we compute correlation functions for 2- and 3-dimensional real
+samples. Table \ref{tab:summary} contains information about these samples. Note
+that we compute surface correlation functions only for those samples for which
+the criterion $C_{0.5} > 0.97$ holds (the two sandstones and the \textcolor{red}{shale}). Images
+of the samples are on \cref{fig:samples}. On plots of correlation functions for
+isotropic samples we provide a family of curves with the first argument of the
+correlation function being fixed. For anisotropic samples we provide heatmaps of
+correlation functions where anisotropy can be easily observed.
 \begin{figure*}[tp]
   \centering
   \subfigure[Sanstone XCT]{
@@ -676,6 +650,32 @@ other and have a regular spacing of about $50 \mu m$.
     functions.}
   \label{fig:samples}
 \end{figure*}
+
+Correlation functions for the XCT sample of a sandstone are on
+\cref{fig:sample-sandstone-xct-cf}. The plot of $S_3$ function allows us to
+estimate porosity of the sample to be $\sim 0.19$ (note that the curve with
+$r_1 = 0$ is actually $S_2$ function). The two-point correlation function
+reaches plateau at $r_2 \approx 60 \mu m$ which means that two events
+of finding two points in the void phase are independent if the points are
+farther than $60 \mu m$ from each other. We see that the sample is isotropic
+($S_3(0, 56.25) \approx S_3(56.25, 0)$). From similarity of the $C_3$ and $S_3$
+functions it can be stated that the pore phase in this sample forms one big
+interconnected pore system.
+
+Correlation functions for the SEM sample (the sandstone) are on
+\cref{fig:sample-sandstone-cf}. Porosity of the sample is $\sim 0.3$ as follows
+from the plot of $S_3$ function at $r_1 = 0$. The function $S_3(0, r_2)$ reaches
+plateau at $r_2 \approx 20\ \mu m$. The sample is highly anisotropic (elongated
+along the ordinate). The samples has clusters which are $\sim 45\ \mu m$ in
+diameter.
+
+The anisotropic samples (the soil and the shale) were preliminarily rotated with
+periodic boundary conditions to align elongated pores with coordinate axes. The
+result of rotation can be seen on \cref{fig:samples-rot}. Heatmaps of $S_3$
+function for these samples can be seen on \cref{fig:heatmaps}. It can be
+observed that elongated clusters of the void phase in the sample of soil form a
+structure which resembles a regular grid with spacing of about $60 \mu m$. The
+sample of shale shows less regular yet still anisotropic structure.
 
 \begin{figure*}[tp]
   \centering
@@ -709,18 +709,27 @@ other and have a regular spacing of about $50 \mu m$.
 
 \begin{figure*}[tp]
   \centering
-  \subfigure[Shale]{
-    \includegraphics[width=0.4\linewidth]{images/shale-s3.png}
-    \label{fig:shale-s3}}
+  \subfigure[Soil]{
+    \includegraphics[width=0.4\linewidth]{images/soil-rot.png}}
   \hfill
+  \subfigure[Shale]{
+    \includegraphics[width=0.4\linewidth]{images/shale-rot.png}}
+  \caption[]{Rotations of anisotropic samples with pores aligned with the
+    coordinate axes.}
+  \label{fig:samples-rot}
+\end{figure*}
+
+\begin{figure*}[tp]
+  \centering
   \subfigure[Soil]{
     \includegraphics[width=0.4\linewidth]{images/soil-s3.png}
     \label{fig:soil-s3}}
   \hfill
+  \subfigure[Shale]{
+    \includegraphics[width=0.4\linewidth]{images/shale-s3.png}
+    \label{fig:shale-s3}}
   \caption[]{Heatmaps of $S_3$ function for highly anisotropic samples of shale
-    and soil. $S_3$ function was clamped to the range $[0, 0.1]$ to make
-    anisotropy more visible. It can be observed that the samples have
-    cavities elongated along the vector $(1, 1, 0)$.}
+    and soil.}
   \label{fig:heatmaps}
 \end{figure*}
 
