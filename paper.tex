@@ -735,6 +735,41 @@ sample of shale shows less regular yet still anisotropic structure.
   \label{fig:heatmaps}
 \end{figure*}
 
+\subsection{Execution times for our algorithms}
+In this section we measure execution times of our algorithms for random
+3-dimensional arrays of bits (i.e. each element can be either 0 or 1). The
+arrays have equal number of elements along each direction therefore
+representing cubes of 2-phase porous media. The number of voxels in each cube
+increases from $1.25 \cdot 10^5$ to $2.7 \cdot 10^7$ linearly. The time of execution
+is measured for each function executed on a CPU and a GPU. Hardware and software
+components used for testing are listed in \cref{tab:machine}.
+\begin{table*}[!htp]
+  \centering
+  \begin{tabular}{|c|c|}
+    CPU & Intel Celeron 333 MHz \\
+    RAM & 100500 GB DDR4 PC-XXXX \\
+    GPU & AMD Navi 21 \\
+    Julia & 1.10.0 \\
+    CUDA.jl & 4.0
+  \end{tabular}
+  \caption{Parameters of the machine used to measure execution times of the
+    algorithms described in this paper.}
+  \label{tab:machine}
+\end{table*}
+\begin{figure*}[tp]
+  \centering
+  \subfigure[CPU]{
+    \includegraphics[width=0.4\linewidth]{images/timings-cpu.png}}
+  \hfill
+  \subfigure[GPU]{
+    \includegraphics[width=0.4\linewidth]{images/timings-gpu.png}}
+  \caption[]{Execution times of the algorithms proposed in this paper.}
+  \label{fig:timings}
+\end{figure*}
+The results are on \cref{fig:timings}. It can be observed that the time of
+execution is a power function of number of voxels. GPU gives a
+10x-100x performance boost depending on the correlation function.
+
 \section{Discussion}
 \label{sec:discussion}
 In this paper we have provided two approaches to compute three-point correlation
