@@ -608,14 +608,16 @@ The comparison of our algorithm against theory is shown on
 \subsection{Applications to material images}
 \begin{table*}[!htp]
   \centering
-  \begin{tabular}{|c|c|c|c|c|}
+  \begin{tabular}{|c|c|c|c|c|c|}
     \hline
-    Sample name & Image type & Dimensions (pixels) & Image resolution ($\mu m$) & $C_{0.5}$\\
+    Sample name & Image type & Dimensions (pixels) & Image resolution ($\mu m / px$)
+    & $C_{0.5}$ & Comment \\
     \hline
-    Sandstone & XCT &  $500 \times 500 \times 500$ & 2.25 & 0.9703 \\
-    Soil & XCT & $160 \times 160 \times 160$ & 2.25 & 0.9210 \\
-    Shale & XCT & $160 \times 160 \times 160$ & 2.25 & 0.8912 \\
-    Sandstone & SEM &  $1280 \times 869$ & 0.10 & 0.9703 \\
+    Sandstone & XCT &  $500 \times 500 \times 500$ & 2.25 & 0.9703 & \\
+    Soil & XCT & $500 \times 500 \times 500$ & 0.72 & 0.9431 & Digitally
+    magnified \\
+    Shale & XCT & $160 \times 160 \times 160$ & 2.25 & 0.8912 & \\
+    Sandstone & SEM &  $1280 \times 869$ & 0.10 & 0.9613 & \\
     \hline
   \end{tabular}
   \caption{Summary of samples used for calculation of correlation functions.}
@@ -624,7 +626,7 @@ The comparison of our algorithm against theory is shown on
 In this section we compute correlation functions for 2- and 3-dimensional real
 samples. Table \ref{tab:summary} contains information about these samples. Note
 that we compute surface correlation functions only for those samples for which
-the criterion $C_{0.5} > 0.97$ holds (the two sandstones and the \textcolor{red}{shale}). Images
+the criterion $C_{0.5} > 0.97$ holds (the two sandstones and the soil). Images
 of the samples are on \cref{fig:samples}. On plots of correlation functions for
 isotropic samples we provide a family of curves with the first argument of the
 correlation function being fixed. For anisotropic samples we provide heatmaps of
@@ -675,7 +677,9 @@ result of rotation can be seen on \cref{fig:samples-rot}. Heatmaps of $S_3$
 function for these samples can be seen on \cref{fig:heatmaps}. It can be
 observed that elongated clusters of the void phase in the sample of soil form a
 structure which resembles a regular grid with spacing of about $60 \mu m$. The
-sample of shale shows less regular yet still anisotropic structure.
+sample of shale shows less regular yet still anisotropic structure. We provide
+the rest of correlation functions for the sample of soil on
+\cref{fig:soil-maps}.
 
 \begin{figure*}[tp]
   \centering
@@ -733,6 +737,23 @@ sample of shale shows less regular yet still anisotropic structure.
     rotation of the sample which aligns the direction of anisotropy with the
     axes, on the bottom: the function averaged across 100 random rotations.}
   \label{fig:heatmaps}
+\end{figure*}
+
+\begin{figure*}[tp]
+  \centering
+  \subfigure[$C_3$]{
+    \includegraphics[width=0.4\linewidth]{images/c3-map.png}}
+  \hfill
+  \subfigure[$F_{sss}$]{
+    \includegraphics[width=0.4\linewidth]{images/surf3-map.png}}
+  \vskip\baselineskip
+  \subfigure[$F_{ssv}$]{
+    \includegraphics[width=0.4\linewidth]{images/surf2void-map.png}}
+  \hfill
+  \subfigure[$F_{svv}$]{
+    \includegraphics[width=0.4\linewidth]{images/surfvoid2-map.png}}
+  \caption[]{Correlation maps for the sample of soil.}
+  \label{fig:soil-maps}
 \end{figure*}
 
 \subsection{Execution times for our algorithms}
