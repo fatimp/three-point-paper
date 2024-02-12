@@ -40,7 +40,7 @@ frequently require description for subsequent analysis, or stochastic
 reconstruction from limited data.  The classical descriptors are 2-point
 correlation functions (CFs), but the computation of 3-point statistics is known
 to be advantageous in some cases as they can probe non-Gaussian signatures, not
-captured by their 2-point counterparts.  Moreover, 3-point and CFs with $n>3$
+captured by their 2-point counterparts. Moreover, $n$-point CFs with $n \ge 3$
 are believed to possess larger information content and provide more information
 about studies structures. In this paper, we have developed algorithms and code
 to compute $S_3, C_3, F_{sss}, F_{ssv}$ and $F_{svv}$ with a right-angle
@@ -171,7 +171,7 @@ descriptor:
     structure is not yet known, compared to other complex descriptors where are
     known pathways to assess the information content of correlation functions --
     there is a methodology for $S_2$ \cite{Gommes2} and approaches for other
-    functions \cite{Degeneraty.045306,cherkasov2023towards};
+    functions \cite{Degeneraty.045306,CHERKASOV2024129400};
   \item In addition to a possibility to compute correlation functions using
     images or other structural data, i.e., similar to all other descriptors,
     some CFs can be also determined experimentally
@@ -232,7 +232,7 @@ future research.
 \label{sec:methods}
 \subsection{3-point correlation functions}
 Let $A_1, A_2, \dots, A_n$ be pairwise disjoint subsets of a set
-$A \subset \mathbb{R}^n$, where the index can be interpreted as a phase on the
+$A \subset \mathbb{R}^m$, where the index can be interpreted as a phase on the
 image $A$. We introduce a family of indicator functions
 $I_n(x) : A \rightarrow \{0,1\}$ defined as:
 \begin{equation}
@@ -245,26 +245,25 @@ $I_n(x) : A \rightarrow \{0,1\}$ defined as:
 \end{equation}
 
 Now we can define the three-point correlation function
-$S_3: \mathbb{R}^{2n} \rightarrow [0, 1]$:
+$S_3: \mathbb{R}^{2m} \rightarrow [0, 1]$:
 \begin{equation}
   S_3^n(x_1, x_2) = \langle I_n(x) I_n(x + x_1) I_n(x + x_2) \rangle
 \end{equation}
-where $\langle \dots \rangle$ means average over all points in $A$. It can be
-understood as the probability that all three vertices of a triangle
-$(0, x_1, x_2)$ will appear in the subset $A_n$ when the triangle is randomly
-thrown in $A$. When $A$ represent isotropic medium, $x_1$ and $x_2$ can be
-replaced with three numbers $r_1 = |x_1|$, $r_2 = |x_2|$ and $r_3 = |x_2 - x_1|$
-to get a function of three scalar arguments.
+where $\langle \dots \rangle$ means ensemble average. It can be understood as
+the probability that all three vertices of a triangle $(0, x_1, x_2)$ will
+appear in the subset $A_n$ when the triangle is randomly thrown in $A$. When $A$
+represent isotropic medium, $x_1$ and $x_2$ can be replaced with three numbers
+$r_1 = |x_1|$, $r_2 = |x_2|$ and $r_3 = |x_2 - x_1|$ to get a function of three
+scalar arguments.
 
 Another function closely related to the three-point correlation function is the
 cluster function which can be defined as:
 \begin{equation}
-  C_3^n(x_1, x_2) = \sum_{k=1}^K \langle \tilde{I}_k(x) \tilde{I}_k(x + x_1)
-  \tilde{I}_k(x + x_2) \rangle
+  C_3^n(x_1, x_2) = \sum_{k=1}^K \langle I_n^k(x) I_n^k(x + x_1) I_n^k(x + x_2) \rangle
 \end{equation}
-where $\tilde{I}_k$ is an indicator function for $k$-th cluster and $K$ is a
-total number of clusters. A cluster is a subset of $A_n$ so that any two points
-in this subset can be connected with a curve belonging to that subset.
+where $I_n^k$ is an indicator function for $k$-th cluster of $A_n$ and $K$
+is a total number of clusters. A cluster is a subset of $A_n$ so that any two
+points in this subset can be connected with a curve belonging to that subset.
 
 By introducing a function $M_n(x) = |\nabla I_n(x)|$ which is a so-called interface
 indicator function, we can define three additional
@@ -273,16 +272,16 @@ correlation functions -- these are the surface-surface-surface function
 function ($F_{svv}$). They are defined as:
 \begin{align}
   F_{sss}^n(x_1, x_2) &= \langle M_n(x) M_n(x + x_1) M_n(x + x_2) \rangle \\
-  F_{ssv}^n(x_1, x_2) &= \langle M_n(x) M_v(x + x_1) I_v(x + x_2) \rangle \\
-  F_{svv}^n(x_1, x_2) &= \langle M_n(x) I_v(x + x_1) I_v(x + x_2) \rangle
+  F_{ssv}^n(x_1, x_2) &= \langle M_n(x) M_{(void)}(x + x_1) I_{(void)}(x + x_2) \rangle \\
+  F_{svv}^n(x_1, x_2) &= \langle M_n(x) I_{(void)}(x + x_1) I_{(void)}(x + x_2) \rangle
 \end{align}
-Here $I_v$ is an indicator function for the subset of the void phase
+Here $I_{(void)}$ is an indicator function for the subset of the void phase
 $A_v$. Unlike $S_3$ and $C_3$ functions, these functions do not have the meaning
 of probability and have the units of measurement inversely proportional to
-volume, surface and length, respectively (e.g., can be measured in $\mu m^{-3}$, $\mu m^{-2}$ and
-$\mu m^{-1}$ or other convenient dimensionless units depending on the problem to be solved). 
-These functions describe the interface of the subset $A_n$ and
-its spatial configuration with respect to $A_v$.
+volume, surface and length, respectively (e.g., can be measured in $\mu m^{-3}$,
+$\mu m^{-2}$ and $\mu m^{-1}$ or other convenient dimensionless units depending
+on the problem to be solved).  These functions describe the interface of the
+subset $A_n$ and its spatial configuration with respect to $A_v$.
 
 \subsection{Computational algorithms}
 Three-point correlation function $S_3$ can be computed either in spatial domain
@@ -309,9 +308,10 @@ returned.
 There are two common boundary conditions when applying $\mathfrak{S}$. The
 first condition is to extend $A_n$ periodically (\cref{fig:s3-periodic}) when
 accessing out-of-bounds array elements. In this case $\mathfrak{S}_z$ is a
-circular shift operator:
+circular shift operator (here ``$x \mod y$'' means a vector
+$(x_1 \mod y_1, x_2 \mod y_2, \dots)$):
 \begin{equation}
-  A[x] \leftarrow A[x+z \mod d]
+  A[x] \leftarrow A[x+z \mod shape(A)]
 \end{equation}
 In this case $Norm(A, x_1, x_2)$ does not depend on $x_1$ and $x_2$ and
 is equal to the total number of elements in $A$. The second condition is to
@@ -804,7 +804,9 @@ for the sample of soil on \cref{fig:soil-maps}.
   \hfill
   \subfigure[$F_{svv}$]{
     \includegraphics[width=0.4\linewidth]{images/surfvoid2-map.png}}
-  \caption[]{Correlation maps for the sample of soil.}
+  \caption[]{Correlation maps for the cluster function and the surface functions
+    of the sample of soil. The functions are calculated for a rotation of the
+    sample which aligns the direction of anisotropy with the axes.}
   \label{fig:soil-maps}
 \end{figure*}
 
@@ -939,7 +941,7 @@ that complicated \cite{dimitrakopoulos2010high}.
 
 We mentioned that classic set of correlation functions describes both the
 geometry and topology of the structure at hand -- but this is to yet unknown
-extent. With the advent of analytical methods \cite{cherkasov2023towards} to
+extent. With the advent of analytical methods \cite{CHERKASOV2024129400} to
 assess information content of arbitrary descriptor for structure of any size, it
 will be possible to choose the most useful set of correlation functions and
 compare their information content against classical and other metrics. If
