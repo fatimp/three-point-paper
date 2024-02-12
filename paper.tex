@@ -36,27 +36,36 @@
 \begin{abstract}
 Structures, or spatial arrangements of matter and energy, including some fields
 (e.g., velocity or pressure) are ubiquitous in research applications and
-frequently require description for subsequent analysis, or stochastic reconstruction from limited data.
-The classical descriptors are 2-point correlation functions (CFs), but the computation of 3-point statistics is known to be
-advantageous in some cases as they can probe non-Gaussian signatures, not captured by their 2-point counterparts.
-Moreover, 3-point and CFs with $n>3$ are believed to possess larger information content and provide 
-more information about studies structures. In this paper, we have developed algorithms and code to compute 
-$S_3, C_3, F_{sss}, F_{ssv}$ and $F_{svv}$ with a right-angle triangle pattern. This pattern is much
-easier to vectorize and parallelize compared to previously used random triangle or spider-web sampling patterns. Moreover,
-it allows to easily implement computations of directional 3-point CFs. The execution times
-for the same number of sample are orders of magnitude lower than existing published counterparts. We showed that the volume of
-data produced get unwieldy very easily, especially if computations are performed in frequency domain. For these reasons until
-information content of different sets of correlation functions with different "n-pointness" is not known, 
-advantages of CFs with $n>3$ are not clear. Nonetheless, developed algorithms and code are universal enough to be
-easily extendable to any $n$ (with increasing computational and RAM burden). All results are available as part of open source
-package \code{CorrelationFunctions.jl} [Postnicov et al., 2024, Comp.Phys.Commun(accepted)]. As described in this paper, 
-3-point CFs computations can be immediately applied in a great number of
-research applications, for example: 1) flow and transport velocity fields analysis or any data with non-Gaussian signatures,
-2) deep learning for structural and physical properties, 3) structure taxonomy and categorization. 
-In all these and numerous other potential cases the ability
-to compute directional 3-point functions may be crucial. Notably, the organization of the code functions allows computation
-of cross-correlation, i.e., one can compute 3-point CFs for multiphase images (while binary structures were used in this paper
-for simplicity of explanations).
+frequently require description for subsequent analysis, or stochastic
+reconstruction from limited data.  The classical descriptors are 2-point
+correlation functions (CFs), but the computation of 3-point statistics is known
+to be advantageous in some cases as they can probe non-Gaussian signatures, not
+captured by their 2-point counterparts.  Moreover, 3-point and CFs with $n>3$
+are believed to possess larger information content and provide more information
+about studies structures. In this paper, we have developed algorithms and code
+to compute $S_3, C_3, F_{sss}, F_{ssv}$ and $F_{svv}$ with a right-angle
+triangle pattern. This pattern is much easier to vectorize and parallelize
+compared to previously used random triangle or spider-web sampling
+patterns. Moreover, it allows to easily implement computations of directional
+3-point CFs. The execution times for the same number of sample are orders of
+magnitude lower than existing published counterparts. We showed that the volume
+of data produced get unwieldy very easily, especially if computations are
+performed in frequency domain. For these reasons until information content of
+different sets of correlation functions with different "n-pointness" is not
+known, advantages of CFs with $n>3$ are not clear. Nonetheless, developed
+algorithms and code are universal enough to be easily extendable to any $n$
+(with increasing computational and RAM burden). All results are available as
+part of open source package \code{CorrelationFunctions.jl} [Postnicov et al.,
+  2024, Comp.Phys.Commun(accepted)]. As described in this paper, 3-point CFs
+computations can be immediately applied in a great number of research
+applications, for example: 1) flow and transport velocity fields analysis or any
+data with non-Gaussian signatures, 2) deep learning for structural and physical
+properties, 3) structure taxonomy and categorization.  In all these and numerous
+other potential cases the ability to compute directional 3-point functions may
+be crucial. Notably, the organization of the code functions allows computation
+of cross-correlation, i.e., one can compute 3-point CFs for multiphase images
+(while binary structures were used in this paper for simplicity of
+explanations).
 \end{abstract}
 
 %\keywords{Arrays, multiplication, addition}
@@ -114,12 +123,13 @@ within different disciplines is stunning, for example: phase ratio or porosity
 \cite{Torquato_book}, persistence diagrams
 \cite{shivashankar2015felix,saadatfar2017pore,obayashi2018persistence}. The
 evolution of such metrics was mainly induced by the ease of measurement and
-interpretation. In fact, we need a single universal descriptor defined by only one characteristic -- information
-content. The latter is an ability of the metric to describe the structure at
-hand with 100$\%$ meaning the ability to fully recover the structure back from
-this metric. Thus, universal descriptor has to possess following key properties:
-(1) high information content, (2) ease of assess, (3) high compression ratio (i.e.,
-descriptor is much "smaller" than the structure itself).
+interpretation. In fact, we need a single universal descriptor defined by only
+one characteristic -- information content. The latter is an ability of the
+metric to describe the structure at hand with 100\% meaning the ability to
+fully recover the structure back from this metric. Thus, universal descriptor
+has to possess following key properties: (1) high information content, (2) ease
+of assess, (3) high compression ratio (i.e., descriptor is much "smaller" than
+the structure itself).
 
 \begin{figure*}[ht]
   \centering
@@ -352,10 +362,12 @@ element of the map in spatial domain is required. The aforementioned limitations
 render this approach impractical.
 
 Our implementation fixes $x_1$ and $x_2$ to be parallel to one of the axes $X$,
-$Y$ or $Z$ with restriction $x_1 \perp x_2$ (\cref{fig:pattern}) \cite{dimitrakopoulos2010high}. Thus, the
-output has dimensions $D_1 \times D_2$ where $D_1$ and $D_2$ are dimensions of
-the input array along selected axes. Note that shift operators with such $x_1$ and $x_2$
-represent a 3-point function computed within a 3D domain, but along a predefined direction (see below).
+$Y$ or $Z$ with restriction $x_1 \perp x_2$ (\cref{fig:pattern})
+\cite{dimitrakopoulos2010high}. Thus, the output has dimensions $D_1 \times D_2$
+where $D_1$ and $D_2$ are dimensions of the input array along selected
+axes. Note that shift operators with such $x_1$ and $x_2$ represent a 3-point
+function computed within a 3D domain, but along a predefined direction (see
+below).
 \begin{figure}[ht]
   \centering
   \includegraphics[width=0.5\linewidth]{images/pattern.png}
@@ -441,9 +453,10 @@ defined as follows:
 
 \subsection{Analysis of anisotropic media}
 When an analyzed sample is anisotropic, i.e., it is stretched or oriented along
-some specific direction, it may be beneficial to align one of the cathetus of 
+some specific direction, it may be beneficial to align one of the cathetus of
 sampling triangle \cref{fig:pattern} with that direction. In this case the
-anisotropy present in the sample will be properly captured by computed 3-pint correlation function.
+anisotropy present in the sample will be properly captured by computed 3-point
+correlation function.
 
 To detect the direction of anisotropy we use an $N \times N$ (where $N$ is
 dimensionality of the sample) covariance matrix for coordinates of points in the
@@ -488,20 +501,23 @@ the correlation function \cref{fig:aniso}.
 When a sample is known to be isotropic, the correlation function may be
 calculated multiple times, each time applying a random rotation of the sample,
 and then averaged across rotations to gather more statistics. This process is
-illustrated on \cref{fig:workflow}. This way we obtain similar results to sampling procedures
-used in \cite{berryman1988,SMITH1988176,malmir2018}.
+illustrated on \cref{fig:workflow}. This way we obtain similar results to
+sampling procedures used in \cite{berryman1988,SMITH1988176,malmir2018}.
 
 Another approach is to fix a number of directions, for example, orthogonal and
-diagonal ones \cite{EPL1,EPL2,CFsjlpaper}. In other words, the sample is rotated with periodic boundary conditions
-to orient along predefined directions. After each rotation we compute correlation functions
-as described above and obtain a number of matrices $D_1 \times D_2$ that are then
-stacked to represent 3-point correlation functions computed in directions \cref{fig:workflow}.
+diagonal ones \cite{EPL1,EPL2,CFsjlpaper}. In other words, the sample is rotated
+with periodic boundary conditions to orient along predefined directions. After
+each rotation we compute correlation functions as described above and obtain a
+number of matrices $D_1 \times D_2$ that are then stacked to represent 3-point
+correlation functions computed in directions \cref{fig:workflow}.
 
-To summarize, \code{CorrelationFunctions.jl} allows to compute 3-point correlation functions
-averaged in all directions (by randomly rotating the sample), along predefined number of directions
-(e.g., orthogonal and diagonal by rotation in these directions)
-or along the direction of major anisotropy (that can be determined using \code{$detect\_anisotropy$} function).
-Full correlation map for 3-point functions is impractical due its huge size and is not implemented.
+To summarize, \code{CorrelationFunctions.jl} allows to compute 3-point
+correlation functions averaged in all directions (by randomly rotating the
+sample), along predefined number of directions (e.g., orthogonal and diagonal by
+rotation in these directions) or along the direction of major anisotropy (that
+can be determined using \code{$detect\_anisotropy$} function).  Full correlation
+map for 3-point functions is impractical due its huge size and is not
+implemented.
 
 \begin{figure*}[tp]
   \centering
@@ -511,7 +527,8 @@ Full correlation map for 3-point functions is impractical due its huge size and 
     directions (which is equivalent to rotating the sampling pattern),
     2.~calculating the correlation function for each direction, 3.~avegaring
     results across rotations, 4.~representing the result as a family of 2D
-    plots. \highlight{Show "random rotation" at the slice, "Stack of directional functions" on the right-upper.}}
+    plots. \highlight{Show "random rotation" at the slice, "Stack of directional
+      functions" on the right-upper.}}
   \label{fig:workflow}
 \end{figure*}
 
@@ -658,14 +675,15 @@ The comparison of our algorithm against theory is shown on
   \caption{Summary of samples used for calculation of correlation functions.}
   \label{tab:summary}
 \end{table*}
-In this section we compute correlation functions for 2- and 3-dimensional
-porous media samples. Table \ref{tab:summary} contains information about these samples. Note
-that we compute surface correlation functions only for those samples for which
-the criterion $C_{0.5} > 0.97$ holds (the two sandstones and the soil) \cite{samarin2023robust}. Images
-of the samples are presented on \cref{fig:samples}. On plots of correlation functions for
-isotropic samples we provide a family of curves with the first argument of the
-correlation function being fixed. For anisotropic samples we provide heatmaps of
-correlation functions where anisotropy can be easily observed.
+In this section we compute correlation functions for 2- and 3-dimensional porous
+media samples. Table \ref{tab:summary} contains information about these
+samples. Note that we compute surface correlation functions only for those
+samples for which the criterion $C_{0.5} > 0.97$ holds (the two sandstones and
+the soil) \cite{samarin2023robust}. Images of the samples are presented on
+\cref{fig:samples}. On plots of correlation functions for isotropic samples we
+provide a family of curves with the first argument of the correlation function
+being fixed. For anisotropic samples we provide heatmaps of correlation
+functions where anisotropy can be easily observed.
 \begin{figure*}[tp]
   \centering
   \subfigure[Sanstone XCT]{
@@ -707,14 +725,15 @@ along the ordinate). The samples have clusters which are $\sim 45\ \mu m$ in
 diameter.
 
 The anisotropic samples (the soil and the shale) were preliminarily rotated with
-periodic boundary conditions to align elongated pores with coordinate axes. Rotated samples 
-are presented on \cref{fig:samples-rot} and heatmaps of $S_3$
-function for these samples -- on \cref{fig:heatmaps}. Based on the analysis of correlation functions it is
-evident that elongated clusters of the void phase within the Soil sample form a
-structure which resembles a regular grid with spacing of about $60 \mu m$. The
-sample of shale shows less regular yet still anisotropic structure. We provide
-the rest of correlation functions for the sample of soil on
-\cref{fig:soil-maps} - \highlight{and what can we see here?}.
+periodic boundary conditions to align elongated pores with coordinate
+axes. Rotated samples are presented on \cref{fig:samples-rot} and heatmaps of
+$S_3$ function for these samples -- on \cref{fig:heatmaps}. Based on the
+analysis of correlation functions it is evident that elongated clusters of the
+void phase within the Soil sample form a structure which resembles a regular
+grid with spacing of about $60 \mu m$. The sample of shale shows less regular
+yet still anisotropic structure. We provide the rest of correlation functions
+for the sample of soil on \cref{fig:soil-maps} - \highlight{and what can we see
+  here?}.
 
 \begin{figure*}[tp]
   \centering
@@ -792,15 +811,15 @@ the rest of correlation functions for the sample of soil on
 \end{figure*}
 
 \subsection{Execution times for our algorithms}
-In this section we assess execution times of proposed computational algorithms for random
-3-dimensional arrays of bits (i.e. each element can be either 0 or 1). For ease of analysis, the
-arrays have the equal number of elements along each direction therefore
-representing cubes of binary porous media. The number of voxels $V$ in each
-cube increases from $1.25 \cdot 10^5$ to $2.7 \cdot 10^7$ linearly. Times of
-execution are measured separately for each function executed on a CPU and a GPU. Hardware
-and software components used for testing are listed in \cref{tab:machine}. Each
-computation of a correlation function is equivalent to throwing of $V^{5/3}$ pattern
-triangles into the sample.
+In this section we assess execution times of proposed computational algorithms
+for random 3-dimensional arrays of bits (i.e. each element can be either 0 or
+1). For ease of analysis, the arrays have the equal number of elements along
+each direction therefore representing cubes of binary porous media. The number
+of voxels $V$ in each cube increases from $1.25 \cdot 10^5$ to $2.7 \cdot 10^7$
+linearly. Times of execution are measured separately for each function executed
+on a CPU and a GPU. Hardware and software components used for testing are listed
+in \cref{tab:machine}. Each computation of a correlation function is equivalent
+to throwing of $V^{5/3}$ pattern triangles into the sample.
 \begin{table*}[!htp]
   \centering
   \begin{tabular}{|c|c|}
@@ -832,16 +851,21 @@ random pixel/voxel patterns are a hard test for some functions, especially for
 $C_3$, as it produces a huge number of separate clusters. Thus, for real samples
 execution times can be even smaller compared to those reported on \cref{fig:timings}.
 
-Direct comparison against existing modern approaches, namely described by Malmir et al. \cite{malmir2018}
-and by Sun et al. \cite{sun2022third}, is not always straightforward due to algorithmic differences.
-In particular, the latter cited work computes 3-point correlation functions for sphere packings in the continuous domain;
-however, on a GPU it takes approximately 28 hours to perform $2\times10^6$ samplings (see Table 1 in \cite{sun2022third}). 
-Considering verification results in \cref{sec:results}, it seems that it would be much faster to discretize the sphere packing
-with appropriate $C_{0.5} > 0.97$ and to utilize our package to assess correlation functions within tens of minutes without any loss in accuracy.
-For $S_3$ and 3-point surface functions, Malmir et al. reported computation times of a couple of minutes for a $128^3$ voxels 
-3D image with $2\times10^5$ samples on CPU (see section IV in \cite{malmir2018}).
-In our case, we sample $\approx 31\times10^9$ triangles within 2 sec on CPU, and less than a second on GPU.
-Our implementation of $C_3$ is even more performant compared to existing counterparts.
+Direct comparison against existing modern approaches, namely described by Malmir
+et al. \cite{malmir2018} and by Sun et al. \cite{sun2022third}, is not always
+straightforward due to algorithmic differences.  In particular, the latter cited
+work computes 3-point correlation functions for sphere packings in the
+continuous domain; however, on a GPU it takes approximately 28 hours to perform
+$2\times10^6$ samplings (see Table 1 in \cite{sun2022third}).  Considering
+verification results in \cref{sec:results}, it seems that it would be much
+faster to discretize the sphere packing with appropriate $C_{0.5} > 0.97$ and to
+utilize our package to assess correlation functions within tens of minutes
+without any loss in accuracy.  For $S_3$ and 3-point surface functions, Malmir
+et al. reported computation times of a couple of minutes for a $128^3$ voxels 3D
+image with $2\times10^5$ samples on CPU (see section IV in \cite{malmir2018}).
+In our case, we sample $\approx 31\times10^9$ triangles within 2 sec on CPU, and
+less than a second on GPU.  Our implementation of $C_3$ is even more performant
+compared to existing counterparts.
 
 \section{Discussion}
 \label{sec:discussion}
@@ -867,83 +891,106 @@ in linear time. It is still an open question if there are linear transforms whic
 allow computation of convolution faster than a naïve approach
 \cite{stone2008uniqueness,stone1998convolution}.
 
-We have made execuation time comparisons of our algorithm with existing algorithms.
-However, it is also beneficial to compare some algorithmic details against existing digital approaches --
-proposed by Malmir~et~al \cite{malmir2018} and another one by Smith and
-Torquato \cite{SMITH1988176}. The first algorithm generates a triangle with
-fixed sides $r_1$ and $r_2$ and an arbitrary angle $\theta$ between them and
-places it in the medium firstly making a random translation and a rotation
-around a random vector by a random angle. By making a large number of trials the
-algorithm gets a value of a three-point correlation function at the point
-$(r_1, r_2, \theta)$. The second algorithm takes a precalculated triangle
-$(r_1, r_2, \theta)$ from a web-like pattern and places it in the medium without
-rotation, only applying a random translation. This way the algorithm preserves
-orientation of triangles stored in the pattern. The main advantage of our
-approach based on right triangle is in its parallelizability and ease of implementation. A drawback is
-that an angle between catheti of the sampling pattern is fixed to be
-$\theta = \frac{\pi}{2}$, but can be mitigated by rotation of the pattern as a whole by an
-equivalent operation of rotation of a sample. These rotations can be random as
-in the Malmir et al. algorithm, or it can be a single rotation
-to align catheti of the sampling triangle with the direction of anisotropy
-(\cref{fig:aniso}). The latter allows computing directional 3-point correlation functions
-for anisotropic structures similar to 2-point counterparts \cite{10.1063/1.4867611,EPL1}.
+We have made execuation time comparisons of our algorithm with existing
+algorithms.  However, it is also beneficial to compare some algorithmic details
+against existing digital approaches -- proposed by Malmir~et~al
+\cite{malmir2018} and another one by Smith and Torquato \cite{SMITH1988176}. The
+first algorithm generates a triangle with fixed sides $r_1$ and $r_2$ and an
+arbitrary angle $\theta$ between them and places it in the medium firstly making
+a random translation and a rotation around a random vector by a random angle. By
+making a large number of trials the algorithm gets a value of a three-point
+correlation function at the point $(r_1, r_2, \theta)$. The second algorithm
+takes a precalculated triangle $(r_1, r_2, \theta)$ from a web-like pattern and
+places it in the medium without rotation, only applying a random
+translation. This way the algorithm preserves orientation of triangles stored in
+the pattern. The main advantage of our approach based on right triangle is in
+its parallelizability and ease of implementation. A drawback is that an angle
+between catheti of the sampling pattern is fixed to be $\theta = \frac{\pi}{2}$,
+but can be mitigated by rotation of the pattern as a whole by an equivalent
+operation of rotation of a sample. These rotations can be random as in the
+Malmir et al. algorithm, or it can be a single rotation to align catheti of the
+sampling triangle with the direction of anisotropy (\cref{fig:aniso}). The
+latter allows computing directional 3-point correlation functions for
+anisotropic structures similar to 2-point counterparts
+\cite{10.1063/1.4867611,EPL1}.
 
-As was mentioned in the \cref{sec:intro} section, computation of 3-point correlation functions can be beneficial
-for some applications, yet the trade-off between computational/storage burden due to higher orders and information content
-is still not clear. The same goes for representation of the correlation functions -- either in the form of
-averaged or directional functions, or as a full correlation map. The latter is larger than the original image
-and was found beneficial only in a limited number of applications, for example, in 3D stochastic reconstructions 
-from 2D cuts \cite{cherkasov2021adaptive}. Computation of 3-point functions for 3D image even along a single direction with
-a simplified pattern in the form of right-angle triangle produces a 2D matrix similar in size to a 2D cut through
-the sample at hand \cref{fig:workflow}. Averaging over a huge number of directions produces the same volume of
-data, but looses all information about directional differences within the structure. Computation of CFs with n > 3 results
-in multidimensional matrices larger than the 3D image. The only way to keep this profusion 
-of floats at bay is to utilize the pattern that can be described with a single parameter while shifting without 
-rotations \cite{chen2019hierarchical,chen2022}. In this fashion the results can be still represented by a single function
-similar to 2-point CFs. But weather this approach produces the descriptors with higher information content is an open question.
-In light of this discussion, at this point we decided to limit \code{CorrelationFunctions.jl} with $n=3$, keeping in mind that
-extension of our algorithms to $n>3$ for $S_n, C_n, F_{s...s}$ and $F_{s...v}$ 
-is actually not that complicated \cite{dimitrakopoulos2010high}.
+As was mentioned in the \cref{sec:intro} section, computation of 3-point
+correlation functions can be beneficial for some applications, yet the trade-off
+between computational/storage burden due to higher orders and information
+content is still not clear. The same goes for representation of the correlation
+functions -- either in the form of averaged or directional functions, or as a
+full correlation map. The latter is larger than the original image and was found
+beneficial only in a limited number of applications, for example, in 3D
+stochastic reconstructions from 2D cuts
+\cite{cherkasov2021adaptive}. Computation of 3-point functions for 3D image even
+along a single direction with a simplified pattern in the form of right-angle
+triangle produces a 2D matrix similar in size to a 2D cut through the sample at
+hand \cref{fig:workflow}. Averaging over a huge number of directions produces
+the same volume of data, but looses all information about directional
+differences within the structure. Computation of CFs with n > 3 results in
+multidimensional matrices larger than the 3D image. The only way to keep this
+profusion of floats at bay is to utilize the pattern that can be described with
+a single parameter while shifting without rotations
+\cite{chen2019hierarchical,chen2022}. In this fashion the results can be still
+represented by a single function similar to 2-point CFs. But weather this
+approach produces the descriptors with higher information content is an open
+question.  In light of this discussion, at this point we decided to limit
+\code{CorrelationFunctions.jl} with $n=3$, keeping in mind that extension of our
+algorithms to $n>3$ for $S_n, C_n, F_{s...s}$ and $F_{s...v}$ is actually not
+that complicated \cite{dimitrakopoulos2010high}.
 
-We mentioned that classic set of correlation functions describes
-both the geometry and topology of the structure at hand -- but this is to yet
-unknown extent. With the advent of analytical methods
-\cite{cherkasov2023towards} to assess information content of arbitrary
-descriptor for structure of any size, it will be possible to choose the most
-useful set of correlation functions and compare their information content
-against classical and other metrics. If computationally effective methodology 
-for information content assessment will be developed, it should amend all
-aforementioned uncertainties and provide a clear winner -- a plethora of different 2-point CFs
-or a less numerous set of higher-order functions. Such long awaited answer
-would not be universal thought and depends not only on descriptor's information content versus
-data volume ratio, but also on its applicability to solve particular problems. For example,
-it is well known that cluster $C_2$ function provides a lot of information in addition to $S_2$ \cite{JiaoPNAS},
-yet it's application in stochastic reconstructions is very limited due to computational burden of cluster
-relabeling during annealing \cite{PLoS_ONE}. Still, effective information content assessment techniques
-will provide a possibility to account for such additional application constraints.
+We mentioned that classic set of correlation functions describes both the
+geometry and topology of the structure at hand -- but this is to yet unknown
+extent. With the advent of analytical methods \cite{cherkasov2023towards} to
+assess information content of arbitrary descriptor for structure of any size, it
+will be possible to choose the most useful set of correlation functions and
+compare their information content against classical and other metrics. If
+computationally effective methodology for information content assessment will be
+developed, it should amend all aforementioned uncertainties and provide a clear
+winner -- a plethora of different 2-point CFs or a less numerous set of
+higher-order functions. Such long awaited answer would not be universal thought
+and depends not only on descriptor's information content versus data volume
+ratio, but also on its applicability to solve particular problems. For example,
+it is well known that cluster $C_2$ function provides a lot of information in
+addition to $S_2$ \cite{JiaoPNAS}, yet it's application in stochastic
+reconstructions is very limited due to computational burden of cluster
+relabeling during annealing \cite{PLoS_ONE}. Still, effective information
+content assessment techniques will provide a possibility to account for such
+additional application constraints.
 
-As described in this paper, 3-point CFs computations can be immediately applied in a great number of
-research applications, for example: 1) flow and transport velocity fields analysis or any data with non-Gaussian signatures,
-2) deep learning for structural and physical properties (at least to observe the differences between 2-point and 3-point based
-training datasets), 3) structure taxonomy and categorization. In all these and numerous other potential cases the ability
-to compute directional 3-point functions may be crucial. Notably, the organization of the code functions for 3-point CFs
-computation is similar to those previously developed for 2-point functions \cite{CFsjlpaper}, thus, allowing computation
-of cross-correlation, i.e., one can compute 3-point CFs for multiphase images (while binary structures were used in this paper
-for simplicity).
+As described in this paper, 3-point CFs computations can be immediately applied
+in a great number of research applications, for example: 1) flow and transport
+velocity fields analysis or any data with non-Gaussian signatures, 2) deep
+learning for structural and physical properties (at least to observe the
+differences between 2-point and 3-point based training datasets), 3) structure
+taxonomy and categorization. In all these and numerous other potential cases the
+ability to compute directional 3-point functions may be crucial. Notably, the
+organization of the code functions for 3-point CFs computation is similar to
+those previously developed for 2-point functions \cite{CFsjlpaper}, thus,
+allowing computation of cross-correlation, i.e., one can compute 3-point CFs for
+multiphase images (while binary structures were used in this paper for
+simplicity).
 
 \section{Summary}
-In this paper, we have considered the problem of computing n-point correlation functions, namely $S_n, C_n, F_{s...s}$ and $F_{s...v}$,
-for which computationally efficient algorithms can be developed (including computations on GPU). For $n=3$ we have developed code in
-Julia language to compute $S_3, C_3, F_{sss}, F_{ssv}$ and $F_{svv}$ with a right-angle triangle pattern. This pattern is much
-easier to vectorize and parallelize compared to previously used random triangle or spider-web sampling patterns. Moreover,
-it allows to easily implement computations of directional 3-point CFs. The execution times
-for the same number of sample are orders of magnitude lower than existing published counterparts. We showed that the volume of
-data produced get unwieldy very easily, especially if computations are performed in frequency domain. For these reasons until
-information content of different sets of correlation functions with different "n-pointness" is not known, it is seemingly
-no much reason to increase the number of points. Nonetheless, developed algorithms and code are universal enough to be
-easily extendable to any $n$ (with increasing computational and RAM burden). All results are available as part of open source
-package \code{CorrelationFunctions.jl}, developed by our group and freely available to the public with numerous Jupiter
-notebooks showing examples of applications to assess 3-point correlation functions for 2D and 3D images.
+In this paper, we have considered the problem of computing n-point correlation
+functions, namely $S_n, C_n, F_{s...s}$ and $F_{s...v}$, for which
+computationally efficient algorithms can be developed (including computations on
+GPU). For $n=3$ we have developed code in Julia language to compute $S_3, C_3,
+F_{sss}, F_{ssv}$ and $F_{svv}$ with a right-angle triangle pattern. This
+pattern is much easier to vectorize and parallelize compared to previously used
+random triangle or spider-web sampling patterns. Moreover, it allows to easily
+implement computations of directional 3-point CFs. The execution times for the
+same number of sample are orders of magnitude lower than existing published
+counterparts. We showed that the volume of data produced get unwieldy very
+easily, especially if computations are performed in frequency domain. For these
+reasons until information content of different sets of correlation functions
+with different "n-pointness" is not known, it is seemingly no much reason to
+increase the number of points. Nonetheless, developed algorithms and code are
+universal enough to be easily extendable to any $n$ (with increasing
+computational and RAM burden). All results are available as part of open source
+package \code{CorrelationFunctions.jl}, developed by our group and freely
+available to the public with numerous Jupiter notebooks showing examples of
+applications to assess 3-point correlation functions for 2D and 3D images.
 
 \appendix
 \section{Computation of number of trials for non-periodic mode}
