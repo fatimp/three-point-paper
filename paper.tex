@@ -474,7 +474,9 @@ $\Lambda$ is diagonal. $T$ can always be made so that it defines a rotation (by
 multiplication of one of the columns by $-1$ if needed, so that
 $\det T = 1$). Application of this rotation to the sample makes the direction of
 anisotropy parallel to one of the axes, so anisotropy can be better represented in
-the correlation function \cref{fig:aniso}.
+the correlation function \cref{fig:aniso}. In our implementation we use rotation
+with nearest-neighbor interpolcation which affects quality of computations as
+discussed in \cref{sec:rotqua}.
 \begin{figure*}[!htp]
   \centering
   \begin{tabular}{ccc}
@@ -1021,6 +1023,88 @@ to zero:
   \right.
 \end{equation}
 For 3D case $S=172.96$ and for 2D case $S=30.46$ \cite{postnicov20232}.
+
+\section{Influence of sample rotation on quality of computations}
+\label{sec:rotqua}
+\begin{figure*}[tp]
+  \centering
+  \subfigure[A sample of value noise]{
+    \includegraphics[width=0.4\linewidth]{images/noise.png}
+    \label{fig:roterror-noise}}
+  \hfill
+  \subfigure[Relative error of computation]{
+    \includegraphics[width=0.4\linewidth]{images/roterror.png}
+    \label{fig:roterror-error}}
+  \caption[]{A plot of dependency of maximal pointwise relative error
+    \cref{eq:relerr} in computation of correlation functions introduced by a
+    rotation of the sample \cref{fig:roterror-noise} from the rotation
+    angle. The rotation is performed around $Z$ axis counter-clockwise using
+    nearest-neighbor interpolation.}
+  \label{fig:roterror}
+\end{figure*}
+Our edge extraction filter works only for binary samples, therefore it is
+natural to require that a rotated image remains binary. The simpliest way to do
+so is to use nearest-neighbor interpolation when sampling subvoxel data during
+rotation. This results only in minimal precision loss in computation of
+correlation functions.
+
+Speculatively, the loss in precision should be minimal for three-point and
+cluster correlation functions, because they are calculated
+``in the whole volume'' of the sample. The biggest loss should be for $F_{sss}$
+function because it takes into account only a small volume of the sample which
+lies closely to the interface between phases and this volume is the only volume
+affected by the rotation.
+
+To estimate the error introduced by rotation, consider a
+$300 \times 300 \times 300$ sample of value noise \cref{fig:roterror-noise}
+which is defined as $f(x, y, z) > T$ where $f$ is a value noise function and $T$
+is a threshold. We produce images of the noise rotated around $Z$ axis by $\phi$
+radians by discretizing an inequation $f(p(x'), p(y'), p(z')) > T$ where
+\begin{equation*}
+  \begin{aligned}
+    x' &= x \cos \phi + y \sin \phi \\
+    y' &= y \cos \phi - x \sin \phi \\
+    z' &= z
+  \end{aligned}
+\end{equation*}
+and
+\begin{equation*}
+  \begin{aligned}
+    p(x) &= \left\{
+    \begin{array}{ll}
+      x'     & \quad x' < 1 \\
+      2 - x' & \quad \text{otherwise}
+    \end{array}
+    \right. \\
+    x ' &= x \mod 2
+  \end{aligned}
+\end{equation*}
+Therefore we assume the noise to be periodic with the period equal to
+$2$ and the interface between phases is continuous. Discretizing for different
+values of $\phi \in [0, \pi/4]$ we obtain the first dataset which contains the
+best possible discretization of the rotated noise.
+
+The second dataset is constructed by discretizing the noise with $\phi = 0$ and
+then rotating the discretized image using nearest-neighbor interpolation.
+
+We compute $S_3$ and $F_{sss}$ functions in periodic mode for the both datasets
+and calculate pointwisely a relative error introduced by the rotation as
+\begin{equation}
+  \varepsilon = \frac{|F_1 - F_2|}{F_1}
+  \label{eq:relerr}
+\end{equation}
+where $F_1$ is a correlation function for a sample from the first dataset and
+$F_2$ is a correlation function for a sample from the second dataset. The we
+calculate the maximal relative error for each $\phi$ as the maximum of all
+pointwise errors for a given rotation angle.
+
+Plots of maximal relative errors for functions $S_3$ and $F_{sss}$ are on
+\cref{fig:roterror-error}. For the surface-surface-surface function we omit
+values $F_{sss}(s_1, s_2)$ if either of its arguments is less than 10 voxels
+because this function is undefined for either $s_1$ or $s_2$ being equal to zero
+and our edge detection filter gives at least 7 voxel transition zone where the
+correlation function is affected by this indeterminacy. The maximal error for
+all $\phi$'s are 0.6\% for $S_3$ and 4.4\% for $F_{sss}$.
 
 \bibliography{paper}
 \end{document}
