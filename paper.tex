@@ -410,19 +410,19 @@ replace an indicator function $I_n$ with an edge detection operator $E_n$
 
 Input images must have appropriately high resolution for edge detection filter
 to work correctly. A criterion for ``goodness'' of an image can be expressed
-with $C_{\alpha}$ parameter \cite{samarin2023robust}. Let $\alpha \in [0, 1]$
+with $Q_\alpha$ parameter \cite{samarin2023robust}. Let $\alpha \in [0, 1]$
 and $f(x)$ be (band-limited) input image ($x \in \mathbb{R}^2$ or
-$\mathbb{R}^3$). We define $C_\alpha$ as follows:
+$\mathbb{R}^3$). We define $Q_\alpha$ as follows:
 \begin{equation}
   \begin{aligned}
     f_0(x) &= f(x) - \langle f(x) \rangle \\
-    C_\alpha &= \frac{\int_{-\alpha\omega}^{\alpha\omega} |\hat{f_0}(z)|^2
+    Q_\alpha &= \frac{\int_{-\alpha\omega}^{\alpha\omega} |\hat{f_0}(z)|^2
       dz}{\int_{-\omega}^{\omega} |\hat{f_0}(z)|^2 dz}
   \end{aligned}
 \end{equation}
 where $\hat{f_0}$ is a Fourier transform of $f_0$ and $\omega$ is a folding
 frequency which depends only on resolution of the image. If a criterion
-$C_{0.5} > 0.97$ holds then the image is suitable for application of
+$Q_{0.5} > 0.97$ holds then the image is suitable for application of
 aforementioned algorithms for calculation of surface functions, otherwise
 image's resolution can be improved with the help of interpolation prior to
 computations \cite{samarin2023robust}.
@@ -666,7 +666,7 @@ The comparison of our algorithm against theory is shown on
   \begin{tabular}{|c|c|c|c|c|}
     \hline
     Sample name & Image type & Dimensions (pixels/voxels) & Image resolution ($\mu m$)
-    & $C_{0.5}$ \\
+    & $Q_{0.5}$ \\
     \hline
     Sandstone & XCT &  $500 \times 500 \times 500$ & 2.25 & 0.9703 \\
     Soil & Reconstruction & $500 \times 500 \times 500$ & 0.72 & 0.9431 \\
@@ -680,7 +680,7 @@ The comparison of our algorithm against theory is shown on
 In this section we compute correlation functions for 2- and 3-dimensional porous
 media samples. Table \ref{tab:summary} contains information about these
 samples. Note that we compute surface correlation functions only for those
-samples for which the criterion $C_{0.5} > 0.97$ holds (the two sandstones and
+samples for which the criterion $Q_{0.5} > 0.97$ holds (the two sandstones and
 the soil) \cite{samarin2023robust}. Images of the samples are presented on
 \cref{fig:samples}. On plots of correlation functions for isotropic samples we
 provide a family of curves with the first argument of the correlation function
@@ -861,7 +861,7 @@ work computes 3-point correlation functions for sphere packings in the
 continuous domain; however, on a GPU it takes approximately 28 hours to perform
 $2\times10^6$ samplings (see Table 1 in \cite{sun2022third}).  Considering
 verification results in \cref{sec:results}, it seems that it would be much
-faster to discretize the sphere packing with appropriate $C_{0.5} > 0.97$ and to
+faster to discretize the sphere packing with appropriate $Q_{0.5} > 0.97$ and to
 utilize our package to assess correlation functions within tens of minutes
 without any loss in accuracy.  For $S_3$ and 3-point surface functions, Malmir
 et al. reported computation times of a couple of minutes for a $128^3$ voxels 3D
