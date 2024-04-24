@@ -262,7 +262,7 @@ cluster function which can be defined as:
   C_3^n(x_1, x_2) = \sum_{k=1}^K \langle I_n^k(x) I_n^k(x + x_1) I_n^k(x + x_2) \rangle
 \end{equation}
 where $I_n^k$ is an indicator function for $k$-th cluster of $A_n$ and $K$
-is a total number of clusters. A cluster is a subset of $A_n$ so that any two
+is a total number of clusters. A cluster is a subset of $A_n$ such that any two
 points in this subset can be connected with a curve belonging to that subset.
 
 By introducing a function $M_n(x) = |\nabla I_n(x)|$ which is a so-called interface
@@ -272,16 +272,16 @@ correlation functions -- these are the surface-surface-surface function
 function ($F_{svv}$). They are defined as:
 \begin{align}
   F_{sss}^n(x_1, x_2) &= \langle M_n(x) M_n(x + x_1) M_n(x + x_2) \rangle \\
-  F_{ssv}^n(x_1, x_2) &= \langle M_n(x) M_{(void)}(x + x_1) I_{(void)}(x + x_2) \rangle \\
+  F_{ssv}^n(x_1, x_2) &= \langle M_n(x) M_n(x + x_1) I_{(void)}(x + x_2) \rangle \\
   F_{svv}^n(x_1, x_2) &= \langle M_n(x) I_{(void)}(x + x_1) I_{(void)}(x + x_2) \rangle
 \end{align}
 Here $I_{(void)}$ is an indicator function for the subset of the void phase
 $A_v$. Unlike $S_3$ and $C_3$ functions, these functions do not have the meaning
 of probability and have the units of measurement inversely proportional to
 volume, surface and length, respectively (e.g., can be measured in $\mu m^{-3}$,
-$\mu m^{-2}$ and $\mu m^{-1}$ or other convenient dimensionless units depending
-on the problem to be solved).  These functions describe the interface of the
-subset $A_n$ and its spatial configuration with respect to $A_v$.
+$\mu m^{-2}$ and $\mu m^{-1}$ or other convenient units depending on the problem
+to be solved).  These functions describe the interface of the subset $A_n$ and
+its spatial configuration with respect to $A_{(void)}$.
 
 \subsection{Computational algorithms}
 Three-point correlation function $S_3$ can be computed either in spatial domain
@@ -445,11 +445,12 @@ defined as follows:
 \begin{equation}
   x \odot y = \left\{
   \begin{array}{ll}
-    1 & \quad x = y \\
+    1 & \quad x = y \ne L_{(void)} \\
     0 & \quad \text{otherwise}.
   \end{array}
   \right.
 \end{equation}
+where $L_{(void)}$ is a label of the void phase.
 
 \subsection{Analysis of anisotropic media}
 When an analyzed sample is anisotropic, i.e., it is stretched or oriented along
@@ -572,7 +573,7 @@ $\lambda=5000$ within a cube $[0, 1]^3$. Because $R \ll 1$, we can use
     \includegraphics[width=0.4\linewidth]{images/balls.png}
     \label{fig:balls}}
   \hfill
-  \subfigure[A plot of $S_3(0, r)$ computed with our algorithm and theoretical
+  \subfigure[A plot of $S_3(0, r)$ computed with our algorithm and a theoretical
     formula.]{
     \includegraphics[width=0.4\linewidth]{images/balls-s3.png}
     \label{fig:balls-s3-comparison}}
