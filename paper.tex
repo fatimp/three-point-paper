@@ -460,17 +460,18 @@ anisotropy present in the sample will be properly captured by computed 3-point
 correlation function.
 
 To detect the direction of anisotropy we use an $N \times N$ (where $N$ is
-dimensionality of the sample) covariance matrix for coordinates of points in the
-phase of interest:
+dimensionality of the sample) covariance matrix
+$\Sigma = \left\{ \sigma_{ij} \right\}$ for coordinates of points in the phase of
+interest:
 \begin{equation}
-  C_{ij} = \sum_{x \in \left\{
+  \sigma_{ij} = \sum_{x \in \left\{
     \begin{array}{l}
       \text{Coordinates of points} \\
       \text{in the phase of interset}
     \end{array}
     \right\}} (x_i - \overline{x_i})(x_j - \overline{x_j})
 \end{equation}
-and decompose $C$ as $T \Lambda T^{-1}$ where $T$ is a unitary matrix and
+and decompose $\Sigma$ as $T \Lambda T^{-1}$ where $T$ is a unitary matrix and
 $\Lambda$ is diagonal. $T$ can always be made so that it defines a rotation (by
 multiplication of one of the columns by $-1$ if needed, so that
 $\det T = 1$). Application of this rotation to the sample makes the direction of
