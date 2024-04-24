@@ -3,7 +3,7 @@ import CorrelationFunctions.Utilities as U
 using NPZ
 using StaticArrays
 
-const sides = [300]
+const sides = [300, 600]
 
 function foo!()
     for side in sides

@@ -9,10 +9,12 @@ const fns = [D.surf3, D.s3]
 function foo(path)
     for fn in fns
         for s in 1:9
-            println(s)
-            data = joinpath(path, "data-$(s)-300.npy") |> npzread |> CuArray
-            cf = fn(data; periodic = true)[D.PlaneXY()]
-            npzwrite(joinpath(path, "data-$(s)-300-$(fn).npy"), cf)
+            for side in [300, 600]
+                println(side)
+                data = joinpath(path, "data-$(s)-$(side).npy") |> npzread |> CuArray
+                cf = fn(data; periodic = true)[D.PlaneXY()]
+                npzwrite(joinpath(path, "data-$(s)-$(side)-$(fn).npy"), cf)
+            end
         end
     end
 end
