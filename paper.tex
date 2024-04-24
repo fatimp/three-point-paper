@@ -1059,12 +1059,12 @@ affected by rotation.
 To estimate the error introduced by rotation, consider a two-phase medium
 \cref{fig:roterror-noise} whose void phase is defined by an inequality
 $f(x, y, z) > U$ where $f$ is a value noise function and $U$ is a threshold. We
-produce images of the noise rotated around $Z$ axis by $\phi$ radians by
+produce images of the noise rotated around $Z$ axis by $\theta$ radians by
 discretizing an inequation $f(p(x'), p(y'), p(z')) > U$ where
 \begin{equation*}
   \begin{aligned}
-    x' &= x \cos \phi + y \sin \phi \\
-    y' &= y \cos \phi - x \sin \phi \\
+    x' &= x \cos \theta + y \sin \theta \\
+    y' &= y \cos \theta - x \sin \theta \\
     z' &= z
   \end{aligned}
 \end{equation*}
@@ -1082,13 +1082,13 @@ and
 \end{equation*}
 Therefore we assume the noise to be periodic with the period equal to $2$ and
 the interface between phases is continuous. Discretizing this noise for
-different values of $\phi \in [0, \pi/4]$ with two different resolutions we
+different values of $\theta \in [0, \pi/4]$ with two different resolutions we
 obtain the first dataset which contains the best possible discretization of the
 rotated noise at those resolutions. For this study we have produced images with
 dimensionality $300 \times 300 \times 300$ and $600 \times 600 \times 600$
 voxels (i.e. the second resolution is twice as much as the first).
 
-The second dataset is constructed by discretizing the noise with $\phi = 0$ and
+The second dataset is constructed by discretizing the noise with $\theta = 0$ and
 then rotating the discretized image using nearest-neighbor interpolation. This
 procedure is done for the same two dimensionalities as in the first dataset.
 
@@ -1100,9 +1100,9 @@ and calculate pointwisely a relative error introduced by rotation as
 \end{equation}
 where $F_1$ is a correlation function for a sample from the first dataset and
 $F_2$ is a correlation function for a sample from the second dataset for the
-same combination of a rotation angle $\phi$ and dimensionality $D$. Then we
+same combination of a rotation angle $\theta$ and dimensionality $D$. Then we
 calculate the maximal relative error as the maximum of all pointwise errors for
-a given pair $(\phi, D)$.
+a given pair $(\theta, D)$.
 
 Plots of maximal relative errors for functions $S_3$ and $F_{sss}$ are on
 \cref{fig:roterror-error}. When calculating the error of the
@@ -1110,7 +1110,7 @@ surface-surface-surface function we omit values $F_{sss}(s_1, s_2)$ if either of
 its arguments is less than 10 voxels because this function is undefined for
 either $s_1$ or $s_2$ being equal to zero and our edge detection filter gives at
 least 7 voxel transition zone where the correlation function is affected by this
-indeterminacy. The maximal error for all $\phi$'s are 0.6\% for $S_3$ and 5.0\%
+indeterminacy. The maximal error for all $\theta$'s are 0.6\% for $S_3$ and 5.0\%
 for $F_{sss}$ for dimensionality $300 \times 300 \times 300$ and 0.3\% for $S_3$
 and 4.5\% for $F_{sss}$ for dimensionality $600 \times 600 \times 600$.
 
