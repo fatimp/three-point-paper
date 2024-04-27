@@ -42,13 +42,13 @@ correlation functions (CFs), but the computation of 3-point statistics is known
 to be advantageous in some cases as they can probe non-Gaussian signatures, not
 captured by their 2-point counterparts. Moreover, $n$-point CFs with $n \ge 3$
 are believed to possess larger information content and provide more information
-about studies structures. In this paper, we have developed algorithms and code
+about studied structures. In this paper, we have developed algorithms and code
 to compute $S_3, C_3, F_{sss}, F_{ssv}$ and $F_{svv}$ with a right-angle
 triangle pattern. This pattern is much easier to vectorize and parallelize
 compared to previously used random triangle or spider-web sampling
 patterns. Moreover, it allows to easily implement computations of directional
-3-point CFs. The execution times for the same number of sample are orders of
-magnitude lower than existing published counterparts. We showed that the volume
+3-point CFs. The execution times for the same number of samples are orders of
+magnitude lower than in existing published counterparts. We showed that the volume
 of data produced get unwieldy very easily, especially if computations are
 performed in frequency domain. For these reasons until information content of
 different sets of correlation functions with different "n-pointness" is not
@@ -56,7 +56,7 @@ known, advantages of CFs with $n>3$ are not clear. Nonetheless, developed
 algorithms and code are universal enough to be easily extendable to any $n$
 (with increasing computational and RAM burden). All results are available as
 part of open source package \code{CorrelationFunctions.jl} [Postnicov et al.,
-  2024, Comp.Phys.Commun(accepted)]. As described in this paper, 3-point CFs
+  2024, Comp.Phys.Commun., 299, 109134]. As described in this paper, 3-point CFs
 computations can be immediately applied in a great number of research
 applications, for example: 1) flow and transport velocity fields analysis or any
 data with non-Gaussian signatures, 2) deep learning for structural and physical
@@ -98,7 +98,7 @@ is of utmost importance for numerous applications:
   \item Description of complex structures and fields for taxonomy, comparison
     and analysis
     \cite{takada2003three,hopkins2013stars,shivashankar2015felix,saadatfar2017pore,
-      portillo2018developing,KarsaninaEJSS,PNM_Morse,khlyupin2023molecular},
+      portillo2018developing,cheng2022data,KarsaninaEJSS,PNM_Morse,khlyupin2023molecular},
     which may include temporal dynamics or surface evolution
     \cite{jiao2013,PhysRevE.92.023301,prokhorov2022,chen2022,fomin2023soil};
   \item Morphological representativity
@@ -112,7 +112,7 @@ is of utmost importance for numerous applications:
     \cite{jiao2007,SciRep1,Havelka,KarsaninaEJSS};
   \item Multiscale image fusion that is usually necessary due to trade-off
     between field-of-view and imaging resolution
-    \cite{SciRep1,Geoderma2018,chen2020super,karimpouli2022}.
+    \cite{SciRep1,Geoderma2018,chen2020super,yan2023multiscale,karimpouli2022,yan2024modeling}.
 \end{enumerate}
 
 The number of possible descriptors to quantify spatial structure developed
@@ -200,8 +200,8 @@ However, while 2-point CFs are computed and used in multitude of studies, higher
 order functions, for example, 3-point correlation functions are not that widely
 used. The reason for this is straightforward -- 3-point correlation functions
 are more involved and, thus, require much more computational resources to
-assess. It has been shown that the amount of additional information content with
-each increase in number of points $n$ decreases \cite{yao1993high,Gommes2}. The
+assess. It has been shown that the amount of additional information content decreases with
+each increase in number of points $n$ \cite{yao1993high,Gommes2}. The
 trade-off between additional information and computational burden is still not
 clear. Nonetheless, the computation of 3-point statistics is known to be
 advantageous at least in the number of applications as related to cosmology,
