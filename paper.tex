@@ -361,21 +361,6 @@ the map. Moreover, Fourier image of the whole map has to be computed even if onl
 element of the map in spatial domain is required. The aforementioned limitations
 render this approach impractical.
 
-Our implementation fixes $x_1$ and $x_2$ to be parallel to one of the axes $X$,
-$Y$ or $Z$ with restriction $x_1 \perp x_2$ (\cref{fig:pattern})
-\cite{dimitrakopoulos2010high}. Thus, the output has dimensions $D_1 \times D_2$
-where $D_1$ and $D_2$ are dimensions of the input array along selected
-axes. Note that shift operators with such $x_1$ and $x_2$ represent a 3-point
-function computed within a 3D domain, but along a predefined direction (see
-below).
-\begin{figure}[ht]
-  \centering
-  \includegraphics[width=0.5\linewidth]{images/pattern.png}
-  \caption[]{The pattern used for calculation of $S_3$ function in our
-    implementation.}
-  \label{fig:pattern}
-\end{figure}
-
 Algorithms for three-point surface functions are the same as for $S_3$,
 containing only small modifications. The main difference is that we need to
 replace an indicator function $I_n$ with an edge detection operator $E_n$
@@ -452,6 +437,38 @@ defined as follows:
 \end{equation}
 where $L_{(void)}$ is a label of the void phase.
 
+\subsection{Open-source implementation}
+The described algorithms are implemented in our \code{CorrelationFunctions.jl}
+package written in Julia and have the same interface:
+\begin{verbatim}
+corrfn(input, phase, ps1, ps2)
+\end{verbatim}
+where \code{corrfn} stands for \code{s3} ($S_3$), \code{c3} ($C_3$),
+\code{surf3} ($F_{sss}$) etc., \code{input} is the input array, \code{phase} is
+a phase of interest and \code{ps1} and \code{ps2} are arrays of points in which
+correlation function is calculated. Firstly, \code{corrfn} does all necessary
+preparations for the input array (e.g. edge extraction or connected component
+labeling) and then calculates the correlation function for each pair of
+arguments from \code{ps1} and \code{ps2}.
+
+Our implementation provides a predefined right triangle pattern where arguments
+of a correlation function $x_1$ and $x_2$ are fixed to be parallel to one of the
+axes $X$, $Y$ or $Z$ with restriction $x_1 \perp x_2$ (\cref{fig:pattern})
+\cite{dimitrakopoulos2010high}. The output has dimensions $D_1 \times D_2$ where
+$D_1$ and $D_2$ are dimensions of the input array along selected axes. Note that
+shift operators with such $x_1$ and $x_2$ represent a 3-point function computed
+within a 3D domain, but along a predefined direction (see below).
+\begin{figure}[ht]
+  \centering
+  \includegraphics[width=0.5\linewidth]{images/pattern.png}
+  \caption[]{The pattern used for calculation of $S_3$ function in our
+    implementation.}
+  \label{fig:pattern}
+\end{figure}
+
+If it is desired, a user can use a custom pattern more appropriate to the
+situation.
+
 \subsection{Analysis of anisotropic media}
 When an analyzed sample is anisotropic, i.e., it is stretched or oriented along
 some specific direction, it may be beneficial to align one of the cathetus of
@@ -474,11 +491,19 @@ interest:
 and decompose $\Sigma$ as $T \Lambda T^{-1}$ where $T$ is a unitary matrix and
 $\Lambda$ is diagonal. $T$ can always be made so that it defines a rotation (by
 multiplication of one of the columns by $-1$ if needed, so that
-$\det T = 1$). Application of this rotation to the sample makes the direction of
-anisotropy parallel to one of the axes, so anisotropy can be better represented in
-the correlation function \cref{fig:aniso}. In our implementation we use rotation
-with nearest-neighbor interpolation which affects quality of computations as
-discussed in \cref{sec:rotqua}.
+$\det T = 1$). Application of this rotation to the sample (or its inverse to the
+pattern) makes the direction of anisotropy coaligned with the pattern, so
+anisotropy can be better represented in the correlation function. For the sake
+of visual clarity in this study we choose to rotate the image instead of the
+pattern \cref{fig:aniso}. This has such consequences as reduced accuracy of
+computed functions due to necessity to interpolate the image during
+rotation. Although we show in \cref{sec:rotqua} that even nearest-neighbor
+interpolation results only in insignificant loss of quality. Rotation of the
+pattern has same drawbacks related to interpolation of the sample which are most
+noticeable at small correlation lengths. The both methods (rotation of the
+sample or the pattern) produce nearly equivalent result if the sample is
+homogeneous and an average pore size is much less than the sample's size (see
+\cref{sec:rotrot})
 \begin{figure*}[!htp]
   \centering
   \begin{tabular}{ccc}
@@ -1115,6 +1140,39 @@ least 7 voxel transition zone where the correlation function is affected by this
 indeterminacy. The maximal error for all $\theta$'s are 0.6\% for $S_3$ and 5.0\%
 for $F_{sss}$ for dimensionality $300 \times 300 \times 300$ and 0.3\% for $S_3$
 and 4.5\% for $F_{sss}$ for dimensionality $600 \times 600 \times 600$.
+
+\section{Difference between rotating the input image or the sampling pattern}
+\label{sec:rotrot}
+Let's take the noise from \cref{sec:rotqua} with lesser sizes of pores and
+calculate $S_3$ function for it, preliminarily rotating the noise around Z-axis
+counter-clockwise using nearest-neighbor interpolation (the first case) or
+rotating the pattern around the same axis clock-wise (the second case). Then we
+compute a difference between the results point-wise using a formula
+\begin{equation}
+  \varepsilon = 2\frac{|S_3^{(1)} - S_3^{(2)}|}{S_3^{(1)} + S_3^{(2)}}
+  \label{eq:reldiff}
+\end{equation}
+The average of point-wise differences is at maximum for the angle of rotation
+$\theta = \frac{\pi}{4}$ and equals to 0.8\%. The maximal difference is about
+10\% for very small correlation length (about 2-3 pixels). These two methods of
+rotating give minimal difference if applied to a homogeneous medium with an
+average pore size much less than a size of the input (\cref{fig:rotdiff}).
+\begin{figure*}[tp]
+  \centering
+  \subfigure[A sample of value noise with small pores (compared to a size of the
+    sample, $300 \times 300 \times 300$)]{
+    \includegraphics[width=0.4\linewidth]{images/noise2.png}
+    \label{fig:rotdiff-noise}}
+  \hfill
+  \subfigure[Difference between two methods of rotation]{
+    \includegraphics[width=0.4\linewidth]{images/rotdiff.png}
+    \label{fig:rotdiff-error}}
+  \caption[]{A plot depicting difference between two rotation methods: rotation
+    of the sample and of the pattern. Dependency of an average point-wise
+    difference \cref{eq:reldiff} from a rotation angle is shown. The rotation is
+    performed around $Z$ axis counter-clockwise (sample) and clockwise (pattern).}
+  \label{fig:rotdiff}
+\end{figure*}
 
 \bibliography{paper}
 \end{document}
