@@ -532,10 +532,11 @@ homogeneous and an average pore size is much less than the sample's size (see
 
 \subsection{Directional and averaged computations}
 When a sample is known to be isotropic, the correlation function may be
-calculated multiple times, each time applying a random rotation of the sample,
-and then averaged across rotations to gather more statistics. This process is
-illustrated on \cref{fig:workflow}. This way we obtain similar results to
-sampling procedures used in \cite{berryman1988,SMITH1988176,malmir2018}.
+calculated multiple times, each time applying a random rotation to the sample or
+the pattern, and then averaged across rotations to gather more statistics. This
+process is illustrated on \cref{fig:workflow}. This way we obtain similar
+results to sampling procedures used in
+\cite{berryman1988,SMITH1988176,malmir2018}.
 
 Another approach is to fix a number of directions, for example, orthogonal and
 diagonal ones \cite{EPL1,EPL2,CFsjlpaper}. In other words, the sample is rotated
@@ -546,11 +547,11 @@ correlation functions computed in directions \cref{fig:workflow}.
 
 To summarize, \code{CorrelationFunctions.jl} allows to compute 3-point
 correlation functions averaged in all directions (by randomly rotating the
-sample), along predefined number of directions (e.g., orthogonal and diagonal by
-rotation in these directions) or along the direction of major anisotropy (that
-can be determined using \code{$detect\_anisotropy$} function).  Full correlation
-map for 3-point functions is impractical due its huge size and is not
-implemented.
+sample or the pattern), along predefined number of directions (e.g., orthogonal
+and diagonal by rotation in these directions) or along the direction of major
+anisotropy (that can be determined using \code{$detect\_anisotropy$} function).
+Full correlation map for 3-point functions is impractical due its huge size and
+is not implemented.
 
 \begin{figure*}[tp]
   \centering
@@ -939,13 +940,12 @@ translation. This way the algorithm preserves orientation of triangles stored in
 the pattern. The main advantage of our approach based on right triangle is in
 its parallelizability and ease of implementation. A drawback is that an angle
 between catheti of the sampling pattern is fixed to be $\theta = \frac{\pi}{2}$,
-but can be mitigated by rotation of the pattern as a whole by an equivalent
-operation of rotation of a sample. These rotations can be random as in the
-Malmir et al. algorithm, or it can be a single rotation to align catheti of the
-sampling triangle with the direction of anisotropy (\cref{fig:aniso}). The
-latter allows computing directional 3-point correlation functions for
-anisotropic structures similar to 2-point counterparts
-\cite{10.1063/1.4867611,EPL1}.
+but it can be mitigated by choosing a random pattern or rotating the
+pattern. The rotations can be random as in the Malmir et al. algorithm, or it
+can be a single rotation to align catheti of the sampling triangle with the
+direction of anisotropy (\cref{fig:aniso}). The latter allows computing
+directional 3-point correlation functions for anisotropic structures similar to
+2-point counterparts \cite{10.1063/1.4867611,EPL1}.
 
 As was mentioned in the \cref{sec:intro} section, computation of 3-point
 correlation functions can be beneficial for some applications, yet the trade-off
