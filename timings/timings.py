@@ -7,12 +7,12 @@ legend = ['$S_3$', '$C_3$', '$F_{sss}$', '$F_{ssv}$', '$F_{svv}$']
 names = map(lambda name: name + '.npy', ['s3', 'c3', 'surf3', 'surf2void', 'surfvoid2'])
 colors = ['b', 'r', 'g', 'k', 'm']
 
-plt.figure(figsize = (10, 8), dpi = 300)
+plt.figure(figsize = (10, 9), dpi = 300)
 plt.rc('font', size = 25)
 
 for (name, color) in zip(names, colors):
     data = np.load('gpu/' + name)
-    plt.plot(data[:,0]**3, data[:,1], color + '.-')
+    plt.plot(data[:,0]**3, data[:,1], color + '.-', linewidth = 3)
 
 plt.legend(legend)
 plt.yscale('log')
