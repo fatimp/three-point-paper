@@ -19,16 +19,17 @@
 \begin{document}
 \preprint{APS/123-QED}
 
-\author{Vasily~Postnicov\textsuperscript{1}}
-\author{Marina~V.~Karsanina\textsuperscript{1}}
+\author{Vasily~Postnicov\textsuperscript{1,3}}
+\author{Marina~V.~Karsanina\textsuperscript{1,2}}
 \author{Aleksey~Khlyupin\textsuperscript{1,2}}
-\author{Kirill~M.~Gerke\textsuperscript{1}}
+\author{Kirill~M.~Gerke\textsuperscript{1,2}}
 \email{kg@ifz.ru}
 
-\affiliation{\textsuperscript{1}Schmidt Institute of Physics of the Earth of
-  Russian Academy of Sciences, Moscow, 107031, Russia}
-\affiliation{\textsuperscript{2}Moscow Institute of Physics and Technology,
+\affiliation{\textsuperscript{1}Moscow Institute of Physics and Technology,
   Dolgoprudny, 141701, Russia}
+\affiliation{\textsuperscript{2}Schmidt Institute of Physics of the Earth of
+  Russian Academy of Sciences, Moscow, 107031, Russia}
+\affiliation{\textsuperscript{3}Dokuchaev Soil Science Institute, Moscow, 119017, Russia}
 
 \title{Evaluation of 3-point correlation functions from structural images on CPU
   and GPU architectures: accounting for anisotropy effects}
@@ -43,11 +44,14 @@ to be advantageous in some cases as they can probe non-Gaussian signatures, not
 captured by their 2-point counterparts. Moreover, $n$-point CFs with $n \ge 3$
 are believed to possess larger information content and provide more information
 about studied structures. In this paper, we have developed algorithms and code
-to compute $S_3, C_3, F_{sss}, F_{ssv}$ and $F_{svv}$ with a right-angle
-triangle pattern. This pattern is much easier to vectorize and parallelize
-compared to previously used random triangle or spider-web sampling
-patterns. Moreover, it allows to easily implement computations of directional
-3-point CFs. The execution times for the same number of samples are orders of
+to compute $S_3, C_3, F_{sss}, F_{ssv}$ and $F_{svv}$ with a right-angle and arbitrary
+triangle pattern. The former was believed to be faster to compute, but with the help of precomputed
+regular positions we achieved the same speed for arbitrary pattern. In this work we also 
+implement and demonstrate computations of directional 3-point CFs -- for this
+purpose right-triangular pattern seems to be superior due to explicit orientation and high coverage.
+Moreover, we assess the errors in CFs' evaluation due to image or pattern rotations and show that they 
+have minor effect on accuracy of computations.
+The execution times of our algorithms for the same number of samples are orders of
 magnitude lower than in existing published counterparts. We showed that the volume
 of data produced get unwieldy very easily, especially if computations are
 performed in frequency domain. For these reasons until information content of
@@ -102,8 +106,8 @@ is of utmost importance for numerous applications:
     which may include temporal dynamics or surface evolution
     \cite{jiao2013,PhysRevE.92.023301,prokhorov2022,chen2022,fomin2023soil};
   \item Morphological representativity
-    \cite{capek2009,rozenbaum2014,gerke2019tensor} and spatial stationarity
-    analysis \cite{REVpaper,LavrukhinPRE};
+    \cite{capek2009,rozenbaum2014,gerke2019tensor,zubov2024search} and spatial stationarity
+    analysis \cite{REVpaper,LavrukhinPRE,zubov2024search};
   \item Stochastic reconstructions from limited amount of input data
     \cite{Adler_recon,Y-T,tahmasebiPRL,Euras2012,EPL2,karsaninaPRL,rozanski2023}
     in the form of limited dimension structures or correlation functions;
@@ -121,7 +125,7 @@ within different disciplines is stunning, for example: phase ratio or porosity
 \cite{zimm1948scattering,becker2010radial}, Minkowski functionals
 \cite{vogel2010} and tensors \cite{schroder2011minkowski}, correlation functions
 \cite{Torquato_book}, persistence diagrams
-\cite{shivashankar2015felix,saadatfar2017pore,obayashi2018persistence}. The
+\cite{shivashankar2015felix,saadatfar2017pore,obayashi2018persistence,zubov2024search}. The
 evolution of such metrics was mainly induced by the ease of measurement and
 interpretation. In fact, we need a single universal descriptor defined by only
 one characteristic -- information content. The latter is an ability of the
@@ -147,7 +151,8 @@ The large portion of the research papers mentioned above
   takada2003three,hopkins2013stars,jiao2013,Torquato_book,roding2020predicting,
   KarsaninaEJSS,capek2009,gerke2019tensor,REVpaper,LavrukhinPRE,Adler_recon,Y-T,
   tahmasebiPRL,Euras2012,EPL2,karsaninaPRL,jiao2007,SciRep1,Havelka,Geoderma2018}
-is based on so-called correlation functions (CFs). These functions define a
+is based on so-called correlation functions (CFs). Majority of these functions, with 
+surface functions being a notable exception \cite{samarin2023robust}, define a
 probability that some events are occurring withing the structure (with some
 special cases of surface functions), for example, 2-point probability $S_2$
 measures the probability that both ends of the line segment are within the same
@@ -177,7 +182,7 @@ descriptor:
     some CFs can be also determined experimentally
     \cite{debye1957scattering,barrall1992nmr,dietrich1995scattering,li2018accurate};
   \item Correlation functions can be scaled \cite{karsaninaPRL} or manipulated,
-    for example, to add functions into a single one \cite{moctezuma2002};
+    for example, to add functions into a single structure \cite{moctezuma2002};
   \item As opposed to scalar metrics such as porosity, surface area or Minkowski
     functionals, CFs can be computed in directions and describe anisotropic
     structures;
@@ -185,7 +190,7 @@ descriptor:
     transport properties are known, among which the most known (and least useful
     due to the impractically huge gap between the bounds) are Hashin-Strikman
     bounds \cite{hashin1963variational}. Other expressions based on integration
-    of higher order $S_n$ are known and were found to be close to direct
+    of higher order $S_n$ are known and were found to be closer to direct
     simulations
     \cite{brown1955solid,beran1965use,milton1981bounds,hlushkou2015effective};
   \item One can control both the size of the CFs-based descriptor and the
@@ -440,42 +445,51 @@ defined as follows:
 \end{equation}
 where $L_{(void)}$ is a label of the void phase.
 
-\subsection{Open-source implementation}
-The described algorithms are implemented in our \code{CorrelationFunctions.jl}
-package written in Julia and have the same interface:
+\subsection{Triangular sampling pattern}
+There are three major known sampling pattern implementations reported in the literature (\cref{fig:pattern}):
+\begin{enumerate}
+  \item Arbitrary pattern (or random) triangle is thrown into the structure (e.g., \cite{malmir2018});
+  \item Web-like predefined triangular pattern (e.g., \cite{SMITH1988176});
+  \item Right-triangular sampling pattern (e.g., \cite{dimitrakopoulos2010high}).
+\end{enumerate}
+The second case of the web-like pattern was useful at times of low computational resources and seems to be the least flexible in terms of structure coverage. Right-traingle as a pattern was popular due ease of implementation and potential speed gains due to vectorization.
+However, we have organized the algorithms of \code{CorrelationFunctions.jl} to be able to utilize any patterns.
+This was achieved by organizing computational functions not around a shifting pattern, but rather around precomputed points representing
+triangle's vertices -- thus making our approach under the hood using the ideas behind the web-like pattern method. 
+
+This is implemented in our code by using the same interface for all computation functions to assess CFs:
 \begin{verbatim}
 corrfn(input, phase, ps1, ps2)
 \end{verbatim}
 where \code{corrfn} stands for \code{s3} ($S_3$), \code{c3} ($C_3$),
-\code{surf3} ($F_{sss}$) etc., \code{input} is the input array, \code{phase} is
+\code{surf3} ($F_{sss}$) etc., \code{input} is the input array describing the structure, \code{phase} is
 a phase of interest and \code{ps1} and \code{ps2} are arrays of points in which
 correlation function is calculated. Firstly, \code{corrfn} does all necessary
 preparations for the input array (e.g. edge extraction or connected component
 labeling) and then calculates the correlation function for each pair of
 arguments from \code{ps1} and \code{ps2}.
 
-Our implementation provides a predefined right triangle pattern where arguments
+To compare different approaches in this work we performed calculations with right-triangular\cite{dimitrakopoulos2010high,malmir2018},
+equilateral triangle and isosceles triangle with varying angle \cite{SMITH1988176,malmir2018} patterns -- both with averaging
+over the whole structure, or computed in directions (see next two subsections below). In the first case the pattern where arguments
 of a correlation function $x_1$ and $x_2$ are fixed to be parallel to one of the
-axes $X$, $Y$ or $Z$ with restriction $x_1 \perp x_2$ (\cref{fig:pattern})
-\cite{dimitrakopoulos2010high}. The output has dimensions $D_1 \times D_2$ where
-$D_1$ and $D_2$ are dimensions of the input array along selected axes.
-\highlight{I CANNOT UNDESTAND THIS SENTENCE: Note that shift operators with such
-  $x_1$ and $x_2$ represent a 3-point function computed within a 3D domain, but
-  along a predefined direction (see below).}
-\begin{figure}[ht]
-  \centering
-  \includegraphics[width=0.5\linewidth]{images/pattern.png}
-  \caption[]{The pattern used for calculation of $S_3$ function in our
-    implementation.}
-  \label{fig:pattern}
-\end{figure}
+axes $X$, $Y$ or $Z$ with restriction $x_1 \perp x_2$ (\cref{fig:pattern}, right scheme). Except for equilateral triangle, the output  has dimensions $D_1 \times D_2$ where $D_1$ and $D_2$ are dimensions of the input array along selected axes. For equilateral pattern there is a single curve (i.e.,
+similar to $S_2$ graphical representation).
 
-If it is desired, a user can use a custom pattern more appropriate to the
-situation.
+\begin{figure*}[ht]
+  \centering
+  \includegraphics[width=0.8\linewidth]{images/web-like.png}
+  \caption[]{Schematic representation of patterns for 3-point correlation functions evaluation:
+  arbitrary or random triangle, web-like, and right-triangular patterns. Note that real patterns are
+  more complex and are made simple for visualization, i.e., for right-triangular pattern we sample
+  all possible variations between points. Equilateral or isosceles triangles can be considered
+  as arbitrary patterns and can be either fixed in space, or rotated randomly.}
+  \label{fig:pattern}
+\end{figure*}
 
 \subsection{Analysis of anisotropic media}
 When an analyzed sample is anisotropic, i.e., it is stretched or oriented along
-some specific direction, it may be beneficial to align one of the cathetus of
+some specific direction, it may be beneficial to align one of the sides (cathetus for the right-triangular pattern) of
 sampling triangle \cref{fig:pattern} with that direction. In this case the
 anisotropy present in the sample will be properly captured by computed 3-point
 correlation function.
@@ -499,33 +513,21 @@ $\det T = 1$). Application of this rotation to the sample (or its inverse to the
 pattern) makes the direction of anisotropy coaligned with the pattern, so
 anisotropy can be better represented in the correlation function. For the sake
 of visual clarity in this study we choose to rotate the image instead of the
-pattern (\cref{fig:aniso}). This has such consequences as reduced accuracy of
+pattern (\cref{fig:aniso}). Any rotation can potentially reduce accuracy of
 computed functions due to necessity to interpolate the image during
-rotation. Although we show in \cref{sec:rotqua} that even nearest-neighbor
-interpolation results only in insignificant loss of quality. Rotation of the
-pattern has same drawbacks related to interpolation of the sample which are most
-noticeable at small correlation lengths. The both methods (rotation of the
-sample or the pattern) produce nearly equivalent result if the sample is
-homogeneous and an average pore size is much less than the sample's size (see
-\cref{sec:rotrot})
-\begin{figure*}[!htp]
+rotation, and this important issue is explored later.
+\begin{figure*}[ht]
   \centering
-  \begin{tabular}{ccc}
-    \includegraphics[width=0.3\linewidth, frame]{images/aniso.png} &
-    \includegraphics[width=0.3\linewidth, frame]{images/aniso-rot.png} & \\
-    \includegraphics[width=0.3\linewidth]{images/aniso-s3.png} &
-    \includegraphics[width=0.3\linewidth]{images/aniso-rot-s3.png} &
-    \includegraphics[width=0.3\linewidth]{images/aniso-avg-s3.png} \\
-  \end{tabular}
-  \caption{Behaviour of our algorithm for calculation of the $S_3$ function
-    when dealing with highly anisotropic media. The pattern \cref{fig:pattern}
+  \includegraphics[width=0.8\linewidth]{images/fig_rot.png}
+  \caption{Examples of directional analysis of images with the help of $S_3$ function
+    when dealing with highly anisotropic media. The right-triangular pattern (\cref{fig:pattern}, right side)
     which we use in our algorithm is most sensitive to anisotropy which is
     directed along one of the axes. \\
     From top down, left to right: an original image of an anisotropic pore; a
-    rotated image of the pore, so it is elongated along the axis; $S_3$ function
+    rotated image of the pore, so it is positioned along the major axis; $S_3$ function
     for the original pore; $S_3$ function for the rotated pore with a vector
     $(0.92, -0.4)$ being a direction of elongation of the pore; $S_3$ function
-    averaged across rotations similar to the algorithm described in
+    averaged across rotations similar to previously known algorithms
     \cite{berryman1988,SMITH1988176,malmir2018}.}
   \label{fig:aniso}
 \end{figure*}
@@ -550,7 +552,7 @@ correlation functions averaged in all directions (by randomly rotating the
 sample or the pattern), along predefined number of directions (e.g., orthogonal
 and diagonal by rotation in these directions) or along the direction of major
 anisotropy (that can be determined using \code{$detect\_anisotropy$} function).
-Full correlation map for 3-point functions is impractical due its huge size and
+Full correlation map for 3-point functions is impractical due its huge size and, thus,
 is not implemented.
 
 \begin{figure*}[tp]
@@ -647,7 +649,7 @@ farther than 0.1 (20 pixels) from curves of discontinuity (see
   \hfill
   \subfigure[$F_{sss}$: calculated with our approach]{
     \includegraphics[width=0.4\linewidth]{images/dumbbell-sss-julia.png}}
-  \caption[]{A comparison of $F_{sss}$ function calculated using our approach
+  \caption[]{A comparison of $F_{sss}$ function calculated using our algorithm
     with its precise values.}
   \label{fig:sss-verification}
 \end{figure*}
@@ -689,6 +691,38 @@ The comparison of our algorithm against theory is shown on
     radius $0.2$ with theoretical values.}
   \label{fig:surface-verification}
 \end{figure*}
+
+\subsection{Comparison of sampling patterns}
+\label{sec:compare_patterns}
+To compare different sampling and averaging patterns we performed computations of $S_3$ on Sandstone 3D sample.
+They were performed in three different manners: 1) isosceles triangle with a right-triangle
+between the equal side -- this sampling resembles both our right-triangle pattern and pattern
+of Malmir et al. \cite{malmir2018}, computations were made within XY planes within the image and, thus,
+represent directional CF; 2) equilateral triangle with side $r$ directionally analyzed within XY planes;
+3) equilateral triangle with side $r$ averaged over 20 random rotations -- reminiscence of web-like and random patterns.
+
+The results of the comparison are shown in \cref{fig:comparison_patterns}. For isotropic samples curves for
+directional and ensemble averaged, as well as for right-angle isosceles triangle, basically collapse to each other
+with minimal differences.
+\begin{figure*}[ht]
+  \centering
+  \includegraphics[width=0.8\linewidth]{images/fig_compar.png}
+  \caption[]{A comparison of computations of $S_3$ correlation function for the Sandstone sample
+  using different patterns with and without random rotations. Left: evaluated with isosceles triangle 
+  pattern with the side $r$ and the angle between edges $\phi$; sampling triangles are aligned with the plane XY.
+  Middle: evaluated with equilateral triangle pattern with the side $r$; sampling triangles are aligned with the plane XY.
+  Right: evaluated with equilateral triangle pattern with the side $r$. The result is averaged over 20 
+  random rotations of the sampling triangle. Lower image: comparison of $S_3$ functions calculated with 
+  right triangle pattern with length of the both catheti $r$ and equilateral triangle pattern 
+  (both averaged over rotations and aligned with the plane XY).}
+  \label{fig:comparison_patterns}
+\end{figure*}
+
+A Jupiter notebook presenting all these cases is available online \cite{Repo_example} and is a good example of
+applications of our package, especially in terms of establishing \code{ps1} and \code{ps2}
+arrays for arbitrary triangle patterns (isosceles and equilateral cases in our example),
+and for directional and ensemble averaged calculations.
+
 
 \subsection{Applications to material images}
 
@@ -878,7 +912,7 @@ to throwing of $V^{5/3}$ pattern triangles into the sample.
   \label{fig:timings}
 \end{figure*}
 
-Wall times are shown in \cref{fig:timings}. It can be seen that the time of
+Wall times are shown in \cref{fig:timings}. They do not depend on the type of sampling pattern used. It can be seen that the time of
 execution is a power function of voxels number. GPU gives a
 10x-100x performance boost depending on the correlation function. Note that
 random pixel/voxel patterns are a hard test for some functions, especially for
@@ -925,9 +959,9 @@ in linear time. It is still an open question if there are linear transforms whic
 allow computation of convolution faster than a naïve approach
 \cite{stone2008uniqueness,stone1998convolution}.
 
-We have made execuation time comparisons of our algorithm with existing
+We have made execution time comparisons of our algorithm with existing
 algorithms.  However, it is also beneficial to compare some algorithmic details
-against existing digital approaches -- proposed by Malmir~et~al
+against existing digital approaches -- proposed by Malmir~et.~al.
 \cite{malmir2018} and another one by Smith and Torquato \cite{SMITH1988176}. The
 first algorithm generates a triangle with fixed sides $r_1$ and $r_2$ and an
 arbitrary angle $\theta$ between them and places it in the medium firstly making
@@ -937,12 +971,10 @@ correlation function at the point $(r_1, r_2, \theta)$. The second algorithm
 takes a precalculated triangle $(r_1, r_2, \theta)$ from a web-like pattern and
 places it in the medium without rotation, only applying a random
 translation. This way the algorithm preserves orientation of triangles stored in
-the pattern. The main advantage of our approach based on right triangle is in
-its parallelizability and ease of implementation. A drawback is that an angle
-between catheti of the sampling pattern is fixed to be $\theta = \frac{\pi}{2}$,
-but it can be mitigated by choosing a random pattern or rotating the
-pattern. The rotations can be random as in the Malmir et al. algorithm, or it
-can be a single rotation to align catheti of the sampling triangle with the
+the pattern. The main advantage of our approach that can operate on arbitrary patterns is in
+its parallelizability and ease of implementation. The rotations necessary
+for arbitrary placement of the pattern within the image can be random as in the Malmir et al. algorithm, or it
+can be a single rotation to align the sampling triangle with the
 direction of anisotropy (\cref{fig:aniso}). The latter allows computing
 directional 3-point correlation functions for anisotropic structures similar to
 2-point counterparts \cite{10.1063/1.4867611,EPL1}.
@@ -972,6 +1004,29 @@ question.  In light of this discussion, at this point we decided to limit
 algorithms to $n>3$ for $S_n, C_n, F_{s...s}$ and $F_{s...v}$ is actually not
 that complicated \cite{dimitrakopoulos2010high}.
 
+The question if image rotation affects the quality of computations remains open.
+To answer this question we performed a study on value noise images.
+In \cref{sec:rotqua} we demonstrate that even nearest-neighbor
+interpolation results only in insignificant loss of quality. Rotation of the
+pattern has same drawbacks related to interpolation of the sample which are most
+noticeable at small correlation lengths. The both methods (rotation of the
+sample or the pattern) produce nearly equivalent result if the sample is
+homogeneous and an average pore size is much less than the sample's size (see
+\cref{sec:rotrot}).
+
+Another interesting question is which sampling pattern is more powerful?
+Our results shown in \cref{fig:comparison_patterns} clear illustrate that
+for isotropic structure all sampling techniques provide quite similar results.
+The differences, of course, will be significant for isotropic cases and
+directional 3-point CFs calculations. Again, the clear winner here is not obvious.
+Right-triangular pattern allows to systematically sample the structure with
+predefined direction. On the other hand, equilateral triangle allows to
+minimize the volume of computed functions and represent them as single curve,
+similar to 2-point functions. Random pattern could be useful for rigorous bounds.
+So, the better approach can depend on the problem at hand. Nonetheless,
+the direct comparison of patterns can be performed only on the basis of
+information content -- something we discuss in the next paragraph.
+
 We mentioned that classic set of correlation functions describes both the
 geometry and topology of the structure at hand -- but this is to yet unknown
 extent. With the advent of analytical methods \cite{CHERKASOV2024129400} to
@@ -987,7 +1042,7 @@ ratio, but also on its applicability to solve particular problems. For example,
 it is well known that cluster $C_2$ function provides a lot of information in
 addition to $S_2$ \cite{JiaoPNAS}, yet it's application in stochastic
 reconstructions is very limited due to computational burden of cluster
-relabeling during annealing \cite{PLoS_ONE}. Still, effective information
+relabeling during annealing \cite{karsanina2015}. Still, effective information
 content assessment techniques will provide a possibility to account for such
 additional application constraints.
 
@@ -1010,7 +1065,8 @@ functions, namely $S_n, C_n, F_{s...s}$ and $F_{s...v}$, for which
 computationally efficient algorithms can be developed (including computations on
 GPU). For $n=3$ we have developed code in Julia language to compute $S_3, C_3,
 F_{sss}, F_{ssv}$ and $F_{svv}$ in an arbitrary set of points. We also provide a
-function which generates a right-angle triangle pattern. Computations are easily
+function which generates a right-angle triangle pattern which can be useful for
+directional CFs evaluation. Computations are easily
 vectorized and utilize the power of modern CPU and GPU architectures. The
 execution times for the same number of sample are orders of magnitude lower than
 existing published counterparts. We showed that the volume of data produced get
@@ -1023,6 +1079,12 @@ increasing computational and RAM burden). All results are available as part of
 open source package \code{CorrelationFunctions.jl}, developed by our group and
 freely available to the public with numerous Jupiter notebooks showing examples
 of applications to assess 3-point correlation functions for 2D and 3D images.
+
+\section{Acknowledgements}
+This research was supported by the Russian Science Foundation grant 23-74-00061.
+
+Collaborative effort of the authors within the FaT iMP (Flow and Transport in Media with Pores) research group
+and used some of its software. We thank our colleague Konstantin Romanenko for suggestions and administrative work.
 
 \appendix
 \section{Computation of number of trials for non-periodic mode}
@@ -1048,7 +1110,7 @@ to zero:
   E_k = S \left\{
   \begin{array}{ll}
     -\sum\limits_{\substack{l \\ l \ne 0}} E_l & \quad k = 0 \\
-    1 / \rho(k, 0) & \quad \text{otherwise}
+    1 / \rho(k, 0) & \quad \text{otherwise.}
   \end{array}
   \right.
 \end{equation}
@@ -1075,7 +1137,7 @@ For 3D case $S=172.96$ and for 2D case $S=30.46$ \cite{postnicov20232}.
 Our edge extraction filter works only for binary samples, therefore it is
 natural to require that a rotated image remains binary. The simpliest way to do
 so is to use nearest-neighbor interpolation when sampling subvoxel data during
-rotation. This results only in minimal precision loss in computation of
+rotation. As we show below, this results only in minimal precision loss in computation of
 correlation functions.
 
 Speculatively, the loss in precision should be minimal for three-point and
@@ -1090,7 +1152,7 @@ To estimate the error introduced by rotation, consider a two-phase medium
 $f(x, y, z) > U$ where $f$ is a value noise function
 \cite[Section IV.B]{samarin2023robust} and $U$ is a threshold. We produce images
 of the noise rotated around $Z$ axis by $\theta$ radians by discretizing an
-inequation $f(p(x'), p(y'), p(z')) > U$ where
+inequation $f(p(x'), p(y'), p(z')) > U$ where:
 \begin{equation*}
   \begin{aligned}
     x' &= x \cos \theta + y \sin \theta \\
@@ -1107,7 +1169,7 @@ and
       2 - x' & \quad \text{otherwise}
     \end{array}
     \right. \\
-    x ' &= x \mod 2
+    x ' &= x \mod 2.
   \end{aligned}
 \end{equation*}
 Therefore we assume the noise to be periodic with the period equal to $2$ and
@@ -1116,7 +1178,7 @@ different values of $\theta \in [0, \pi/4]$ with two different resolutions we
 obtain the first dataset which contains the best possible discretization of the
 rotated noise at those resolutions. For this study we have produced images with
 dimensionality $300 \times 300 \times 300$ and $600 \times 600 \times 600$
-voxels (i.e. the second resolution is twice as much as the first).
+voxels (i.e., the second resolution is twice as much as the first).
 
 The second dataset is constructed by discretizing the noise with $\theta = 0$ and
 then rotating the discretized image using nearest-neighbor interpolation. This
@@ -1144,7 +1206,7 @@ indeterminacy. The maximal error for all $\theta$'s are 0.6\% for $S_3$ and 5.0\
 for $F_{sss}$ for dimensionality $300 \times 300 \times 300$ and 0.3\% for $S_3$
 and 4.5\% for $F_{sss}$ for dimensionality $600 \times 600 \times 600$.
 
-\section{Difference between rotating the input image or the sampling pattern}
+\section{Difference between rotation of the input image or the sampling pattern}
 \label{sec:rotrot}
 Let's take the noise from \cref{sec:rotqua} with lesser sizes of pores and
 calculate $S_3$ function for it, preliminarily rotating the noise around Z-axis
@@ -1162,8 +1224,7 @@ rotating give minimal difference if applied to a homogeneous medium with an
 average pore size much less than a size of the input (\cref{fig:rotdiff}).
 \begin{figure*}[tp]
   \centering
-  \subfigure[A sample of value noise with small pores (compared to a size of the
-    sample, $300 \times 300 \times 300$)]{
+  \subfigure[A sample of value noise with small pores]{
     \includegraphics[width=0.4\linewidth]{images/noise2.png}
     \label{fig:rotdiff-noise}}
   \hfill
