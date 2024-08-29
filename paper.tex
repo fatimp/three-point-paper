@@ -45,7 +45,7 @@ are believed to possess larger information content and provide more information
 about studied structures. In this paper, we have developed algorithms and code
 to compute $S_3, C_3, F_{sss}, F_{ssv}$ and $F_{svv}$ with a right-angle
 triangle pattern. This pattern is much easier to vectorize and parallelize
-compared to previously used random triangle or spider-web sampling
+compared to previously used random triangle or spiderweb sampling
 patterns. Moreover, it allows to easily implement computations of directional
 3-point CFs. The execution times for the same number of samples are orders of
 magnitude lower than in existing published counterparts. We showed that the volume
@@ -934,7 +934,7 @@ arbitrary angle $\theta$ between them and places it in the medium firstly making
 a random translation and a rotation around a random vector by a random angle. By
 making a large number of trials the algorithm gets a value of a three-point
 correlation function at the point $(r_1, r_2, \theta)$. The second algorithm
-takes a precalculated triangle $(r_1, r_2, \theta)$ from a web-like pattern and
+takes a precalculated triangle $(r_1, r_2, \theta)$ from a weblike pattern and
 places it in the medium without rotation, only applying a random
 translation. This way the algorithm preserves orientation of triangles stored in
 the pattern. The main advantage of our approach based on right triangle is in
