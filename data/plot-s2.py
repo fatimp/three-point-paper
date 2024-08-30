@@ -8,7 +8,8 @@ def s2_th(x, λ, R):
     return np.exp(-ρ * np.where(x < 2*R, 1 + 3/4*x/R - 1/16*(x/R)**3, 2))
 
 s2 = np.load('test-s2.npy')
-xs = np.linspace(0, 0.5, s2.size)
+xs1 = np.linspace(0, 0.5, s2.size)
+xs2 = np.linspace(0, 0.5, 1000)
 
 #plt.figure(figsize = (10, 8), dpi = 300)
 #plt.rc('font', size = 25)
@@ -33,8 +34,8 @@ xs = np.linspace(0, 0.5, s2.size)
 
 plt.figure(figsize = (10, 9), dpi = 300)
 plt.rc('font', size = 25)
-plt.plot(xs, s2, linewidth = 3)
-plt.plot(xs, s2_th(xs, 5000, 0.02), linewidth = 3)
+plt.plot(xs1, s2, color = '#1f77b4', linewidth = 3)
+plt.plot(xs2, s2_th(xs2, 5000, 0.02), color = '#ff7f0e', linestyle = '-.', linewidth = 3)
 plt.ticklabel_format(axis = "y", scilimits = (0, 0), useMathText = True)
 plt.ticklabel_format(axis = "x", scilimits = (0, 0), useMathText = True)
 plt.xlim([0.025, 0.055])
