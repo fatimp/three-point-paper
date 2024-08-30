@@ -533,21 +533,21 @@ of visual clarity in this study we choose to rotate the image instead of the
 pattern (\cref{fig:aniso}). Any rotation can potentially reduce accuracy of
 computed functions due to necessity to interpolate the image during
 rotation, and this important issue is explored later.
-\begin{figure*}[ht]
-  \centering
-  \includegraphics[width=0.8\linewidth]{images/fig_rot.png}
-  \caption{Examples of directional analysis of images with the help of $S_3$
-    function when dealing with highly anisotropic media. The right-triangular
-    pattern (\cref{fig:pattern}, right side) which we use in our algorithm is
-    most sensitive to anisotropy which is directed along one of the
-    axes. \\ From top down, left to right: an original image of an anisotropic
-    pore; a rotated image of the pore, so it is positioned along the major axis;
-    $S_3$ function for the original pore; $S_3$ function for the rotated pore
-    with a vector $(0.92, -0.4)$ being a direction of elongation of the pore;
-    $S_3$ function averaged across rotations similar to previously known
-    algorithms \cite{berryman1988,SMITH1988176,malmir2018}.}
-  \label{fig:aniso}
-\end{figure*}
+%\begin{figure*}[ht]
+%  \centering
+%  \includegraphics[width=0.8\linewidth]{images/fig_rot.png}
+%  \caption{Examples of directional analysis of images with the help of $S_3$
+%    function when dealing with highly anisotropic media. The right-triangular
+%    pattern (\cref{fig:pattern}, right side) which we use in our algorithm is
+%    most sensitive to anisotropy which is directed along one of the
+%    axes. \\ From top down, left to right: an original image of an anisotropic
+%    pore; a rotated image of the pore, so it is positioned along the major axis;
+%    $S_3$ function for the original pore; $S_3$ function for the rotated pore
+%    with a vector $(0.92, -0.4)$ being a direction of elongation of the pore;
+%    $S_3$ function averaged across rotations similar to previously known
+%    algorithms \cite{berryman1988,SMITH1988176,malmir2018}.}
+%  \label{fig:aniso}
+%\end{figure*}
 
 \subsection{Directional and averaged computations}
 When a sample is known to be isotropic, the correlation function may be
@@ -725,21 +725,21 @@ The results of the comparison are shown in \cref{fig:comparison_patterns}. For
 isotropic samples curves for directional and ensemble averaged, as well as for
 right-angle isosceles triangle, basically collapse to each other with minimal
 differences.
-\begin{figure*}[ht]
-  \centering \includegraphics[width=0.8\linewidth]{images/fig_compar.png}
-  \caption[]{A comparison of computations of $S_3$ correlation function for the
-    Sandstone sample using different patterns with and without random
-    rotations. Left: evaluated with isosceles triangle pattern with the side $r$
-    and the angle between edges $\phi$; sampling triangles are aligned with the
-    plane XY.  Middle: evaluated with equilateral triangle pattern with the side
-    $r$; sampling triangles are aligned with the plane XY.  Right: evaluated
-    with equilateral triangle pattern with the side $r$. The result is averaged
-    over 20 random rotations of the sampling triangle. Lower image: comparison
-    of $S_3$ functions calculated with right triangle pattern with length of the
-    both catheti $r$ and equilateral triangle pattern (both averaged over
-    rotations and aligned with the plane XY).}
-  \label{fig:comparison_patterns}
-\end{figure*}
+%\begin{figure*}[ht]
+%  \centering \includegraphics[width=0.8\linewidth]{images/fig_compar.png}
+%  \caption[]{A comparison of computations of $S_3$ correlation function for the
+%    Sandstone sample using different patterns with and without random
+%    rotations. Left: evaluated with isosceles triangle pattern with the side $r$
+%    and the angle between edges $\phi$; sampling triangles are aligned with the
+%    plane XY.  Middle: evaluated with equilateral triangle pattern with the side
+%    $r$; sampling triangles are aligned with the plane XY.  Right: evaluated
+%    with equilateral triangle pattern with the side $r$. The result is averaged
+%    over 20 random rotations of the sampling triangle. Lower image: comparison
+%    of $S_3$ functions calculated with right triangle pattern with length of the
+%    both catheti $r$ and equilateral triangle pattern (both averaged over
+%    rotations and aligned with the plane XY).}
+%  \label{fig:comparison_patterns}
+%\end{figure*}
 
 A Jupiter notebook presenting all these cases is available online
 \cite{Repo_example} and is a good example of applications of our package,
