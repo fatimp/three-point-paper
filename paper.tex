@@ -367,12 +367,12 @@ This algorithm has a better computational complexity compared with the previous
 algorithms if the whole correlation map is needed ($O(n^2 \log n)$ vs
 $O(n^3)$ where $n$ is a number of elements in the input array). The whole
 correlation map, however, requires a lot of memory and is rarely
-needed. Imagine, that the input array $A$ is of dimensions $500 \times 500$.
-Then, considering that single precision floating point numbers are used,
+needed. Imagine, that the input array $A$ is of dimensions $500^2$. Then,
+considering that single precision floating point numbers are used,
 $4 \cdot 2 \cdot 500^4 / 1000^3 = 500$ GB are needed to store Fourier image of
-the map. Moreover, Fourier image of the whole map has to be computed even if only one
-element of the map in spatial domain is required. The aforementioned limitations
-render this approach impractical.
+the map. Moreover, Fourier image of the whole map has to be computed even if
+only one element of the map in spatial domain is required. The aforementioned
+limitations render this approach impractical.
 
 Algorithms for three-point surface functions are the same as for $S_3$,
 containing only small modifications. The main difference is that we need to
@@ -788,9 +788,9 @@ and for directional and ensemble averaged calculations.
     Sample name & Image type & Dimensions (pixels/voxels) & Image resolution ($\mu m$)
     & $Q_{0.5}$ \\
     \hline
-    Sandstone & XCT &  $500 \times 500 \times 500$ & 2.25 & 0.9703 \\
-    Soil & Reconstruction & $500 \times 500 \times 500$ & 0.72 & 0.9431 \\
-    Shale & Reconstruction & $160 \times 160 \times 160$ & 2.25 & 0.8912 \\
+    Sandstone & XCT &  $500^3$ & 2.25 & 0.9703 \\
+    Soil & Reconstruction & $500^3$ & 0.72 & 0.9431 \\
+    Shale & Reconstruction & $160^3$ & 2.25 & 0.8912 \\
     Sandstone & SEM &  $1280 \times 869$ & 0.10 & 0.9613 \\
     \hline
   \end{tabular}
@@ -1234,8 +1234,8 @@ the interface between phases is continuous. Discretizing this noise for
 different values of $\theta \in [0, \pi/4]$ with two different resolutions we
 obtain the first dataset which contains the best possible discretization of the
 rotated noise at those resolutions. For this study we have produced images with
-dimensionality $300 \times 300 \times 300$ and $600 \times 600 \times 600$
-voxels (i.e., the second resolution is twice as much as the first).
+dimensionality $300^3$ and $600^3$ voxels (i.e., the second resolution is twice
+as much as the first).
 
 The second dataset is constructed by discretizing the noise with $\theta = 0$ and
 then rotating the discretized image using nearest-neighbor interpolation. This
@@ -1260,8 +1260,8 @@ its arguments is less than 10 voxels because this function is undefined for
 either $s_1$ or $s_2$ being equal to zero and our edge detection filter gives at
 least 7 voxel transition zone where the correlation function is affected by this
 indeterminacy. The maximal error for all $\theta$'s are 0.6\% for $S_3$ and 5.0\%
-for $F_{sss}$ for dimensionality $300 \times 300 \times 300$ and 0.3\% for $S_3$
-and 4.5\% for $F_{sss}$ for dimensionality $600 \times 600 \times 600$.
+for $F_{sss}$ for dimensionality $300^3$ and 0.3\% for $S_3$ and 4.5\% for
+$F_{sss}$ for dimensionality $600^3$.
 
 \section{Difference between rotation of the input image or the sampling pattern}
 \label{sec:rotrot}
