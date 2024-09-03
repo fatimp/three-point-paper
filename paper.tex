@@ -737,7 +737,18 @@ isotropic samples curves for directional and ensemble averaged, as well as for
 right-angle isosceles triangle, basically collapse to each other with minimal
 differences.
 \begin{figure*}[ht]
-  \centering \includegraphics[width=0.8\linewidth]{images/fig_compar.png}
+  \centering
+  \subfigure[Isosceles with right angle]{
+    \includegraphics[width=0.4\linewidth]{images/isosceles.png}}
+  \hfill
+  \subfigure[Equilateral]{
+    \includegraphics[width=0.4\linewidth]{images/equilateral.png}}
+  \vskip\baselineskip
+  \subfigure[With random rotations]{
+    \includegraphics[width=0.4\linewidth]{images/equilateral-avg.png}}
+  \hfill
+  \subfigure[Comparison plot]{
+    \includegraphics[width=0.4\linewidth]{images/alltogether.png}}
   \caption[]{A comparison of computations of $S_3$ correlation function for the
     Sandstone sample using different patterns with and without random
     rotations. Left: evaluated with isosceles triangle pattern with the side $r$
