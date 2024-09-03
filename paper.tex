@@ -546,7 +546,17 @@ computed functions due to necessity to interpolate the image during
 rotation, and this important issue is explored later.
 \begin{figure*}[ht]
   \centering
-  \includegraphics[width=0.8\linewidth]{images/fig_rot.png}
+  \subfigure[Original image]{
+    \includegraphics[width=0.4\linewidth,frame]{images/aniso.png}}
+  \hfill
+  \subfigure[Rotated image]{
+    \includegraphics[width=0.4\linewidth,frame]{images/aniso-rot.png}}
+  \vskip\baselineskip
+  \includegraphics[width=0.3\linewidth]{images/aniso-s3.png}
+  \hfill
+  \includegraphics[width=0.3\linewidth]{images/aniso-rot-s3.png}
+  \hfill
+  \includegraphics[width=0.3\linewidth]{images/aniso-avg-s3.png}
   \caption{Examples of directional analysis of images with the help of $S_3$
     function when dealing with highly anisotropic media. The right-triangular
     pattern (\cref{fig:pattern}, right side) which we use in our algorithm is
