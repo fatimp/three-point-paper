@@ -443,12 +443,13 @@ defined as follows:
 \begin{equation}
   x \odot y = \left\{
   \begin{array}{ll}
-    1 & \quad x = y \ne L_{(void)} \\
+    1 & \quad x = y \ne B \\
     0 & \quad \text{otherwise}.
   \end{array}
   \right.
 \end{equation}
-where $L_{(void)}$ is a label of the void phase.
+where $B$ is a background label (i.e. a label for all elements which are not in
+the phase $n$).
 
 \subsection{Triangular sampling pattern}
 There are three major known sampling pattern implementations reported in the
