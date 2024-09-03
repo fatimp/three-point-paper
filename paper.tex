@@ -732,7 +732,7 @@ The comparison of our algorithm against theory is shown on
 \end{figure*}
 
 \subsection{Comparison of sampling patterns}
-\label{sec:compare_patterns}
+\label{sec:compare-patterns}
 To compare different sampling and averaging patterns we performed computations
 of $S_3$ on Sandstone 3D sample.  They were performed in three different
 manners: 1) isosceles triangle with a right-triangle between the equal side --
@@ -743,35 +743,41 @@ directionally analyzed within XY planes; 3) equilateral triangle with side $r$
 averaged over 20 random rotations -- reminiscence of weblike and random
 patterns.
 
-The results of the comparison are shown in \cref{fig:comparison_patterns}. For
+The results of the comparison are shown in \cref{fig:comparison-patterns}. For
 isotropic samples curves for directional and ensemble averaged, as well as for
 right-angle isosceles triangle, basically collapse to each other with minimal
 differences.
 \begin{figure*}[ht]
   \centering
   \subfigure[Isosceles with right angle]{
-    \includegraphics[width=0.4\linewidth]{images/isosceles.png}}
+    \includegraphics[width=0.4\linewidth]{images/isosceles.png}
+    \label{fig:cp-isosceles}}
   \hfill
   \subfigure[Equilateral]{
-    \includegraphics[width=0.4\linewidth]{images/equilateral.png}}
+    \includegraphics[width=0.4\linewidth]{images/equilateral.png}
+    \label{fig:cp-equilateral}}
   \vskip\baselineskip
   \subfigure[With random rotations]{
-    \includegraphics[width=0.4\linewidth]{images/equilateral-avg.png}}
+    \includegraphics[width=0.4\linewidth]{images/equilateral-avg.png}
+    \label{fig:cp-equilateral-avg}}
   \hfill
   \subfigure[Comparison plot]{
-    \includegraphics[width=0.4\linewidth]{images/alltogether.png}}
+    \includegraphics[width=0.4\linewidth]{images/alltogether.png}
+    \label{fig:cp-comp}}
   \caption[]{A comparison of computations of $S_3$ correlation function for the
     Sandstone sample using different patterns with and without random
-    rotations. Left: evaluated with isosceles triangle pattern with the side $r$
-    and the angle between edges $\phi$; sampling triangles are aligned with the
-    plane XY.  Middle: evaluated with equilateral triangle pattern with the side
-    $r$; sampling triangles are aligned with the plane XY.  Right: evaluated
-    with equilateral triangle pattern with the side $r$. The result is averaged
-    over 20 random rotations of the sampling triangle. Lower image: comparison
-    of $S_3$ functions calculated with right triangle pattern with length of the
-    both catheti $r$ and equilateral triangle pattern (both averaged over
-    rotations and aligned with the plane XY).}
-  \label{fig:comparison_patterns}
+    rotations. Fig.~\ref{fig:cp-isosceles}: evaluated with isosceles triangle
+    pattern with the side $r$ and the angle between edges $\phi$; sampling
+    triangles are aligned with the plane XY. Fig.~\ref{fig:cp-equilateral}:
+    evaluated with equilateral triangle pattern with the side $r$; sampling
+    triangles are aligned with the plane XY. Fig.~\ref{fig:cp-equilateral-avg}:
+    evaluated with equilateral triangle pattern with the side $r$. The result is
+    averaged over 20 random rotations of the sampling
+    triangle. Fig.~\ref{fig:cp-comp}: comparison of $S_3$ functions calculated
+    with right triangle pattern with length of the both catheti $r$ and
+    equilateral triangle pattern (both averaged over rotations and aligned with
+    the plane XY).}
+  \label{fig:comparison-patterns}
 \end{figure*}
 
 A Jupiter notebook presenting all these cases is available online
@@ -1071,7 +1077,7 @@ homogeneous and an average pore size is much less than the sample's size (see
 \cref{sec:rotrot}).
 
 Another interesting question is which sampling pattern is more powerful?
-Our results shown in \cref{fig:comparison_patterns} clearly illustrate that
+Our results shown in \cref{fig:comparison-patterns} clearly illustrate that
 for isotropic structure all sampling techniques provide quite similar results.
 The differences, of course, will be significant for isotropic cases and
 directional 3-point CFs calculations. Again, the clear winner here is not obvious.
