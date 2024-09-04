@@ -27,7 +27,7 @@
      inkscape:deskcolor="#d1d1d1"
      inkscape:document-units="mm"
      inkscape:zoom="0.78127805"
-     inkscape:cx="290.54957"
+     inkscape:cx="291.82952"
      inkscape:cy="342.38771"
      inkscape:window-width="1916"
      inkscape:window-height="1030"
@@ -65,18 +65,18 @@
     <g
        id="g4"
        transform="matrix(1.8975617,0,0,1.8975617,-54.916422,-79.980092)"
-       style="stroke-width:0.26349604;stroke-dasharray:none">
+       style="stroke-width:0.26349604;stroke-dasharray:none;stroke:#2c881d;stroke-opacity:1">
       <path
-         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.26349604;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#Dot);marker-mid:url(#Dot);marker-end:url(#Dot)"
+         style="fill:none;fill-rule:evenodd;stroke:#2c881d;stroke-width:0.26349604;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#Dot);marker-mid:url(#Dot);marker-end:url(#Dot)"
          d="M 31.793836,47.284634 V 108.89594 H 98.701912 Z"
          id="path1" />
       <path
-         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.26349604;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#Dot);marker-end:url(#Dot)"
+         style="fill:none;fill-rule:evenodd;stroke:#2c881d;stroke-width:0.26349604;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#Dot);marker-end:url(#Dot)"
          d="M 85.912745,108.89594 31.793836,47.284634 71.902569,108.89594"
          id="path3"
          sodipodi:nodetypes="ccc" />
       <path
-         style="fill:none;fill-rule:evenodd;stroke:#000000;stroke-width:0.26349604;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#Dot);marker-end:url(#Dot)"
+         style="fill:none;fill-rule:evenodd;stroke:#2c881d;stroke-width:0.26349604;stroke-linejoin:bevel;stroke-dasharray:none;stroke-opacity:1;marker-start:url(#Dot);marker-end:url(#Dot)"
          d="M 58.80881,108.89594 31.793836,47.284634 45.844692,108.89594"
          id="path4"
          sodipodi:nodetypes="ccc" />
